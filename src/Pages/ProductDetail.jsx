@@ -119,6 +119,14 @@ const ProductDetail = () => {
             {product.priceDetails}
           </p>
 
+          <div className='mt-2'>
+            <AddToCartButton
+              product={product}
+              selectedColor={selectedColor}
+              selectedSize={selectedSize}
+            />
+          </div>
+
           <h2 className="mt-5 text-2xl font-extrabold mb-4 text-gray-800 font-bignoodle">
             Talles
           </h2>
@@ -191,11 +199,6 @@ const ProductDetail = () => {
               </p>
             ))}
           </div>
-          <AddToCartButton
-            product={product}
-            selectedColor={selectedColor}
-            selectedSize={selectedSize}
-          />
         </div>
       </div>
     </section>
