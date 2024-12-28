@@ -1,6 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Importar Link
 
+// Colores que vamos a mostrar
+export const colors = [
+  { id: 1, name: 'Rojo', hex: '#FF0000' },
+  { id: 2, name: 'Verde', hex: '#00FF00' },
+  { id: 3, name: 'Azul', hex: '#0000FF' },
+  { id: 4, name: 'Amarillo', hex: '#FFFF00' },
+  { id: 5, name: 'Naranja', hex: '#FFA500' },
+  { id: 6, hex: '#FFFFFF', name: 'Blanco' }, // Blanco,
+  { id: 7, hex: '#000000', name: 'Negro' } // Negro
+];
 export const products = [
   {
     id: 1, // Agregar un id único
@@ -19,7 +29,8 @@ export const products = [
       Las medidas están disponibles en la última foto para ayudarte a elegir la talla perfecta.
 
       Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, por lo que el color puede variar levemente.
-    `
+    `,
+    color: null // Guardamos el color elegido
   },
   {
     id: 2, // Agregar un id único

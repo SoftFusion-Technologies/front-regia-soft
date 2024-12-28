@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import PostHero from './PostHero';
 
 const Hero = () => {
+  // Desplazar hacia la parte superior cuando el componente se monte
+  useEffect(() => {
+    window.scrollTo(0, 0); // Desplazar hacia arriba de la página
+  }, []);
   const images = [
     '/src/Images/Hero/imgHero1.webp',
     '/src/Images/Hero/imgHero1.webp',

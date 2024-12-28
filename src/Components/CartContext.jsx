@@ -1,34 +1,53 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 // Crear el contexto
 export const CartContext = createContext();
 
-// Proveedor del contexto
-const CartProvider = ({ children }) => {
-  // Estado para almacenar los artículos en el carrito
-  const [cartItems, setCartItems] = useState([]);
+export const CartProvider = ({ children }) => {
+  // Obtener el carrito del localStorage o inicializarlo como un arreglo vacío
+  const [cartItems, setCartItems] = useState(() => {
+    const savedCart = localStorage.getItem('cartItems');
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
 
-  // Función para agregar un producto al carrito con la cantidad
-  const addToCart = (product, quantity) => {
-    setCartItems((prevItems) => {
-      // Verificar si el producto ya está en el carrito
-      const itemIndex = prevItems.findIndex((item) => item.id === product.id);
-      if (itemIndex >= 0) {
-        // Si el producto ya existe, actualizamos la cantidad
-        const updatedItems = [...prevItems];
-        updatedItems[itemIndex].quantity += quantity; // Sumar la cantidad
-        return updatedItems;
-      } else {
-        // Si el producto no existe, lo agregamos con la cantidad seleccionada
-        return [...prevItems, { ...product, quantity }];
-      }
-    });
+  // Función para agregar un producto al carrito
+  const addToCart = (productToAdd) => {
+    // Verificar si el producto ya está en el carrito
+    const existingProduct = cartItems.find(
+      (item) =>
+        item.id === productToAdd.id &&
+        item.selectedColor === productToAdd.selectedColor
+    );
+
+    if (existingProduct) {
+      // Si el producto ya está, aumentar la cantidad
+      setCartItems((prevItems) =>
+        prevItems.map((item) =>
+          item.id === existingProduct.id &&
+          item.selectedColor === existingProduct.selectedColor
+            ? { ...item, quantity: item.quantity + productToAdd.quantity }
+            : item
+        )
+      );
+    } else {
+      // Si no está, agregarlo al carrito
+      setCartItems((prevItems) => [...prevItems, productToAdd]);
+    }
   };
 
   // Función para eliminar un producto del carrito
-  const removeFromCart = (productId) => {
-    setCartItems(cartItems.filter((item) => item.id !== productId));
+  const removeFromCart = (productId, selectedColor) => {
+    setCartItems((prevItems) =>
+      prevItems.filter(
+        (item) => item.id !== productId || item.selectedColor !== selectedColor
+      )
+    );
   };
+
+  // Guardar el carrito en el localStorage cada vez que cambie
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
 
   return (
     <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>

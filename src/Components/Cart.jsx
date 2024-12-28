@@ -1,8 +1,32 @@
 import React, { useContext } from 'react';
-import { CartContext } from './CartContext'; // Importa el contexto del carrito
+import { CartContext } from './CartContext';
 
 const Cart = () => {
-  const { cartItems, removeFromCart } = useContext(CartContext); // Consume el contexto
+  const { cartItems, removeFromCart } = useContext(CartContext);
+
+  // Función para generar el mensaje para WhatsApp
+  const generateWhatsAppMessage = () => {
+    let message =
+      '¡Hola! Quiero realizar una compra. Aquí están los detalles:\n\n';
+
+    cartItems.forEach((item) => {
+      message += `Producto: ${item.title}\n`;
+      message += `Cantidad: ${item.quantity}\n`;
+      message += `Precio: ${item.price}\n`;
+      if (item.selectedColor) {
+        message += `Color: ${item.selectedColor.name}\n`;
+      }
+      message += '\n'; // Línea en blanco para separar productos
+    });
+
+    message += '¡Gracias!';
+
+    // Codificar el mensaje para URL
+    return encodeURIComponent(message);
+  };
+
+  // Enlace de WhatsApp con el mensaje generado
+  const whatsappLink = `https://wa.me/5493863531891?text=${generateWhatsAppMessage()}`;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -20,7 +44,7 @@ const Cart = () => {
             >
               {/* Imagen del producto */}
               <img
-                src={item.imageFront || '/path/to/default-image.jpg'} // Imagen por defecto si no existe
+                src={item.imageFront || '/path/to/default-image.jpg'}
                 alt={item.title}
                 className="w-20 h-20 object-cover rounded-md"
               />
@@ -35,10 +59,27 @@ const Cart = () => {
                 <p className="text-sm text-gray-500">
                   Cantidad: {item.quantity}
                 </p>
+                {/* Mostrar el color seleccionado */}
+                {item.selectedColor && (
+                  <div className="flex items-center mt-2">
+                    <div
+                      style={{
+                        backgroundColor: item.selectedColor.hex,
+                        width: '20px',
+                        height: '20px',
+                        borderRadius: '50%'
+                      }}
+                      className="mr-2"
+                    ></div>
+                    <p className="text-sm text-gray-600">
+                      {item.selectedColor.name}
+                    </p>
+                  </div>
+                )}
               </div>
               {/* Botón para eliminar */}
               <button
-                onClick={() => removeFromCart(item.id)}
+                onClick={() => removeFromCart(item.id, item.selectedColor)} // Pasa el color también
                 className="text-red-600 hover:text-red-800 font-semibold"
               >
                 Eliminar
@@ -47,6 +88,18 @@ const Cart = () => {
           ))}
         </ul>
       )}
+
+      {/* Botón para finalizar compra */}
+      <div className="text-center mt-6">
+        <a
+          href={whatsappLink}
+          className="px-6 py-2 bg-green-500 text-white text-lg font-semibold rounded-md hover:bg-green-600"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Finalizar Compra
+        </a>
+      </div>
     </div>
   );
 };

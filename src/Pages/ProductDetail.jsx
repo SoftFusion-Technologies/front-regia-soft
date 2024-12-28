@@ -1,14 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { products } from './FeaturedProducts'; // Importar los productos
+import { products, colors } from './FeaturedProducts'; // Importar los productos
 import { CartContext } from '../Components/CartContext'; // Importa el contexto del carrito
 import AddToCartButton from '../Config/AddToCartButton';
 
 const ProductDetail = () => {
+  // Desplazar hacia la parte superior cuando el componente se monte
+  useEffect(() => {
+    window.scrollTo(0, 0); // Desplazar hacia arriba de la página
+  }, []);
+
   const { id } = useParams(); // Obtener el id del producto desde la URL
   const [product, setProduct] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null); // Nuevo estado para el color seleccionado
+
   const [currentImage, setCurrentImage] = useState(null);
-  const { addToCart } = useContext(CartContext); // Accedemos a la función para agregar al carrito
 
   useEffect(() => {
     const foundProduct = products.find((p) => p.id === parseInt(id));
@@ -20,6 +26,9 @@ const ProductDetail = () => {
     }
   }, [id]);
 
+  const handleColorSelect = (color) => {
+    setSelectedColor(color); // Actualiza el color seleccionado
+  };
   if (!product) {
     return (
       <p className="text-center text-gray-600 text-lg mt-8">
@@ -72,13 +81,15 @@ const ProductDetail = () => {
           {/* Breadcrumb personalizado */}
           <nav className="text-sm text-gray-500 mb-4">
             <ul className="flex space-x-2">
-              <li className="hover:text-blue-500 cursor-pointer">INICIO</li>
+              <li className="hover:text-pink-500 cursor-pointer">
+                <a href="/">INICIO</a>
+              </li>
               <li>·</li>
-              <li className="hover:text-blue-500 cursor-pointer">HOMBRE</li>
+              <li className="hover:text-pink-500 cursor-pointer">HOMBRE</li>
               <li>·</li>
-              <li className="hover:text-blue-500 cursor-pointer">REMERAS</li>
+              <li className="hover:text-pink-500 cursor-pointer">REMERAS</li>
               <li>·</li>
-              <li className="hover:text-blue-500 cursor-pointer">OVERSIZE</li>
+              <li className="hover:text-pink-500 cursor-pointer">OVERSIZE</li>
               <li>·</li>
               <li className="text-gray-800 font-bold">
                 {product.title.toUpperCase()}
@@ -99,6 +110,32 @@ const ProductDetail = () => {
           </p>
 
           <h2 className="mt-5 text-2xl font-extrabold mb-4 text-gray-800 font-bignoodle">
+            Colores
+          </h2>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            {colors.map((color) => (
+              <div
+                key={color.id}
+                onClick={() => handleColorSelect(color)}
+                className={`cursor-pointer w-12 h-12 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:ring-2 hover:ring-gray-400
+            ${selectedColor?.id === color.id ? 'border-4 border-black' : ''}`} // Si el color está seleccionado, agrega un borde
+                style={{
+                  backgroundColor: color.hex,
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Sombra sutil
+                  transform:
+                    selectedColor?.id === color.id ? 'scale(1.1)' : 'scale(1)' // Aumenta el tamaño del color seleccionado
+                }}
+                onMouseEnter={(e) => (e.target.style.transform = 'scale(1.05)')}
+                onMouseLeave={(e) =>
+                  (e.target.style.transform =
+                    selectedColor?.id === color.id ? 'scale(1.1)' : 'scale(1)')
+                }
+              />
+            ))}
+          </div>
+
+          <h2 className="mt-5 text-2xl font-extrabold mb-4 text-gray-800 font-bignoodle">
             Descripción
           </h2>
           {/* Descripción del producto */}
@@ -109,7 +146,7 @@ const ProductDetail = () => {
               </p>
             ))}
           </div>
-          <AddToCartButton product={product} />
+          <AddToCartButton product={product} selectedColor={selectedColor} />
         </div>
       </div>
     </section>

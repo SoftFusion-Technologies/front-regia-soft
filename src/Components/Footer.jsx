@@ -60,7 +60,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="footer">
+    <footer className="footer mt-32">
       <div className="footer-left">
         <h2 className="titulo">Corsa Nera</h2>
         <p id="description-id" className="description">

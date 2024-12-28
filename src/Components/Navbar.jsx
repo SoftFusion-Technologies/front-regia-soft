@@ -16,6 +16,11 @@ const Navbar = () => {
 
   const { cartItems } = useContext(CartContext); // Obtener los productos del carrito
 
+  const totalQuantity = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
   return (
     <nav className="bg-white shadow-md">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
@@ -57,12 +62,13 @@ const Navbar = () => {
         </div>
 
         {/* Carrito de compras en Desktop */}
+        {/* Carrito de compras en Desktop */}
         <div className="relative">
           <Link to="/cart" className="flex items-center">
             <FaShoppingCart size={30} className="text-black" />
-            {cartItems.length > 0 && (
-              <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
-                {cartItems.length}
+            {totalQuantity > 0 && (
+              <span className="absolute top-0 right-0 bg-pink-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
+                {totalQuantity}
               </span>
             )}
           </Link>
