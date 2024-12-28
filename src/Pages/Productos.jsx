@@ -38,6 +38,18 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE FELLOW',
       precio: '$12.000,00',
       imagen: '/ProductSimple/Remeras Fellow Blanca (1).webp'
+    },
+    {
+      id: 7,
+      nombre: 'REMERA OVERSIZE CORAZÓN',
+      precio: '$12.000,00',
+      imagen: '/ProductSimple/Remeras OVer Crazon back (1).webp'
+    },
+    {
+      id: 8,
+      nombre: 'REMERA OVERSIZE TENNIS',
+      precio: '$12.000,00',
+      imagen: '/ProductSimple/Remeras OVer tennis Blanca.webp'
     }
   ];
 
