@@ -7,44 +7,51 @@ const FeaturedProducts = () => {
       imageFront: '/src/Images/ProductsDestacados/ImgCraneFrente.webp',
       imageBack: '/src/Images/ProductsDestacados/ImgCraneBack.webp',
       title: 'REMERA OVERSIZE CRANE',
-      price: '$14.500',
+      price: '$14.500,00',
       priceDetails: 'Precio con efectivo o transferencia: $12.000'
     },
     {
       imageFront: '/src/Images/ProductsDestacados/Remeras OVer Brooklyn 2.webp',
       imageBack: '/src/Images/ProductsDestacados/Remeras OVer Brooklyn.webp',
       title: 'REMERA OVERSIZE BROOKLYN',
-      price: '$14.500',
+      price: '$14.500,00',
       priceDetails: 'Precio con efectivo o transferencia: $12.000'
     },
     {
-      imageFront: '/images/Products/product3.webp',
-      imageBack: '/images/Products/product3Back.webp',
-      title: 'Producto 3',
-      price: '$59.99'
+      imageFront: '/src/Images/ProductsDestacados/Remera over lisa 1.webp',
+      imageBack: '/src/Images/ProductsDestacados/Remera over lisa 2.webp',
+      title: 'REMERA OVERSIZE LISA',
+      price: '$12.000,000',
+      priceDetails: 'Llevando 3 o más C/U: $10.000,000'
     },
     {
-      imageFront: '/images/Products/product4.webp',
-      imageBack: '/images/Products/product4Back.webp',
-      title: 'Producto 4',
-      price: '$69.99'
+      imageFront: '/src/Images/ProductsDestacados/Remeras OVer Positive.webp',
+      imageBack:
+        '/src/Images/ProductsDestacados/Remeras OVer Positive Back.webp',
+      title: 'REMERA OVERSIZE POSITIVE',
+      price: '$14.500,00',
+      priceDetails: 'Precio con efectivo o transferencia: $12.000'
     },
     {
-      imageFront: '/images/Products/product5.webp',
-      imageBack: '/images/Products/product5Back.webp',
-      title: 'Producto 5',
-      price: '$29.99'
+      imageFront:
+        '/src/Images/ProductsDestacados/Remeras OVer Crazon back.webp',
+      imageBack: '/src/Images/ProductsDestacados/Remeras OVer Crazon 2.webp',
+      title: 'REMERA OVERSIZE CORAZÓN',
+      price: '$14.500,00',
+      priceDetails: 'Precio con efectivo o transferencia: $12.000'
     },
     {
-      imageFront: '/images/Products/product6.webp',
-      imageBack: '/images/Products/product6Back.webp',
-      title: 'Producto 6',
-      price: '$89.99'
+      imageFront:
+        '/src/Images/ProductsDestacados/Remeras Fellow Blanca Frente.webp',
+      imageBack: '/src/Images/ProductsDestacados/Remeras Fellow Blanca.webp',
+      title: 'REMERA OVERSIZE FELLOW',
+      price: '$14.500,00',
+      priceDetails: 'Precio con efectivo o transferencia: $12.000'
     }
   ];
 
   return (
-    <section className="py-16 px-4 sm:px-8">
+    <section id="featured-products" className="py-16 px-4 sm:px-8">
       {/* Título de la sección */}
       <h2 className="font-messina text-3xl font-bold text-center mb-8">
         Destacados

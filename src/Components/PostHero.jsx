@@ -1,6 +1,11 @@
 import React from 'react';
 
 const PostHero = () => {
+  // Función para hacer el scroll hacia la sección
+  const scrollToSection = () => {
+    const section = document.getElementById('featured-products');
+    section.scrollIntoView({ behavior: 'smooth' });
+  };
   return (
     <div className="font-bignoodle absolute -mt-60 md:-mt-10 left-1/2 transform -translate-x-1/2 flex items-center justify-center text-black z-10">
       <div className="text-center space-y-4">
@@ -8,7 +13,10 @@ const PostHero = () => {
         <p className="text-xl">
           La mejor tienda de ropa con estilo y elegancia
         </p>
-        <button className="text-lg px-8 py-3 bg-black text-white rounded-lg border-2 border-transparent hover:bg-white hover:text-black hover:border-black transition duration-300">
+        <button
+          onClick={scrollToSection}
+          className="text-lg px-8 py-3 bg-black text-white rounded-lg border-2 border-transparent hover:bg-white hover:text-black hover:border-black transition duration-300"
+        >
           Ver productos
         </button>
       </div>
