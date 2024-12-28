@@ -8,6 +8,7 @@ import CartProvider from './Components/CartContext'; // Importamos el proveedor 
 import Cart from './Components/Cart'; // Importamos el proveedor del carrito
 import Mapa from './Components/Mapa';
 import NotFound from './Pages/NotFound'; // Importar la página 404
+import About from './Pages/About';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetail />} />{' '}
           <Route path="/cart" element={<Cart />} />
+          <Route path="/about" element={<About />} />
           {/* Ruta para la página no encontrada */}
           <Route path="*" element={<NotFound />} />
         </Routes>
