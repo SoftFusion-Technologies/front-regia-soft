@@ -7,6 +7,12 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+  // Función para hacer el scroll hacia la sección de contacto
+  const scrollToContactSection = () => {
+    const section = document.getElementById('contacto');
+    section.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <nav className="bg-white shadow-md">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
@@ -20,15 +26,25 @@ const Navbar = () => {
 
         {/* Menú Desktop */}
         <div className="hidden md:flex space-x-8">
-          {menuItems.map((item) => (
-            <a
-              key={item.id}
-              href={item.href}
-              className="font-bignoodle text-lg font-medium text-black hover:text-gray-500 transition"
-            >
-              {item.label}
-            </a>
-          ))}
+          {menuItems.map((item) =>
+            item.label === 'Contacto' ? (
+              <button
+                key={item.id}
+                onClick={scrollToContactSection} // Usamos onClick para scroll
+                className="font-bignoodle text-lg font-medium text-black hover:text-gray-500 transition"
+              >
+                {item.label}
+              </button>
+            ) : (
+              <a
+                key={item.id}
+                href={item.href}
+                className="font-bignoodle text-lg font-medium text-black hover:text-gray-500 transition"
+              >
+                {item.label}
+              </a>
+            )
+          )}
         </div>
 
         {/* Botón Hamburguesa */}
@@ -58,15 +74,25 @@ const Navbar = () => {
       {/* Menú Mobile */}
       {isMenuOpen && (
         <div className="md:hidden bg-white">
-          {menuItems.map((item) => (
-            <a
-              key={item.id}
-              href={item.href}
-              className="font-bignoodle block px-4 py-2 text-black hover:bg-gray-100 transition"
-            >
-              {item.label}
-            </a>
-          ))}
+          {menuItems.map((item) =>
+            item.label === 'Contacto' ? (
+              <button
+                key={item.id}
+                onClick={scrollToContactSection} // En el menú mobile también
+                className="font-bignoodle block px-4 py-2 text-black hover:bg-gray-100 transition"
+              >
+                {item.label}
+              </button>
+            ) : (
+              <a
+                key={item.id}
+                href={item.href}
+                className="font-bignoodle block px-4 py-2 text-black hover:bg-gray-100 transition"
+              >
+                {item.label}
+              </a>
+            )
+          )}
         </div>
       )}
     </nav>
