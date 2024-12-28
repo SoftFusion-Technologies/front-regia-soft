@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PostHero from './PostHero';
 
 const Hero = () => {
   const images = [
@@ -19,26 +20,23 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative w-full h-[90vh] sm:h-[60vh] md:h-[50vh] lg:h-[70vh]">
-      {/* Imagen de fondo */}
-      <div
-        className="absolute inset-0 w-full h-full bg-cover bg-center transition-all duration-1000"
-        style={{ backgroundImage: `url(${images[currentImage]})` }}
-      ></div>
+    <>
+      <section className="relative w-full h-[90vh] sm:h-[60vh] md:h-[50vh] lg:h-[70vh] -mt-80 sm:-mt-80 md:mt-0">
+        {/* Imagen de fondo */}
+        <div
+          className="absolute inset-0 w-full h-full bg-center transition-all duration-1000"
+          style={{
+            backgroundImage: `url(${images[currentImage]})`,
+            backgroundSize: 'contain', // Asegura que la imagen se vea completa
+            backgroundRepeat: 'no-repeat', // Evita que la imagen se repita
+            backgroundPosition: 'center' // Centra la imagen dentro del contenedor
+          }}
+        ></div>
+      </section>
 
-      {/* Capa de contenido */}
-      <div className="font-bignoodle absolute inset-0 flex items-center justify-center text-black z-10">
-        <div className="text-center space-y-4">
-          <h1 className="text-5xl font-bold uppercase">Corsa Nera</h1>
-          <p className="text-lg">
-            La mejor tienda de ropa con estilo y elegancia
-          </p>
-          <button className="px-8 py-3 bg-black text-white rounded-lg border-2 border-transparent hover:bg-white hover:text-black hover:border-black transition duration-300">
-            Ver productos
-          </button>
-        </div>
-      </div>
-    </section>
+      {/* Componente PostHero debajo de la imagen */}
+      <PostHero />
+    </>
   );
 };
 
