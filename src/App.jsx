@@ -6,6 +6,7 @@ import Navbar from './Components/Navbar';
 import ProductDetail from './Pages/ProductDetail';
 import CartProvider from './Components/CartContext'; // Importamos el proveedor del carrito
 import Cart from './Components/Cart'; // Importamos el proveedor del carrito
+import Mapa from './Components/Mapa';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           {/* Ruta dinámica */}
         </Routes>
+        <Mapa />
         <Footer />
       </Router>
     </CartProvider>
