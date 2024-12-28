@@ -13,7 +13,7 @@ const Navbar = () => {
         {/* Logo y Nombre */}
         <div className="flex items-center space-x-3">
           <img src={LogoCN} alt="Corsa Nera Logo" className="h-14 w-auto" />
-          <span className="text-2xl font-extrabold text-black tracking-wide uppercase">
+          <span className="font-bignoodle text-2xl font-bold text-black tracking-wide uppercase">
             Corsa Nera
           </span>
         </div>
@@ -24,7 +24,7 @@ const Navbar = () => {
             <a
               key={item.id}
               href={item.href}
-              className="text-lg font-medium text-black hover:text-gray-500 transition"
+              className="font-bignoodle text-lg font-medium text-black hover:text-gray-500 transition"
             >
               {item.label}
             </a>
@@ -62,7 +62,7 @@ const Navbar = () => {
             <a
               key={item.id}
               href={item.href}
-              className="block px-4 py-2 text-black hover:bg-gray-100 transition"
+              className="font-bignoodle block px-4 py-2 text-black hover:bg-gray-100 transition"
             >
               {item.label}
             </a>
