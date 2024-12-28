@@ -70,7 +70,7 @@ const Footer = () => {
         <div className="socials">
           <li>
             <a
-              href="https://www.facebook.com/tuTienda"
+              href="https://www.instagram.com/corsaneraurban"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -79,7 +79,7 @@ const Footer = () => {
           </li>
           <li>
             <a
-              href="https://www.instagram.com/tuTienda"
+              href="https://www.instagram.com/corsaneraurban"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -88,7 +88,7 @@ const Footer = () => {
           </li>
           <li>
             <a
-              href="https://twitter.com/tuTienda"
+              href="https://www.instagram.com/corsaneraurban"
               target="_blank"
               rel="noopener noreferrer"
             >

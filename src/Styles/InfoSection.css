@@ -1,0 +1,57 @@
+/* General styling for the section */
+.info-section {
+  display: flex;
+  justify-content: center;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Container for the items to make them align in a row */
+.info-section-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  width: 100%;
+}
+
+/* Individual item styling */
+.info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  min-width: 200px; /* Prevents items from getting too narrow */
+}
+
+/* Icon styling */
+.icon-container {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.icon {
+  font-size: 3rem;
+}
+
+/* Title and description styling */
+.info-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.info-description {
+  color: #666;
+  font-size: 1rem;
+}
+
+/* Responsiveness for mobile */
+@media (max-width: 768px) {
+  .info-section-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
