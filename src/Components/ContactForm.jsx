@@ -25,10 +25,10 @@ const ContactForm = () => {
     // Configura el servicio de EmailJS
     emailjs
       .send(
-        'service_id', // Reemplaza con tu ID de servicio de EmailJS
-        'template_id', // Reemplaza con tu ID de plantilla de EmailJS
+        'service_ecylv9e', // Reemplaza con tu ID de servicio de EmailJS
+        'template_ghxtjse', // Reemplaza con tu ID de plantilla de EmailJS
         formData,
-        'user_id' // Reemplaza con tu ID de usuario de EmailJS
+        'O_NsVIcilb7zYleKT' // Reemplaza con tu ID de usuario de EmailJS
       )
       .then(
         (response) => {
@@ -36,6 +36,7 @@ const ContactForm = () => {
           setFormData({ name: '', email: '', message: '' });
         },
         (error) => {
+          console.error('Error de EmailJS:', error);
           setStatus('Hubo un error al enviar el mensaje.');
         }
       );
