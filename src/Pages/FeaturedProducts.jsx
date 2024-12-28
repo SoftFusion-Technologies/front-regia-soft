@@ -14,8 +14,8 @@ export const colors = [
 export const products = [
   {
     id: 1, // Agregar un id único
-    imageFront: '/src/Images/ProductsDestacados/ImgCraneFrente.webp',
-    imageBack: '/src/Images/ProductsDestacados/ImgCraneBack.webp',
+    imageFront: '/ProductsDestacados/ImgCraneFrente.webp',
+    imageBack: '/ProductsDestacados/ImgCraneBack.webp',
     title: 'REMERA OVERSIZE CRANE',
     price: '$14.500,00',
     priceDetails: 'Precio con efectivo o transferencia: $12.000',
@@ -34,32 +34,32 @@ export const products = [
   },
   {
     id: 2, // Agregar un id único
-    imageFront: '/src/Images/ProductsDestacados/Remeras OVer Brooklyn 2.webp',
-    imageBack: '/src/Images/ProductsDestacados/Remeras OVer Brooklyn.webp',
+    imageFront: '/ProductsDestacados/Remeras OVer Brooklyn 2.webp',
+    imageBack: '/ProductsDestacados/Remeras OVer Brooklyn.webp',
     title: 'REMERA OVERSIZE BROOKLYN',
     price: '$14.500,00',
     priceDetails: 'Precio con efectivo o transferencia: $12.000'
   },
   {
     id: 3, // Agregar un id único
-    imageFront: '/src/Images/ProductsDestacados/Remera over lisa 1.webp',
-    imageBack: '/src/Images/ProductsDestacados/Remera over lisa 2.webp',
+    imageFront: '/ProductsDestacados/Remera over lisa 1.webp',
+    imageBack: '/ProductsDestacados/Remera over lisa 2.webp',
     title: 'REMERA OVERSIZE LISA',
     price: '$12.000,000',
     priceDetails: 'Llevando 3 o más C/U: $10.000,000'
   },
   {
     id: 4, // Agregar un id único
-    imageFront: '/src/Images/ProductsDestacados/Remeras OVer Positive.webp',
-    imageBack: '/src/Images/ProductsDestacados/Remeras OVer Positive Back.webp',
+    imageFront: '/ProductsDestacados/Remeras OVer Positive.webp',
+    imageBack: '/ProductsDestacados/Remeras OVer Positive Back.webp',
     title: 'REMERA OVERSIZE POSITIVE',
     price: '$14.500,00',
     priceDetails: 'Precio con efectivo o transferencia: $12.000'
   },
   {
     id: 5, // Agregar un id único
-    imageFront: '/src/Images/ProductsDestacados/Remeras OVer Crazon back.webp',
-    imageBack: '/src/Images/ProductsDestacados/Remeras OVer Crazon 2.webp',
+    imageFront: '/ProductsDestacados/Remeras OVer Crazon back.webp',
+    imageBack: '/ProductsDestacados/Remeras OVer Crazon 2.webp',
     title: 'REMERA OVERSIZE CORAZÓN',
     price: '$14.500,00',
     priceDetails: 'Precio con efectivo o transferencia: $12.000'
@@ -67,8 +67,8 @@ export const products = [
   {
     id: 6, // Agregar un id único
     imageFront:
-      '/src/Images/ProductsDestacados/Remeras Fellow Blanca Frente.webp',
-    imageBack: '/src/Images/ProductsDestacados/Remeras Fellow Blanca.webp',
+      '/ProductsDestacados/Remeras Fellow Blanca Frente.webp',
+    imageBack: '/ProductsDestacados/Remeras Fellow Blanca.webp',
     title: 'REMERA OVERSIZE FELLOW',
     price: '$14.500,00',
     priceDetails: 'Precio con efectivo o transferencia: $12.000'

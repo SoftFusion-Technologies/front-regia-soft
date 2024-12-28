@@ -7,9 +7,9 @@ const Hero = () => {
     window.scrollTo(0, 0); // Desplazar hacia arriba de la página
   }, []);
   const images = [
-    '/src/Images/Hero/imgHero1.webp',
-    '/src/Images/Hero/imgHero1.webp',
-    '/src/Images/Hero/imgHero1.webp'
+    '/Hero/imgHero1.webp',
+    '/Hero/imgHero1.webp',
+    '/Hero/imgHero1.webp'
   ]; // Agrega las imágenes para el slider
   const [currentImage, setCurrentImage] = useState(0);
 
