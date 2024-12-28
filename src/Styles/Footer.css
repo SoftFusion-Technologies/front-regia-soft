@@ -1,0 +1,210 @@
+*,*:before,*:after{
+    box-sizing: border-box;
+}
+
+footer{
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    padding: 50px;
+    color: #fff;
+    background-color: #000;
+}
+
+.footer > *{
+    flex: 1 100%;
+}
+.footer-left{
+    margin-right: 1.25em;
+    margin-bottom: 2em;
+}
+
+.titulo{
+    font-size: 20px;
+}
+h2{
+    font-weight: bold;
+    font-size: 15px;
+    color: #fff;
+}
+
+.footer ul{
+    list-style: none;
+    padding-left: 0;
+}
+.footer li{
+    text-decoration: none;
+    line-height: 2em;
+}
+.footer-right{
+    display: flex;
+    flex-flow: row wrap;
+}
+.footer-right > *{
+    flex: 1 50%;
+    margin-right: 1.25em;
+}
+.footer-right h2{
+    font-size: 20px;
+}
+
+
+.box li{
+    color: #fff;
+}
+
+.box li :hover{
+    color: #ef4444;
+}
+
+.footer-bottom{
+    text-align: center;
+    color: #999;
+    padding-top: 50px;
+}
+.footer-left p{
+    text-align: left;
+    padding-right: 20%;
+    color: #fff;
+}
+.socials li{
+    margin-top: 20px;
+    background: #000;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.socials li:hover {
+    transform: scale(1.2);
+}
+
+.socials li a{
+    display: inline-block;
+    color: #e7f2f4;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+    font-size: 30px;
+    padding: 5px;  
+}
+
+.socials li a:hover {
+    color: #ef4444; 
+}
+
+@media screen and (min-width: 600px){
+    .footer-right > *{
+        flex: 1;
+    }
+    .footer-left{
+        flex: 1 0px;
+    }
+    .footer-right{
+        flex: 2 0px;
+    }
+}
+/* Estilos para pantallas pequeñas */
+@media screen and (max-width: 599px) {
+
+    .footer {
+        margin-top: 0;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .footer-left {
+        margin: 0 auto; 
+        padding: 0 10px; 
+    }
+
+    .titulo {
+        margin-bottom: 20px;
+    }
+
+    #description-id {
+        text-align: center;
+        margin: 0 auto;
+        padding: 0 10px;
+        max-width: 100%;
+    }
+
+    .footer-right {
+        display: block; /*los elementos de la lista se muestren en una columna */
+        margin: 0 auto; 
+    }
+
+    .footer-right .box {
+        padding: 20px 0; 
+    }
+
+    .footer-right .box li {
+        margin-bottom: 5px; /* Ajusta el margen según sea necesario */
+    }
+
+    .footer-left .socials {
+        display: flex;
+        justify-content: center; /* Centra los íconos de redes sociales */
+        margin-top: 20px;
+        margin-bottom: 50px;
+    }
+
+    .footer-bottom {
+        text-align: center; /* Centra el texto en la parte inferior */
+    }
+
+    .footer-bottom span {
+        display: block; /* Asegura que los spans estén en líneas separadas */
+        margin-top: 5px; /* Espaciado entre los textos */
+    }
+}
+
+/* Animaciones */
+@keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .footer-left, .socials, .footer-right li {
+    opacity: 0; /* Inicialmente invisibles */
+    transform: translateY(-20px); /* Inicialmente desplazados hacia abajo */
+    transition: opacity 0.7s ease, transform 0.7s ease; /* Transición suave */
+  }
+  
+  .footer-left.appear, .socials.appear, .footer-right li.appear {
+    opacity: 1; /* Hacer visibles */
+    transform: translateY(0); /* Restaurar la posición original */
+  }
+  
+  .footer-left.appear {
+    animation: fadeInUp 3s ease forwards;
+  }
+  
+  .socials.appear {
+    animation: fadeInUp 1.5s ease forwards;
+    animation-delay: 0.75s; /* Retrasar la animación */
+  }
+  
+  .footer-right li.appear {
+    animation: fadeInUp 1.5s ease forwards;
+    animation-delay: 1.5s; /* Retrasar la animación en cascada */
+  }
+
+
+
+
+
+    
