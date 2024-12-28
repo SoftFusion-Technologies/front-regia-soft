@@ -41,6 +41,14 @@ const Productos = () => {
     }
   ];
 
+  const handleWhatsAppClick = (nombre, precio) => {
+    const phoneNumber = '3863531891'; // Número de WhatsApp
+    const message = `Hola, estoy interesado en el producto: ${nombre}, que tiene un precio de ${precio}.`;
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+    window.open(whatsappUrl, '_blank');
+  };
   return (
     <div className="productos-container py-16 px-4 sm:px-8">
       <h1 className="text-3xl font-bold text-center sm:text-5xl mb-8 font-bignoodle">
@@ -53,6 +61,9 @@ const Productos = () => {
           <div
             key={producto.id}
             className="producto-card border border-gray-300 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition"
+            onClick={() =>
+              handleWhatsAppClick(producto.nombre, producto.precio)
+            }
           >
             <img
               src={producto.imagen}
