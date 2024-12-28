@@ -29,7 +29,7 @@ const Hero = () => {
       <section className="relative w-full h-[90vh] sm:h-[60vh] md:h-[50vh] lg:h-[70vh] -mt-52 sm:-mt-80 md:mt-0">
         {/* Imagen de fondo */}
         <div
-          className="absolute inset-0 w-full h-full bg-center transition-all duration-1000"
+          className="absolute inset-0 w-full h-full bg-center transition-all duration-1000 z-0"
           style={{
             backgroundImage: `url(${images[currentImage]})`,
             backgroundSize: 'contain', // Asegura que la imagen se vea completa
