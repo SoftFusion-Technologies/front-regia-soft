@@ -9,6 +9,7 @@ import Cart from './Components/Cart'; // Importamos el proveedor del carrito
 import Mapa from './Components/Mapa';
 import NotFound from './Pages/NotFound'; // Importar la página 404
 import About from './Pages/About';
+import Productos from './Pages/Productos';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/product/:id" element={<ProductDetail />} />{' '}
           <Route path="/cart" element={<Cart />} />
           <Route path="/about" element={<About />} />
+          <Route path="/productos" element={<Productos />} />
           {/* Ruta para la página no encontrada */}
           <Route path="*" element={<NotFound />} />
         </Routes>
