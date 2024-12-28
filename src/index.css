@@ -3,21 +3,23 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "BigNoodle";
-  src: url('./fonts/big_noodle_titling.ttf') format('truetype'); 
+  font-family: 'BigNoodle';
+  src: url('./fonts/big_noodle_titling.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "MessinaRegular";
-  src: url('./fonts/MessinaSans-Regular.ttf') format('truetype'); 
+  font-family: 'MessinaRegular';
+  src: url('./fonts/MessinaSans-Regular.ttf') format('truetype');
 }
 
 .font-bignoodle {
-  font-family: BigNoodle
+  font-family: BigNoodle;
 }
 
 .font-messina {
   font-family: MessinaRegular;
 }
 
-
+/* Importa los estilos de Slick */
+@import '~slick-carousel/slick/slick.css';
+@import '~slick-carousel/slick/slick-theme.css';
