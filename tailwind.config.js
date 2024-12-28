@@ -4,9 +4,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#000', // Negro para reflejar el estilo "Corsa Nera"
-        secondary: '#FFF', // Blanco
-        accent: '#FF5733' // Color llamativo para botones o detalles
+        primary: '#1a202c',
+        secondary: '#f7fafc',
+        accent: '#ed64a6'
       }
     }
   },
