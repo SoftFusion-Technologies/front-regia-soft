@@ -21,7 +21,7 @@ const Cart = () => {
         message += `Color: ${item.selectedColor.name}\n`;
       }
       if (item.selectedSize) {
-        message += `Talle: ${item.selectedSize}\n`; // Mostrar el talle
+        message += `Talle: ${item.selectedSize.name}\n`; // Mostrar el talle
       }
       message += '\n'; // Línea en blanco para separar productos
     });
