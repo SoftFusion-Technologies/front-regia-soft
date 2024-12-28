@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { products } from './FeaturedProducts'; // Importar los productos
+import { CartContext } from '../Components/CartContext'; // Importa el contexto del carrito
+import AddToCartButton from '../Config/AddToCartButton';
 
 const ProductDetail = () => {
   const { id } = useParams(); // Obtener el id del producto desde la URL
   const [product, setProduct] = useState(null);
   const [currentImage, setCurrentImage] = useState(null);
+  const { addToCart } = useContext(CartContext); // Accedemos a la función para agregar al carrito
 
   useEffect(() => {
     const foundProduct = products.find((p) => p.id === parseInt(id));
@@ -106,6 +109,7 @@ const ProductDetail = () => {
               </p>
             ))}
           </div>
+          <AddToCartButton product={product} />
         </div>
       </div>
     </section>

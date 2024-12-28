@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { menuItems } from '../Config/menu';
 import LogoCN from '../Images/LogoCorsaNera.png';
-
+import { Link } from 'react-router-dom';
+import { FaShoppingCart } from 'react-icons/fa'; // Importa el ícono del carrito
+import { CartContext } from '../Components/CartContext'; // Importa el contexto del carrito
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   // Función para hacer el scroll hacia la sección de contacto
@@ -13,15 +14,23 @@ const Navbar = () => {
     section.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const { cartItems } = useContext(CartContext); // Obtener los productos del carrito
+
   return (
     <nav className="bg-white shadow-md">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
         {/* Logo y Nombre */}
         <div className="flex items-center space-x-3">
-          <img src={LogoCN} alt="Corsa Nera Logo" className="h-14 w-auto" />
-          <span className="font-bignoodle text-2xl font-bold text-black tracking-wide uppercase">
-            Corsa Nera
-          </span>
+          <Link to="/">
+            {' '}
+            {/* Redirige al inicio cuando se hace clic */}
+            <img src={LogoCN} alt="Corsa Nera Logo" className="h-14 w-auto" />
+          </Link>
+          <Link to="/">
+            <span className="font-bignoodle text-2xl font-bold text-black tracking-wide uppercase">
+              Corsa Nera
+            </span>
+          </Link>
         </div>
 
         {/* Menú Desktop */}
@@ -45,6 +54,18 @@ const Navbar = () => {
               </a>
             )
           )}
+        </div>
+
+        {/* Carrito de compras en Desktop */}
+        <div className="relative">
+          <Link to="/cart" className="flex items-center">
+            <FaShoppingCart size={30} className="text-black" />
+            {cartItems.length > 0 && (
+              <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
+                {cartItems.length}
+              </span>
+            )}
+          </Link>
         </div>
 
         {/* Botón Hamburguesa */}
