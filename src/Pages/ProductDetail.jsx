@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { products, colors } from './FeaturedProducts'; // Importar los productos
+import { products, colors, sizes } from './FeaturedProducts'; // Importar los productos
 import { CartContext } from '../Components/CartContext'; // Importa el contexto del carrito
 import AddToCartButton from '../Config/AddToCartButton';
 
@@ -13,6 +13,9 @@ const ProductDetail = () => {
   const { id } = useParams(); // Obtener el id del producto desde la URL
   const [product, setProduct] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null); // Nuevo estado para el color seleccionado
+  const [selectedSize, setSelectedSize] = useState(null); // Nuevo estado para el color seleccionado
+  const [sizeError, setSizeError] = useState(false);
+  const [colorError, setColorError] = useState(false);
 
   const [currentImage, setCurrentImage] = useState(null);
 
@@ -26,9 +29,16 @@ const ProductDetail = () => {
     }
   }, [id]);
 
-  const handleColorSelect = (color) => {
-    setSelectedColor(color); // Actualiza el color seleccionado
+  const handleSizeSelect = (size) => {
+    setSelectedSize(size);
+    setSizeError(false); // Reset error when a size is selected
   };
+
+  const handleColorSelect = (color) => {
+    setSelectedColor(color);
+    setColorError(false); // Reset error when a color is selected
+  };
+
   if (!product) {
     return (
       <p className="text-center text-gray-600 text-lg mt-8">
@@ -110,6 +120,37 @@ const ProductDetail = () => {
           </p>
 
           <h2 className="mt-5 text-2xl font-extrabold mb-4 text-gray-800 font-bignoodle">
+            Talles
+          </h2>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            {sizes.map((size) => (
+              <div
+                key={size.id}
+                onClick={() => handleSizeSelect(size)}
+                className={`cursor-pointer w-16 h-16 flex items-center justify-center rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:ring-2 hover:ring-gray-400
+              ${selectedSize?.id === size.id ? 'border-4 border-black' : ''}`}
+              >
+                <span
+                  className={`text-xl font-semibold ${
+                    selectedSize?.id === size.id
+                      ? 'text-black'
+                      : 'text-gray-600'
+                  }`}
+                >
+                  {size.name}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {sizeError && (
+            <p className="text-red-500 font-bignoodle text-5xl">
+              ¡Por favor, selecciona un talle!
+            </p>
+          )}
+
+          <h2 className="mt-5 text-2xl font-extrabold mb-4 text-gray-800 font-bignoodle">
             Colores
           </h2>
 
@@ -134,7 +175,11 @@ const ProductDetail = () => {
               />
             ))}
           </div>
-
+          {colorError && (
+            <p className="text-red-500 font-bignoodle text-5xl">
+              ¡Por favor, selecciona un talle!
+            </p>
+          )}
           <h2 className="mt-5 text-2xl font-extrabold mb-4 text-gray-800 font-bignoodle">
             Descripción
           </h2>
@@ -146,7 +191,11 @@ const ProductDetail = () => {
               </p>
             ))}
           </div>
-          <AddToCartButton product={product} selectedColor={selectedColor} />
+          <AddToCartButton
+            product={product}
+            selectedColor={selectedColor}
+            selectedSize={selectedSize}
+          />
         </div>
       </div>
     </section>

@@ -1,7 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { CartContext } from './CartContext';
 
 const Cart = () => {
+  // Desplazar hacia la parte superior cuando el componente se monte
+  useEffect(() => {
+    window.scrollTo(0, 0); // Desplazar hacia arriba de la página
+  }, []);
   const { cartItems, removeFromCart } = useContext(CartContext);
 
   // Función para generar el mensaje para WhatsApp
@@ -16,9 +20,11 @@ const Cart = () => {
       if (item.selectedColor) {
         message += `Color: ${item.selectedColor.name}\n`;
       }
+      if (item.selectedSize) {
+        message += `Talle: ${item.selectedSize}\n`; // Mostrar el talle
+      }
       message += '\n'; // Línea en blanco para separar productos
     });
-
     message += '¡Gracias!';
 
     // Codificar el mensaje para URL
@@ -60,7 +66,7 @@ const Cart = () => {
                   Cantidad: {item.quantity}
                 </p>
                 {/* Mostrar el color seleccionado */}
-                {item.selectedColor && (
+                {item.selectedColor && item.selectedColor.name && (
                   <div className="flex items-center mt-2">
                     <div
                       style={{
@@ -75,6 +81,13 @@ const Cart = () => {
                       {item.selectedColor.name}
                     </p>
                   </div>
+                )}
+
+                {/* Mostrar el talle seleccionado */}
+                {item.selectedSize && (
+                  <p className="text-sm text-gray-600 mt-2">
+                    Talle: {item.selectedSize.name}
+                  </p>
                 )}
               </div>
               {/* Botón para eliminar */}

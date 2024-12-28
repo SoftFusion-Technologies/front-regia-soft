@@ -6,6 +6,7 @@ const Hero = () => {
   useEffect(() => {
     window.scrollTo(0, 0); // Desplazar hacia arriba de la página
   }, []);
+  
   const images = [
     '/Hero/imgHero1.webp',
     '/Hero/imgHero1.webp',

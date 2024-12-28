@@ -16,7 +16,8 @@ export const CartProvider = ({ children }) => {
     const existingProduct = cartItems.find(
       (item) =>
         item.id === productToAdd.id &&
-        item.selectedColor === productToAdd.selectedColor
+        item.selectedColor === productToAdd.selectedColor &&
+        item.selectedSize === productToAdd.selectedSize // Agregar comparación por talle
     );
 
     if (existingProduct) {
@@ -24,7 +25,8 @@ export const CartProvider = ({ children }) => {
       setCartItems((prevItems) =>
         prevItems.map((item) =>
           item.id === existingProduct.id &&
-          item.selectedColor === existingProduct.selectedColor
+          item.selectedColor === existingProduct.selectedColor &&
+          item.selectedSize === existingProduct.selectedSize
             ? { ...item, quantity: item.quantity + productToAdd.quantity }
             : item
         )

@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { CartContext } from '../Components/CartContext'; // Importa el contexto del carrito
 import { useNavigate } from 'react-router-dom'; // Para redirigir al carrito
 
-const AddToCartButton = ({ product, selectedColor }) => {
+const AddToCartButton = ({ product, selectedColor, selectedSize }) => {
   const { addToCart } = useContext(CartContext); // Función para agregar al carrito
   const [quantity, setQuantity] = useState(1); // Estado para la cantidad
   const [showModal, setShowModal] = useState(false); // Estado para mostrar el modal
@@ -14,9 +14,19 @@ const AddToCartButton = ({ product, selectedColor }) => {
   };
 
   const handleAddToCart = () => {
+    // Verificar si se seleccionó talle y color
+    if (!selectedSize || !selectedColor) {
+      // Si no se seleccionó talle o color, mostrar el mensaje de error
+      alert(
+        'Por favor, selecciona un talle y un color antes de agregar al carrito.'
+      );
+      return; // Evitar que se agregue al carrito si falta alguna selección
+    }
     const productToAdd = {
       ...product,
-      selectedColor: selectedColor || null, // Si no se seleccionó color, lo dejamos como null
+      selectedColor: selectedColor || null,
+      selectedSize: selectedSize || null, // Si no se seleccionó talle, lo dejamos como null
+      // Si no se seleccionó color, lo dejamos como null
       quantity: quantity // Agregar la cantidad al producto
     };
     addToCart(productToAdd); // Agregar el producto al carrito
