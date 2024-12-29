@@ -4,6 +4,7 @@ import LogoCN from '../Images/LogoCorsaNera.png';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa'; // Importa el ícono del carrito
 import { CartContext } from '../Components/CartContext'; // Importa el contexto del carrito
+import '../Styles/animacionlinks.css';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -31,7 +32,7 @@ const Navbar = () => {
             {/* Redirige al inicio cuando se hace clic */}
             <img src={LogoCN} alt="Corsa Nera Logo" className="h-14 w-auto" />
           </Link>
-          <Link to="/">
+          <Link to="/" className="link">
             <span className="font-bignoodle text-2xl font-bold text-black tracking-wide uppercase">
               Corsa Nera
             </span>
@@ -44,7 +45,7 @@ const Navbar = () => {
             <a
               key={item.id}
               href={item.href}
-              className="font-bignoodle text-lg font-medium text-black hover:text-gray-500 transition"
+              className="link font-bignoodle text-lg font-medium text-black hover:text-gray-500 transition"
             >
               {item.label}
             </a>
