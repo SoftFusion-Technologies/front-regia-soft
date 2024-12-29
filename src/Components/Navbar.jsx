@@ -40,25 +40,15 @@ const Navbar = () => {
 
         {/* Menú Desktop */}
         <div className="hidden md:flex space-x-8">
-          {menuItems.map((item) =>
-            item.label === 'Contacto' ? (
-              <button
-                key={item.id}
-                onClick={scrollToContactSection} // Usamos onClick para scroll
-                className="font-bignoodle text-lg font-medium text-black hover:text-gray-500 transition"
-              >
-                {item.label}
-              </button>
-            ) : (
-              <a
-                key={item.id}
-                href={item.href}
-                className="font-bignoodle text-lg font-medium text-black hover:text-gray-500 transition"
-              >
-                {item.label}
-              </a>
-            )
-          )}
+          {menuItems.map((item) => (
+            <a
+              key={item.id}
+              href={item.href}
+              className="font-bignoodle text-lg font-medium text-black hover:text-gray-500 transition"
+            >
+              {item.label}
+            </a>
+          ))}
         </div>
 
         {/* Carrito de compras en Desktop */}

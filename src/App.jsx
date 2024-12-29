@@ -10,6 +10,7 @@ import Mapa from './Components/Mapa';
 import NotFound from './Pages/NotFound'; // Importar la página 404
 import About from './Pages/About';
 import Productos from './Pages/Productos';
+import Contact from './Pages/Contact';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/about" element={<About />} />
           <Route path="/productos" element={<Productos />} />
+          <Route path="/contacto" element={<Contact />} />
           {/* Ruta para la página no encontrada */}
           <Route path="*" element={<NotFound />} />
         </Routes>
