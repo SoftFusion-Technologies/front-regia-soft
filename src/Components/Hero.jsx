@@ -6,10 +6,10 @@ const Hero = () => {
   useEffect(() => {
     window.scrollTo(0, 0); // Desplazar hacia arriba de la página
   }, []);
-  
+
   const images = [
     '/Hero/imgHero1.webp',
-    '/Hero/imgHero1.webp',
+    '/Hero/Home_2_x.webp',
     '/Hero/imgHero1.webp'
   ]; // Agrega las imágenes para el slider
   const [currentImage, setCurrentImage] = useState(0);
@@ -20,7 +20,7 @@ const Hero = () => {
   };
 
   useEffect(() => {
-    const interval = setInterval(nextImage, 5000); // Cambia cada 5 segundos
+    const interval = setInterval(nextImage, 2000); // Cambia cada 5 segundos
     return () => clearInterval(interval); // Limpia el intervalo cuando el componente se desmonte
   }, []);
 
