@@ -7,17 +7,19 @@ const Contact = () => {
       {/* Breadcrumb */}
       <div className="text-center py-3 px-5">
         <nav className="text-sm">
-          <a href="/" className="text-blue-600 hover:underline">
+          <a href="/" className="text-pink-600 hover:underline">
             Inicio
           </a>
           <span className="mx-2">/</span>
-          <span className="text-gray-600">Contacto</span>
+          <span className="text-gray-600 text-cent">Contacto</span>
         </nav>
       </div>
 
       {/* Main Content */}
       <div className="container mx-auto py-10 px-5">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">Contacto</h1>
+        <h1 className="text-5xl font-extrabold text-gray-800 mb-6 text-center font-bignoodle">
+          Contacto
+        </h1>{' '}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Contact Information */}
           <div className="bg-white shadow-md rounded-lg p-6">
