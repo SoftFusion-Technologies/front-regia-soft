@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Importar Link
+import SinStock from '../Config/SinStock'; // Asegúrate de importar el componente
 
 export const sizes = [
   { id: 1, name: 'XS' }, // Extra pequeño
@@ -29,7 +30,7 @@ export const products = [
     imageBack: '/ProductsDestacados/ImgCraneBack.webp',
     title: 'REMERA OVERSIZE CRANE',
     price: '$14.500,00',
-    priceDetails: 'Precio con efectivo o transferencia: $12.000',
+    priceDetails: 'Precio con efectivo o transferencia: $13.000,00',
     description: `
       La Remera OVERSIZE CRANE, la prenda ideal para quienes buscan comodidad y estilo. 
       Esta remera oversize de manga corta está fabricada con:
@@ -49,7 +50,7 @@ export const products = [
     imageBack: '/ProductsDestacados/Remeras OVer Brooklyn.webp',
     title: 'REMERA OVERSIZE BROOKLYN',
     price: '$14.500,00',
-    priceDetails: 'Precio con efectivo o transferencia: $12.000',
+    priceDetails: 'Precio con efectivo o transferencia: $13.000,00',
     description: `
       La Remera "Brooklyn", la prenda ideal para quienes buscan comodidad y estilo. Esta remera oversize de manga corta.
 
@@ -65,7 +66,7 @@ export const products = [
     imageFront: '/ProductsDestacados/Remera over lisa 1.webp',
     imageBack: '/ProductsDestacados/Remera over lisa 2.webp',
     title: 'REMERA OVERSIZE LISA',
-    price: '$12.000,000',
+    price: '$13.000,00,000',
     priceDetails: 'Llevando 3 o más C/U: $10.000,000',
     description: `
      REMERA OVERSIZE LISA
@@ -84,7 +85,7 @@ Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, po
     imageBack: '/ProductsDestacados/Remeras OVer Positive Back.webp',
     title: 'REMERA OVERSIZE POSITIVE',
     price: '$14.500,00',
-    priceDetails: 'Precio con efectivo o transferencia: $12.000',
+    priceDetails: 'Precio con efectivo o transferencia: $13.000,00',
     description: `
     REMERA OVERSIZE POSITIVE
 La Remera "Positive", la prenda ideal para quienes buscan comodidad y estilo. Esta remera oversize de manga corta.
@@ -102,7 +103,7 @@ Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, po
     imageBack: '/ProductsDestacados/Remeras OVer Crazon 2.webp',
     title: 'REMERA OVERSIZE CORAZÓN',
     price: '$14.500,00',
-    priceDetails: 'Precio con efectivo o transferencia: $12.000',
+    priceDetails: 'Precio con efectivo o transferencia: $13.000,00',
     description: `
     REMERA OVERSIZE CORAZÓN
 La Remera "Corazón", la prenda ideal para quienes buscan comodidad y estilo. Esta remera oversize de manga corta.
@@ -120,7 +121,7 @@ Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, po
     imageBack: '/ProductsDestacados/Remeras Fellow Blanca.webp',
     title: 'REMERA OVERSIZE FELLOW',
     price: '$14.500,00',
-    priceDetails: 'Precio con efectivo o transferencia: $12.000',
+    priceDetails: 'Precio con efectivo o transferencia: $13.000,00',
     description: `
    REMERA CLASICA FELLOW
 La Remera "Fellow". Esta remera corte clásico de manga corta.
@@ -165,6 +166,8 @@ const FeaturedProducts = () => {
                 alt={`${product.title} espalda`}
                 className="w-full h-full object-contain opacity-0 group-hover:opacity-100 absolute top-0 left-0 transition-opacity duration-1000 ease-in-out"
               />
+              {/* Si el producto tiene id 2, mostramos el componente SinStock */}
+              {product.id === 5 && <SinStock />}
             </div>
             <div className="p-4">
               <h3 className="text-xl font-semibold font-bignoodle text-center">
