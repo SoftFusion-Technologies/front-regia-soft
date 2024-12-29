@@ -10,6 +10,11 @@ const FAQ = () => {
 
   const faqs = [
     {
+      question: '¿Como comprar?',
+      answer:
+        'Selecciona cualquiera de nuestros productos, eligiendo el talle y el color. Luego, agrega el artículo al carrito y finaliza la compra. Al completar el proceso, serás redirigido a nuestro WhatsApp con el detalle de tu compra.'
+    },
+    {
       question: '¿Cuál es el monto mínimo de compra?',
       answer: 'No tenemos mínimo de compra.'
     },
