@@ -15,17 +15,18 @@ const About = () => {
         QUIÉNES SOMOS
       </h1>
       <section className="about-content">
-        <h2>Sobre Corsa Nera</h2>
+        <h2 className="font-bignoodle">Sobre Corsa Nera</h2>
         <p>
           Bienvenidos a <strong>Corsa Nera</strong>, una tienda de ropa
-          exclusiva dedicada a ofrecer moda de alta calidad para hombres que buscan destacarse con estilo y elegancia. En Corsa Nera,
-          cada prenda es seleccionada con atención al detalle para garantizar
-          una experiencia de compra única y satisfactoria. Ya sea que busques
-          ropa casual, de oficina o para una ocasión especial, tenemos la
-          selección perfecta que refleja las últimas tendencias y la
-          atemporalidad del buen vestir.
+          exclusiva dedicada a ofrecer moda de alta calidad para hombres que
+          buscan destacarse con estilo y elegancia. En Corsa Nera, cada prenda
+          es seleccionada con atención al detalle para garantizar una
+          experiencia de compra única y satisfactoria. Ya sea que busques ropa
+          casual, de oficina o para una ocasión especial, tenemos la selección
+          perfecta que refleja las últimas tendencias y la atemporalidad del
+          buen vestir.
         </p>
-        <h2>Nuestra Misión</h2>
+        <h2 className="font-bignoodle">Nuestra Misión</h2>
         <p>
           En <strong>Corsa Nera</strong>, nuestra misión es ser el destino
           predilecto para quienes buscan prendas de calidad superior y diseños
@@ -36,7 +37,7 @@ const About = () => {
           nos aseguramos de que cada cliente salga de nuestra tienda sintiéndose
           confiado y cómodo con su elección.
         </p>
-        <h2>Nuestra Visión</h2>
+        <h2 className="font-bignoodle">Nuestra Visión</h2>
         <p>
           Aspiramos a consolidarnos como la tienda de moda más influyente de la
           región, reconocida por la calidad y exclusividad de nuestros
