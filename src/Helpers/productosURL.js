@@ -36,5 +36,43 @@ Las medidas están disponibles en la última foto para ayudarte a elegir la tall
 
 Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, por lo que el color puede variar levemente.`,
     color: null // Guardamos el color elegido
+  },
+  {
+    id: 102, // Agregar un id único
+    imageFront: '/Product3/boxifitespalda.webp',
+    imageBack: '/Packs/rooboxi.webp',
+    imagePack: '/Product3/talleboxifit.webp',
+    title: 'REMERA OVERSIZE BOXYFIT ESTRELLA',
+    price: '$14.500,00',
+    priceDetails: 'Llevando 3 o más C/U: $13.000,00',
+    description: `
+     REMERA OVERSIZE BOXYFIT ESTRELLA
+Descubre la Remera BOXYFIT ESTRELLA. Esta remera oversize de manga corta.
+
+Material de tela: Fabricada en jersey peinado 24.1, una tela suave y agradable al tacto que te mantendrá cómodo durante todo el día.
+Cuidado sencillo: Se recomienda lavar con agua fría para preservar la calidad y durabilidad de la prenda.
+Las medidas están disponibles en la última foto para ayudarte a elegir la talla perfecta.
+
+Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, por lo que el color puede variar levemente.`,
+    color: null // Guardamos el color elegido
+  },
+  {
+    id: 103, // Agregar un id único
+    imageFront: '/public/Product3/futurefront.webp',
+    imageBack: '/public/Product3/futureback.webp',
+    imagePack: '/public/Packs/futurepack.webp',
+    title: 'REMERA OVERSIZE FUTURE',
+    price: '$14.500,00',
+    priceDetails: 'Llevando 3 o más C/U: $13.000,00',
+    description: `
+     REMERA OVERSIZE FUTURE
+Descubre la Remera FUTURE. Esta remera oversize de manga corta.
+
+Material de tela: Fabricada en jersey peinado 24.1, una tela suave y agradable al tacto que te mantendrá cómodo durante todo el día.
+Cuidado sencillo: Se recomienda lavar con agua fría para preservar la calidad y durabilidad de la prenda.
+Las medidas están disponibles en la última foto para ayudarte a elegir la talla perfecta.
+
+Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, por lo que el color puede variar levemente.`,
+    color: null // Guardamos el color elegido
   }
 ];

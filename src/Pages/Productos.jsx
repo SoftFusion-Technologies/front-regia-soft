@@ -34,14 +34,14 @@ const Productos = () => {
       imagen: '/Packs/roografiti.webp'
     },
     {
-      id: 24,
+      id: 102,
       nombre: 'REMERA OVERSIZE BOXYFIT ESTRELLA',
       precio: '$14.500,00',
       newPrecio: 'Precio con efectivo o transferencia $13.000,00',
-      imagen: '/ProductSimple/rooboxi.webp'
+      imagen: '/Packs/rooboxi.webp'
     },
     {
-      id: 25,
+      id: 103,
       nombre: 'REMERA OVERSIZE BACK TO FUTURE',
       precio: '$14.500,00',
       newPrecio: 'Precio con efectivo o transferencia $13.000,00',

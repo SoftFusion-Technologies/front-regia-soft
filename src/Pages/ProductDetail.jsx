@@ -54,9 +54,41 @@ const ProductDetail = () => {
 
   if (!product) {
     return (
-      <p className="text-center text-gray-600 text-lg mt-8">
-        Producto no encontrado
-      </p>
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-center p-6 bg-red-100 border border-red-400 rounded-lg shadow-md max-w-md">
+          <svg
+            className="mx-auto h-12 w-12 text-red-500 mb-4"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 12h3m-3 0h-3m3 0v-3m0 3v3m0 0h-3m3 0h3m0 0h3m-3 0h-3M5 12h3m-3 0H2m3 0v-3m0 3v3m0 0h3m-3 0h-3"
+            />
+          </svg>
+          <p className="text-xl font-semibold text-red-600">
+            Producto no encontrado
+          </p>
+          <p className="text-gray-600 mt-2">
+            Lo sentimos, pero no hemos podido encontrar el producto que buscas.
+          </p>
+          <p className="text-lg mt-4 text-green-600">
+            ¿Nos escribes al{' '}
+            <a
+              href="https://wa.me/5493863531891"
+              className="font-semibold text-green-800 hover:underline"
+            >
+              WhatsApp
+            </a>{' '}
+            y te conseguimos el producto que deseas?
+          </p>
+        </div>
+      </div>
     );
   }
 
