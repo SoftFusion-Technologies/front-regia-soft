@@ -42,13 +42,13 @@ const Navbar = () => {
         {/* Menú Desktop */}
         <div className="hidden md:flex space-x-8">
           {menuItems.map((item) => (
-            <a
+            <Link
               key={item.id}
-              href={item.href}
+              to={item.href}
               className="link font-bignoodle text-lg font-medium text-black hover:text-gray-500 transition"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -92,25 +92,15 @@ const Navbar = () => {
       {/* Menú Mobile */}
       {isMenuOpen && (
         <div className="md:hidden bg-white">
-          {menuItems.map((item) =>
-            item.label === 'Contacto' ? (
-              <button
-                key={item.id}
-                onClick={scrollToContactSection} // En el menú mobile también
-                className="font-bignoodle block px-4 py-2 text-black hover:bg-gray-100 transition"
-              >
-                {item.label}
-              </button>
-            ) : (
-              <a
-                key={item.id}
-                href={item.href}
-                className="font-bignoodle block px-4 py-2 text-black hover:bg-gray-100 transition"
-              >
-                {item.label}
-              </a>
-            )
-          )}
+          {menuItems.map((item) => (
+            <Link
+              key={item.id}
+              to={item.href}
+              className="font-bignoodle block px-4 py-2 text-black hover:bg-gray-100 transition"
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
       )}
     </nav>
