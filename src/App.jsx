@@ -23,7 +23,7 @@ const App = () => {
         <Routes>
           {/* Definir la ruta para la página de inicio */}
           <Route path="/" element={<Home />} />
-          <Route path="/product/:id" element={<ProductDetail />} />{' '}
+          <Route path="/product/:id/:name" element={<ProductDetail />} />{' '}
           <Route path="/cart" element={<Cart />} />
           <Route path="/about" element={<About />} />
           <Route path="/productos" element={<Productos />} />

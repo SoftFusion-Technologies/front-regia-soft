@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { products, colors, sizes } from './FeaturedProducts'; // Importar los productos
+import { products } from '../Helpers/productsPremium'; // Importar los productos
+import { productosURL } from '../Helpers/productosURL'; // Importar los productos simples
+import { colors, sizes } from '../Helpers/helpers';
 import { CartContext } from '../Components/CartContext'; // Importa el contexto del carrito
 import AddToCartButton from '../Config/AddToCartButton';
 
@@ -18,9 +20,20 @@ const ProductDetail = () => {
   const [colorError, setColorError] = useState(false);
 
   const [currentImage, setCurrentImage] = useState(null);
-
   useEffect(() => {
-    const foundProduct = products.find((p) => p.id === parseInt(id));
+    // Combina los productos de ambos arrays (eliminando duplicados)
+    const allProducts = [
+      ...products,
+      ...productosURL.filter(
+        (productSimple) =>
+          !products.some(
+            (productFeatured) => productFeatured.id === productSimple.id
+          )
+      )
+    ];
+
+    // Buscar el producto en el array combinado
+    const foundProduct = allProducts.find((p) => p.id === parseInt(id));
     setProduct(foundProduct);
 
     // Si se encuentra el producto, establecer la imagen inicial
@@ -73,6 +86,7 @@ const ProductDetail = () => {
               }`}
               onClick={() => setCurrentImage(product.imageFront)}
             />
+
             <img
               src={product.imageBack}
               alt="Back"
@@ -82,6 +96,17 @@ const ProductDetail = () => {
                   : 'border-gray-300'
               }`}
               onClick={() => setCurrentImage(product.imageBack)}
+            />
+
+            <img
+              src={product.imagePack}
+              alt="Back"
+              className={`w-20 h-20 object-cover cursor-pointer border-2 rounded-md ${
+                currentImage === product.imagePack
+                  ? 'border-blue-500'
+                  : 'border-gray-300'
+              }`}
+              onClick={() => setCurrentImage(product.imagePack)}
             />
           </div>
         </div>
@@ -119,7 +144,7 @@ const ProductDetail = () => {
             {product.priceDetails}
           </p>
 
-          <div className='mt-2'>
+          <div className="mt-2">
             <AddToCartButton
               product={product}
               selectedColor={selectedColor}

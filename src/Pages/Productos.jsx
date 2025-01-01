@@ -1,36 +1,37 @@
 import React from 'react';
 import '../Styles/Productos.css';
+import { Link } from 'react-router-dom'; // Importar Link
 
 const Productos = () => {
   // Muestra las remeras over premium
   const productosPremium = [
     {
-      id: 20,
+      id: 2,
       nombre: 'REMERA OVERSIZE BROOKLYN',
       precio: '$14.500,00',
       newPrecio: 'Precio con efectivo o transferencia $13.000,00',
-      imagen: '/ProductSimple/Remeras OVer Brooklyn 1.webp'
+      imagen: '/Packs/Remeras OVer Brooklyn 1.webp'
     },
     {
-      id: 21,
+      id: 5,
       nombre: 'REMERA OVERSIZE CORAZÓN',
       precio: '$14.500,00',
       newPrecio: 'Precio con efectivo o transferencia $13.000,00',
-      imagen: '/ProductSimple/Remeras OVer Crazon 2 (1).webp'
+      imagen: '/Packs/Remeras OVer Crazon 2 (1).webp'
     },
     {
-      id: 22,
+      id: 100,
       nombre: 'REMERA OVERSIZE OLA',
       precio: '$14.500,00',
       newPrecio: 'Precio con efectivo o transferencia $13.000,00',
-      imagen: '/ProductSimple/rooppack.webp'
+      imagen: '/Packs/rooppack.webp'
     },
     {
-      id: 23,
+      id: 101,
       nombre: 'REMERA OVERSIZE GRAFITI',
       precio: '$14.500,00',
       newPrecio: 'Precio con efectivo o transferencia $13.000,00',
-      imagen: '/ProductSimple/roografiti.webp'
+      imagen: '/Packs/roografiti.webp'
     },
     {
       id: 24,
@@ -142,12 +143,12 @@ const Productos = () => {
       {/* Grid de productos premium, se adapta a 3 o 4 por fila */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {productosPremium.map((producto) => (
-          <div
-            key={producto.id}
+          <Link
+            key={producto.id} // Usamos el id como clave única
+            to={`/product/${producto.id}/${encodeURIComponent(
+              producto.nombre
+            )}`} // Ruta dinámica con id y nombre del producto
             className="producto-card border border-gray-300 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition"
-            onClick={() =>
-              handleWhatsAppClick(producto.nombre, producto.precio)
-            }
           >
             <img
               src={producto.imagen}
@@ -172,7 +173,7 @@ const Productos = () => {
                 COMPRAR
               </butonn>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
