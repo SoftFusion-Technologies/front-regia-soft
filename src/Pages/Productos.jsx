@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../Styles/Productos.css';
 import { Link } from 'react-router-dom'; // Importar Link
 
 const Productos = () => {
+  // Desplazar hacia la parte superior cuando el componente se monte
+  useEffect(() => {
+    window.scrollTo({
+      top: 0, // Desplazar hacia arriba de la página
+      behavior: 'smooth' // Añadir desplazamiento suave
+    });
+  }, []);
+
   // Muestra las remeras over premium
   const productosPremium = [
     {
@@ -48,18 +56,18 @@ const Productos = () => {
       imagen: '/ProductSimple/roobackfuture.webp'
     },
     {
-      id: 26,
+      id: 104,
       nombre: 'REMERA OVERSIZE FRIDAY',
       precio: '$14.500,00',
       newPrecio: 'Precio con efectivo o transferencia $13.000,00',
-      imagen: '/ProductSimple/roofriday.webp'
+      imagen: '/Packs/roofriday.webp'
     },
     {
-      id: 27,
+      id: 105,
       nombre: 'REMERA OVERSIZE CONQUER',
       precio: '$14.500,00',
       newPrecio: 'Precio con efectivo o transferencia $13.000,00',
-      imagen: '/ProductSimple/rooconquer.webp'
+      imagen: '/Packs/rooconquer.webp'
     }
   ];
 

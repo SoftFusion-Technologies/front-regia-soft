@@ -74,5 +74,43 @@ Las medidas están disponibles en la última foto para ayudarte a elegir la tall
 
 Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, por lo que el color puede variar levemente.`,
     color: null // Guardamos el color elegido
+  },
+  {
+    id: 104, // Agregar un id único
+    imageFront: '/Product3/FRIDAYFRONT.webp',
+    imageBack: '/Product3/FRIDAYBACK.webp',
+    imagePack: '/Packs/roofriday.webp',
+    title: 'REMERA OVERSIZE FRIDAY',
+    price: '$14.500,00',
+    priceDetails: 'Llevando 3 o más C/U: $13.000,00',
+    description: `
+     REMERA OVERSIZE FRIDAY
+Descubre la Remera FRIDAY. Esta remera oversize de manga corta.
+
+Material de tela: Fabricada en jersey peinado 24.1, una tela suave y agradable al tacto que te mantendrá cómodo durante todo el día.
+Cuidado sencillo: Se recomienda lavar con agua fría para preservar la calidad y durabilidad de la prenda.
+Las medidas están disponibles en la última foto para ayudarte a elegir la talla perfecta.
+
+Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, por lo que el color puede variar levemente.`,
+    color: null // Guardamos el color elegido
+  },
+  {
+    id: 105, // Agregar un id único
+    imageFront: '/Product3/conquerfront.webp',
+    imageBack: '/Product3/conquerback.webp',
+    imagePack: '/Packs/rooconquer.webp',
+    title: 'REMERA OVERSIZE CONQUER',
+    price: '$14.500,00',
+    priceDetails: 'Llevando 3 o más C/U: $13.000,00',
+    description: `
+     REMERA OVERSIZE CONQUER
+Descubre la Remera CONQUER. Esta remera oversize de manga corta.
+
+Material de tela: Fabricada en jersey peinado 24.1, una tela suave y agradable al tacto que te mantendrá cómodo durante todo el día.
+Cuidado sencillo: Se recomienda lavar con agua fría para preservar la calidad y durabilidad de la prenda.
+Las medidas están disponibles en la última foto para ayudarte a elegir la talla perfecta.
+
+Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, por lo que el color puede variar levemente.`,
+    color: null // Guardamos el color elegido
   }
 ];

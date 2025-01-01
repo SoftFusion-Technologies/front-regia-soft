@@ -9,7 +9,10 @@ import AddToCartButton from '../Config/AddToCartButton';
 const ProductDetail = () => {
   // Desplazar hacia la parte superior cuando el componente se monte
   useEffect(() => {
-    window.scrollTo(0, 0); // Desplazar hacia arriba de la página
+    window.scrollTo({
+      top: 0, // Desplazar hacia arriba de la página
+      behavior: 'smooth' // Añadir desplazamiento suave
+    });
   }, []);
 
   const { id } = useParams(); // Obtener el id del producto desde la URL
