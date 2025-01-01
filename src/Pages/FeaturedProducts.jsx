@@ -14,9 +14,9 @@ export const sizes = [
 
 // Colores que vamos a mostrar
 export const colors = [
-  { id: 1, name: 'Rojo', hex: '#FF0000' },
-  { id: 2, name: 'Verde', hex: '#00FF00' },
-  { id: 3, name: 'Azul', hex: '#0000FF' },
+  // { id: 1, name: 'Rojo', hex: '#FF0000' },
+  // { id: 2, name: 'Verde', hex: '#00FF00' },
+  // { id: 3, name: 'Azul', hex: '#0000FF' },
   { id: 4, name: 'Amarillo', hex: '#FFFF00' },
   { id: 5, name: 'Naranja', hex: '#FFA500' },
   { id: 6, name: 'Blanco', hex: '#FFFFFF' }, // Blanco,
