@@ -58,9 +58,9 @@ Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, po
   },
   {
     id: 103, // Agregar un id único
-    imageFront: '/public/Product3/futurefront.webp',
-    imageBack: '/public/Product3/futureback.webp',
-    imagePack: '/public/Packs/futurepack.webp',
+    imageFront: '/Product3/futurefront.webp',
+    imageBack: '/Product3/futureback.webp',
+    imagePack: '/Packs/futurepack.webp',
     title: 'REMERA OVERSIZE FUTURE',
     price: '$14.500,00',
     priceDetails: 'Llevando 3 o más C/U: $13.000,00',
