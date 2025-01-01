@@ -77,19 +77,48 @@ const Productos = () => {
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
       imagen: '/ProductSimple/Remeras Bellow Pack.webp'
     },
+
     {
       id: 3,
+      nombre: 'REMERA OVERSIZE BUNNY TIME',
+      precio: '$13.000,00',
+      newPrecio: 'Precio con efectivo o transferencia $11.000,00',
+      imagen: '/ProductSimple/tesebe.webp'
+    },
+    {
+      id: 4,
+      nombre: 'REMERA OVERSIZE PARADISE',
+      precio: '$13.000,00',
+      newPrecio: 'Precio con efectivo o transferencia $11.000,00',
+      imagen: '/ProductSimple/paradise.webp'
+    },
+    {
+      id: 5,
+      nombre: 'REMERA OVERSIZE FELLOW',
+      precio: '$13.000,00',
+      newPrecio: 'Precio con efectivo o transferencia $11.000,00',
+      imagen: '/ProductSimple/Remeras Fellow Blanca (1).webp'
+    },
+    {
+      id: 6,
       nombre: 'REMERA OVERSIZE FELLOW',
       precio: '$13.000,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
       imagen: '/ProductSimple/Remeras Evil dog blanca back.webp'
     },
     {
-      id: 4,
-      nombre: 'REMERA OVERSIZE FELLOW',
+      id: 7,
+      nombre: 'REMERA OVERSIZE SHADOW',
       precio: '$13.000,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
-      imagen: '/ProductSimple/Remeras Fellow Blanca (1).webp'
+      imagen: '/ProductSimple/shadow.webp'
+    },
+    {
+      id: 8,
+      nombre: 'REMERA OVERSIZE REFRESH',
+      precio: '$13.000,00',
+      newPrecio: 'Precio con efectivo o transferencia $11.000,00',
+      imagen: '/ProductSimple/refresh.webp'
     }
   ];
 
