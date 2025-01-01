@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { CartContext } from './CartContext';
-
+import EmptyCart from '../Config/EmptyCart';
 const Cart = () => {
   // Desplazar hacia la parte superior cuando el componente se monte
   useEffect(() => {
@@ -38,9 +38,7 @@ const Cart = () => {
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-3xl font-bold text-center mb-6">Mi Carrito</h2>
       {cartItems.length === 0 ? (
-        <p className="text-center text-xl text-gray-600">
-          No hay productos en el carrito.
-        </p>
+        <EmptyCart></EmptyCart>
       ) : (
         <ul className="space-y-6">
           {cartItems.map((item) => (
@@ -103,16 +101,19 @@ const Cart = () => {
       )}
 
       {/* Botón para finalizar compra */}
-      <div className="text-center mt-6">
-        <a
-          href={whatsappLink}
-          className="px-6 py-2 bg-green-500 text-white text-lg font-semibold rounded-md hover:bg-green-600"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Finalizar Compra
-        </a>
-      </div>
+
+      {cartItems.length !== 0 && (
+        <div className="text-center mt-6">
+          <a
+            href={whatsappLink}
+            className="px-6 py-2 bg-green-500 text-white text-lg font-semibold rounded-md hover:bg-green-600"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Finalizar Compra
+          </a>
+        </div>
+      )}
     </div>
   );
 };
