@@ -5,6 +5,7 @@ import { productosURL } from '../Helpers/productosURL'; // Importar los producto
 import { colors, sizes } from '../Helpers/helpers';
 import { CartContext } from '../Components/CartContext'; // Importa el contexto del carrito
 import AddToCartButton from '../Config/AddToCartButton';
+import ProductNotFound from '../Components/ProductNotFound';
 
 const ProductDetail = () => {
   // Desplazar hacia la parte superior cuando el componente se monte
@@ -57,25 +58,8 @@ const ProductDetail = () => {
 
   if (!product) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="text-center p-6 bg-red-100 border border-red-400 rounded-lg shadow-md max-w-md">
-          <p className="text-xl font-semibold text-red-600 uppercase">
-            Producto no encontrado
-          </p>
-          <p className="text-gray-600 mt-2">
-            Lo sentimos, pero no hemos podido encontrar el producto que buscas.
-          </p>
-          <p className="text-lg mt-4 text-green-600">
-            escribenos al{' '}
-            <a
-              href="https://wa.me/5493863531891"
-              className="font-semibold text-green-800 hover:underline"
-            >
-              WhatsApp
-            </a>{' '}
-            y te conseguimos el producto que deseas
-          </p>
-        </div>
+      <div>
+        <ProductNotFound />
       </div>
     );
   }
