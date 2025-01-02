@@ -6,7 +6,7 @@ const ProductNotFound = () => {
       <div className="text-center p-8 bg-white border border-gray-300 rounded-lg shadow-lg max-w-md transform transition-all hover:scale-105 duration-300 ease-in-out">
         <div className="mb-6">
           <img
-            src="/public/Hero/notfound.avif" // Imagen placeholder para ropa masculina (puedes agregar una más específica)
+            src="/Hero/notfound.avif" // Imagen placeholder para ropa masculina (puedes agregar una más específica)
             alt="Producto no encontrado"
             className="w-24 h-24 mx-auto mb-4 animate-pulse"
           />
