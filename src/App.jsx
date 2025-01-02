@@ -13,7 +13,7 @@ import Productos from './Pages/Productos';
 import Contact from './Pages/Contact';
 import SizeGuide from './Pages/SizeGuide';
 import FAQ from './Pages/FAQ';
-
+import FloatingCart from './Components/FloatingCart';
 const App = () => {
   return (
     <CartProvider>
@@ -34,6 +34,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Mapa />
+        <FloatingCart />
         <Footer />
       </Router>
     </CartProvider>
