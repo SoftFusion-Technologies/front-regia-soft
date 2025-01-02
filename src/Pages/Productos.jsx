@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Styles/Productos.css';
 import { Link } from 'react-router-dom'; // Importar Link
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import ProductNotFound from '../Components/ProductNotFound';
 
 const Productos = () => {
   // Desplazar hacia la parte superior cuando el componente se monte
@@ -11,6 +14,9 @@ const Productos = () => {
     });
   }, []);
 
+  // Estado para manejar la búsqueda
+  const [searchQuery, setSearchQuery] = useState('');
+  
   // Muestra las remeras over premium
   const productosPremium = [
     {
@@ -18,6 +24,7 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE BROOKLYN',
       precio: '$14.500,00',
       newPrecio: 'Precio con efectivo o transferencia $13.000,00',
+      categoria: 'premium',
       imagen: '/Packs/Remeras OVer Brooklyn 1.webp'
     },
     {
@@ -25,6 +32,7 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE CORAZÓN',
       precio: '$14.500,00',
       newPrecio: 'Precio con efectivo o transferencia $13.000,00',
+      categoria: 'premium',
       imagen: '/Packs/Remeras OVer Crazon 2 (1).webp'
     },
     {
@@ -32,6 +40,7 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE OLA',
       precio: '$14.500,00',
       newPrecio: 'Precio con efectivo o transferencia $13.000,00',
+      categoria: 'premium',
       imagen: '/Packs/rooppack.webp'
     },
     {
@@ -39,6 +48,7 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE GRAFITI',
       precio: '$14.500,00',
       newPrecio: 'Precio con efectivo o transferencia $13.000,00',
+      categoria: 'premium',
       imagen: '/Packs/roografiti.webp'
     },
     {
@@ -46,6 +56,7 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE BOXYFIT ESTRELLA',
       precio: '$14.500,00',
       newPrecio: 'Precio con efectivo o transferencia $13.000,00',
+      categoria: 'premium',
       imagen: '/Packs/rooboxi.webp'
     },
     {
@@ -53,6 +64,7 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE BACK TO FUTURE',
       precio: '$14.500,00',
       newPrecio: 'Precio con efectivo o transferencia $13.000,00',
+      categoria: 'premium',
       imagen: '/ProductSimple/roobackfuture.webp'
     },
     {
@@ -60,6 +72,7 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE FRIDAY',
       precio: '$14.500,00',
       newPrecio: 'Precio con efectivo o transferencia $13.000,00',
+      categoria: 'premium',
       imagen: '/Packs/roofriday.webp'
     },
     {
@@ -67,6 +80,7 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE CONQUER',
       precio: '$14.500,00',
       newPrecio: 'Precio con efectivo o transferencia $13.000,00',
+      categoria: 'premium',
       imagen: '/Packs/rooconquer.webp'
     }
   ];
@@ -77,6 +91,7 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE OSO',
       precio: '$13.000,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
+      categoria: 'simple',
       imagen: '/ProductSimple/Remera Oso.webp'
     },
     {
@@ -84,6 +99,7 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE BELLOW',
       precio: '$13.000,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
+      categoria: 'simple',
       imagen: '/ProductSimple/Remeras Bellow Pack.webp'
     },
 
@@ -92,6 +108,7 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE BUNNY TIME',
       precio: '$13.000,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
+      categoria: 'simple',
       imagen: '/ProductSimple/tesebe.webp'
     },
     {
@@ -99,6 +116,7 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE PARADISE',
       precio: '$13.000,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
+      categoria: 'simple',
       imagen: '/ProductSimple/paradise.webp'
     },
     {
@@ -106,6 +124,7 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE FELLOW',
       precio: '$13.000,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
+      categoria: 'simple',
       imagen: '/ProductSimple/Remeras Fellow Blanca (1).webp'
     },
     {
@@ -113,6 +132,7 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE FELLOW',
       precio: '$13.000,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
+      categoria: 'simple',
       imagen: '/ProductSimple/Remeras Evil dog blanca back.webp'
     },
     {
@@ -120,6 +140,7 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE SHADOW',
       precio: '$13.000,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
+      categoria: 'simple',
       imagen: '/ProductSimple/shadow.webp'
     },
     {
@@ -127,6 +148,7 @@ const Productos = () => {
       nombre: 'REMERA OVERSIZE REFRESH',
       precio: '$13.000,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
+      categoria: 'simple',
       imagen: '/ProductSimple/refresh.webp'
     }
   ];
@@ -139,18 +161,47 @@ const Productos = () => {
     )}`;
     window.open(whatsappUrl, '_blank');
   };
+
+  // Filtrar productos basados en el término de búsqueda
+  const filteredProductosPremium = productosPremium.filter((producto) =>
+    producto.nombre.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredProductos = productos.filter((producto) =>
+    producto.nombre.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   return (
     <div className="productos-container py-16 px-4 sm:px-8">
       <h1 className="text-3xl font-bold text-center sm:text-5xl mb-8 font-bignoodle">
         Nuestros Productos
       </h1>
 
-      <h1 className="text-3xl font-bold text-left sm:text-5xl mb-8 font-bignoodle">
-        OVERSIZES PREMIUM
-      </h1>
+      {/* Campo de búsqueda */}
+      <div className="relative mb-8">
+        {/* Input con lupa */}
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Buscar productos..."
+          className="p-2 border border-gray-300 rounded-lg w-full sm:w-1/3 mx-auto pl-10"
+        />
+        <FontAwesomeIcon
+          icon={faSearch}
+          className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+        />
+      </div>
+
+      {filteredProductosPremium.some(
+        (producto) => producto.categoria === 'premium'
+      ) && (
+        <h1 className="text-3xl font-bold text-left sm:text-5xl mb-8 font-bignoodle">
+          OVERSIZES PREMIUM
+        </h1>
+      )}
       {/* Grid de productos premium, se adapta a 3 o 4 por fila */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {productosPremium.map((producto) => (
+        {filteredProductosPremium.map((producto) => (
           <Link
             key={producto.id} // Usamos el id como clave única
             to={`/product/${producto.id}/${encodeURIComponent(
@@ -185,12 +236,17 @@ const Productos = () => {
         ))}
       </div>
 
-      <h1 className="mt-10 text-3xl font-bold text-left sm:text-5xl mb-8 font-bignoodle">
-        CLASICAS
-      </h1>
+      {filteredProductos.some(
+        (producto) => producto.categoria === 'simple'
+      ) && (
+        <h1 className="mt-10 text-3xl font-bold text-left sm:text-5xl mb-8 font-bignoodle">
+          CLASICAS
+        </h1>
+      )}
+
       {/* Grid de productos, se adapta a 3 o 4 por fila */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {productos.map((producto) => (
+        {filteredProductos.map((producto) => (
           <div
             key={producto.id}
             className="producto-card border border-gray-300 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition"
@@ -224,6 +280,14 @@ const Productos = () => {
           </div>
         ))}
       </div>
+
+      {(filteredProductosPremium.length === 0 &&
+        productosPremium.length !== 0) ||
+      (filteredProductos.length === 0 && productos.length !== 0) ? (
+        <div className="-mt-56">
+          <ProductNotFound />
+        </div>
+      ) : null}
     </div>
   );
 };

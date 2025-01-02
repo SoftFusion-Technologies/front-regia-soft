@@ -6,6 +6,7 @@ const PostHero = () => {
     const section = document.getElementById('featured-products');
     section.scrollIntoView({ behavior: 'smooth' });
   };
+  
   return (
     <div className="font-bignoodle absolute -mt-60 md:-mt-10 left-1/2 transform -translate-x-1/2 flex items-center justify-center text-black z-10">
       <div className="text-center space-y-4">
