@@ -6,6 +6,7 @@ const Cart = () => {
   useEffect(() => {
     window.scrollTo(0, 0); // Desplazar hacia arriba de la página
   }, []);
+  
   const { cartItems, removeFromCart } = useContext(CartContext);
 
   // Función para generar el mensaje para WhatsApp
@@ -90,7 +91,9 @@ const Cart = () => {
               </div>
               {/* Botón para eliminar */}
               <button
-                onClick={() => removeFromCart(item.id, item.selectedColor)} // Pasa el color también
+                onClick={() =>
+                  removeFromCart(item.id, item.selectedColor, item.selectedSize)
+                } // Pasa el tamaño también
                 className="text-red-600 hover:text-red-800 font-semibold"
               >
                 Eliminar
@@ -101,7 +104,6 @@ const Cart = () => {
       )}
 
       {/* Botón para finalizar compra */}
-
       {cartItems.length !== 0 && (
         <div className="text-center mt-6">
           <a
@@ -114,6 +116,15 @@ const Cart = () => {
           </a>
         </div>
       )}
+
+      <div className="text-center mt-6">
+        <button
+          onClick={() => (window.location.href = '/productos')}
+          className="px-6 py-2 bg-blue-500 text-white text-lg font-semibold rounded-md hover:bg-blue-600"
+        >
+          Seguir Comprando
+        </button>
+      </div>
     </div>
   );
 };
