@@ -16,7 +16,7 @@ const Productos = () => {
 
   // Estado para manejar la búsqueda
   const [searchQuery, setSearchQuery] = useState('');
-  
+
   // Muestra las remeras over premium
   const productosPremium = [
     {
@@ -175,7 +175,6 @@ const Productos = () => {
       <h1 className="text-3xl font-bold text-center sm:text-5xl mb-8 font-bignoodle">
         Nuestros Productos
       </h1>
-
       {/* Campo de búsqueda */}
       <div className="relative mb-8">
         {/* Input con lupa */}
@@ -191,7 +190,6 @@ const Productos = () => {
           className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
         />
       </div>
-
       {filteredProductosPremium.some(
         (producto) => producto.categoria === 'premium'
       ) && (
@@ -235,7 +233,6 @@ const Productos = () => {
           </Link>
         ))}
       </div>
-
       {filteredProductos.some(
         (producto) => producto.categoria === 'simple'
       ) && (
@@ -243,7 +240,6 @@ const Productos = () => {
           CLASICAS
         </h1>
       )}
-
       {/* Grid de productos, se adapta a 3 o 4 por fila */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {filteredProductos.map((producto) => (
@@ -281,13 +277,13 @@ const Productos = () => {
         ))}
       </div>
 
-      {(filteredProductosPremium.length === 0 &&
-        productosPremium.length === 0) ||
-      (filteredProductos.length === 0 && productos.length === 0) ? (
-        <div className="-mt-56">
-          <ProductNotFound />
-        </div>
-      ) : null}
+      {/* Componente de "No se encontraron productos" */}
+      {filteredProductos.length === 0 &&
+        filteredProductosPremium.length === 0 && (
+          <div className="-mt-56">
+            <ProductNotFound />
+          </div>
+        )}
     </div>
   );
 };
