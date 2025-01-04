@@ -282,8 +282,8 @@ const Productos = () => {
       </div>
 
       {(filteredProductosPremium.length === 0 &&
-        productosPremium.length !== 0) ||
-      (filteredProductos.length === 0 && productos.length !== 0) ? (
+        productosPremium.length === 0) ||
+      (filteredProductos.length === 0 && productos.length === 0) ? (
         <div className="-mt-56">
           <ProductNotFound />
         </div>
