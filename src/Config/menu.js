@@ -18,8 +18,16 @@ export const menuItems = [
     label: 'Productos',
     href: 'productos',
     submenu: [
-      { id: 21, label: 'Remeras Over Premium', href: 'productos/remeras-over-premium' },
-      { id: 22, label: 'Remeras Over Clásicas', href: 'productos/remeras-over-clasicas' },
+      {
+        id: 21,
+        label: 'Remeras Over Premium',
+        href: 'productos/remeras-over-premium'
+      },
+      {
+        id: 22,
+        label: 'Remeras Over Clásicas',
+        href: 'productos/remeras-over-clasicas'
+      },
       { id: 23, label: 'Bermudas', href: 'productos/bermudas' }
     ]
   },
@@ -28,4 +36,3 @@ export const menuItems = [
   { id: 5, label: 'Contacto', href: 'contacto' },
   { id: 6, label: 'Preguntas Frecuentes', href: 'faq' }
 ];
-
