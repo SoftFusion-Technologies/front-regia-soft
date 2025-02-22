@@ -14,6 +14,8 @@ import Contact from './Pages/Contact';
 import SizeGuide from './Pages/SizeGuide';
 import FAQ from './Pages/FAQ';
 import FloatingCart from './Components/FloatingCart';
+import Prod_RemerasOCla from './Pages/Sections/Prod_RemerasOCla';
+import Prod_Bermudas from './Pages/Sections/Prod_Bermudas';
 const App = () => {
   return (
     <CartProvider>
@@ -26,9 +28,18 @@ const App = () => {
           <Route path="/product/:id/:name" element={<ProductDetail />} />{' '}
           <Route path="/cart" element={<Cart />} />
           <Route path="/about" element={<About />} />
-          <Route path="/productos" element={<Productos />} />
+          {/* <Route path="/productos" element={<Productos />} /> */}
           <Route path="/contacto" element={<Contact />} />
           <Route path="/guia-de-talles" element={<SizeGuide />} />
+          <Route
+            path="/productos/remeras-over-premium"
+            element={<Productos />}
+          />
+          <Route
+            path="/productos/remeras-over-clasicas"
+            element={<Prod_RemerasOCla />}
+          />
+          <Route path="/productos/bermudas" element={<Prod_Bermudas />} />
           <Route path="/faq" element={<FAQ />} />
           {/* Ruta para la página no encontrada */}
           <Route path="*" element={<NotFound />} />
