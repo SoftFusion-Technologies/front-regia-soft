@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom'; // Importar Link
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import ProductNotFound from '../../Components/ProductNotFound';
-
+import imgBermudaBellow from '../../../public/Bermudas/Bermudas fellow 1.webp';
+import imgBermudaLosAngeles from '../../../public/Bermudas/Bermudas los angeles negra.webp';
+import imgBermudaMomYoung from '../../../public/Bermudas/Bermudas mom young blanca.webp';
 const Prod_Bermudas = () => {
   // Desplazar hacia la parte superior cuando el componente se monte
   useEffect(() => {
@@ -20,36 +22,27 @@ const Prod_Bermudas = () => {
   const productos = [
     {
       id: 1,
-      nombre: 'REMERA OVERSIZE OSO',
-      precio: '$13.500,00',
-      newPrecio: 'Precio con efectivo o transferencia $11.000,00',
-      categoria: 'simple',
-      imagen: '/ProductSimple/Remera Oso.webp'
+      nombre: 'BERMUDA FELLOW',
+      precio: '$18.000,00',
+      newPrecio: 'Precio con efectivo o transferencia $15.500,00',
+      categoria: 'bermudas',
+      imagen: imgBermudaBellow
     },
     {
       id: 2,
-      nombre: 'REMERA OVERSIZE BELLOW',
-      precio: '$13.500,00',
-      newPrecio: 'Precio con efectivo o transferencia $11.000,00',
-      categoria: 'simple',
-      imagen: '/ProductSimple/Remeras Bellow Pack.webp'
+      nombre: 'BERMUDA LOS ANGELES',
+      precio: '$18.000,00',
+      newPrecio: 'Precio con efectivo o transferencia $15.500,00',
+      categoria: 'bermudas',
+      imagen: imgBermudaLosAngeles
     },
-
     {
       id: 3,
-      nombre: 'REMERA OVERSIZE BUNNY TIME',
+      nombre: 'BERMUDA OVERSIZE MOM YOUNG',
       precio: '$13.500,00',
-      newPrecio: 'Precio con efectivo o transferencia $11.000,00',
-      categoria: 'simple',
-      imagen: '/ProductSimple/tesebe.webp'
-    },
-    {
-      id: 4,
-      nombre: 'REMERA OVERSIZE PARADISE',
-      precio: '$13.500,00',
-      newPrecio: 'Precio con efectivo o transferencia $11.000,00',
-      categoria: 'simple',
-      imagen: '/ProductSimple/paradise.webp'
+      newPrecio: 'Precio con efectivo o transferencia $15.500,00',
+      categoria: 'bermudas',
+      imagen: imgBermudaMomYoung
     }
   ];
 
