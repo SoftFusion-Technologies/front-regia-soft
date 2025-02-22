@@ -6,7 +6,7 @@ export const products = [
     imagePack: '/Packs/imgCranePack.webp',
     title: 'REMERA OVERSIZE CRANE',
     price: '$14.500,00',
-    priceDetails: 'Precio con efectivo o transferencia: $13.000,00',
+    priceDetails: 'Precio con efectivo o transferencia: $13.500,00',
     description: `
       La Remera OVERSIZE CRANE, la prenda ideal para quienes buscan comodidad y estilo. 
       Esta remera oversize de manga corta está fabricada con:
@@ -27,7 +27,7 @@ export const products = [
     imagePack: '/Packs/Remeras OVer Brooklyn 1.webp',
     title: 'REMERA OVERSIZE BROOKLYN',
     price: '$14.500,00',
-    priceDetails: 'Precio con efectivo o transferencia: $13.000,00',
+    priceDetails: 'Precio con efectivo o transferencia: $13.500,00',
     description: `
       La Remera "Brooklyn", la prenda ideal para quienes buscan comodidad y estilo. Esta remera oversize de manga corta.
 
@@ -44,8 +44,8 @@ export const products = [
     imageBack: '/ProductsDestacados/Remera over lisa 2.webp',
     imagePack: '/Packs/remeraLisaTalle.webp',
     title: 'REMERA OVERSIZE LISA',
-    price: '$13.000,00,000',
-    priceDetails: 'Llevando 3 o más C/U: $10.000,000',
+    price: '$13.500,00,000',
+    priceDetails: 'Llevando 3 o más C/U: $10.000,00',
     description: `
      REMERA OVERSIZE LISA
 Descubre la Remera lisa. Esta remera oversize de manga corta.
@@ -64,7 +64,7 @@ Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, po
     imagePack: '/Packs/imgPositive.webp',
     title: 'REMERA OVERSIZE POSITIVE',
     price: '$14.500,00',
-    priceDetails: 'Precio con efectivo o transferencia: $13.000,00',
+    priceDetails: 'Precio con efectivo o transferencia: $13.500,00',
     description: `
     REMERA OVERSIZE POSITIVE
 La Remera "Positive", la prenda ideal para quienes buscan comodidad y estilo. Esta remera oversize de manga corta.
@@ -83,7 +83,7 @@ Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, po
     imagePack: '/Packs/Remeras OVer Crazon 2 (1).webp',
     title: 'REMERA OVERSIZE CORAZÓN',
     price: '$14.500,00',
-    priceDetails: 'Precio con efectivo o transferencia: $13.000,00',
+    priceDetails: 'Precio con efectivo o transferencia: $13.500,00',
     description: `
     REMERA OVERSIZE CORAZÓN
 La Remera "Corazón", la prenda ideal para quienes buscan comodidad y estilo. Esta remera oversize de manga corta.
@@ -102,7 +102,7 @@ Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, po
     imagePack: '/Packs/fellow.webp',
     title: 'REMERA OVERSIZE FELLOW',
     price: '$14.500,00',
-    priceDetails: 'Precio con efectivo o transferencia: $13.000,00',
+    priceDetails: 'Precio con efectivo o transferencia: $13.500,00',
     description: `
    REMERA CLASICA FELLOW
 La Remera "Fellow". Esta remera corte clásico de manga corta.

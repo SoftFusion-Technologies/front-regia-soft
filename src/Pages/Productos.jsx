@@ -16,14 +16,14 @@ const Productos = () => {
 
   // Estado para manejar la búsqueda
   const [searchQuery, setSearchQuery] = useState('');
-  
+
   // Muestra las remeras over premium
   const productosPremium = [
     {
       id: 2,
       nombre: 'REMERA OVERSIZE BROOKLYN',
       precio: '$14.500,00',
-      newPrecio: 'Precio con efectivo o transferencia $13.000,00',
+      newPrecio: 'Precio con efectivo o transferencia $13.500,00',
       categoria: 'premium',
       imagen: '/Packs/Remeras OVer Brooklyn 1.webp'
     },
@@ -31,7 +31,7 @@ const Productos = () => {
       id: 5,
       nombre: 'REMERA OVERSIZE CORAZÓN',
       precio: '$14.500,00',
-      newPrecio: 'Precio con efectivo o transferencia $13.000,00',
+      newPrecio: 'Precio con efectivo o transferencia $13.500,00',
       categoria: 'premium',
       imagen: '/Packs/Remeras OVer Crazon 2 (1).webp'
     },
@@ -39,7 +39,7 @@ const Productos = () => {
       id: 100,
       nombre: 'REMERA OVERSIZE OLA',
       precio: '$14.500,00',
-      newPrecio: 'Precio con efectivo o transferencia $13.000,00',
+      newPrecio: 'Precio con efectivo o transferencia $13.500,00',
       categoria: 'premium',
       imagen: '/Packs/rooppack.webp'
     },
@@ -47,7 +47,7 @@ const Productos = () => {
       id: 101,
       nombre: 'REMERA OVERSIZE GRAFITI',
       precio: '$14.500,00',
-      newPrecio: 'Precio con efectivo o transferencia $13.000,00',
+      newPrecio: 'Precio con efectivo o transferencia $13.500,00',
       categoria: 'premium',
       imagen: '/Packs/roografiti.webp'
     },
@@ -55,7 +55,7 @@ const Productos = () => {
       id: 102,
       nombre: 'REMERA OVERSIZE BOXYFIT ESTRELLA',
       precio: '$14.500,00',
-      newPrecio: 'Precio con efectivo o transferencia $13.000,00',
+      newPrecio: 'Precio con efectivo o transferencia $13.500,00',
       categoria: 'premium',
       imagen: '/Packs/rooboxi.webp'
     },
@@ -63,7 +63,7 @@ const Productos = () => {
       id: 103,
       nombre: 'REMERA OVERSIZE BACK TO FUTURE',
       precio: '$14.500,00',
-      newPrecio: 'Precio con efectivo o transferencia $13.000,00',
+      newPrecio: 'Precio con efectivo o transferencia $13.500,00',
       categoria: 'premium',
       imagen: '/ProductSimple/roobackfuture.webp'
     },
@@ -71,7 +71,7 @@ const Productos = () => {
       id: 104,
       nombre: 'REMERA OVERSIZE FRIDAY',
       precio: '$14.500,00',
-      newPrecio: 'Precio con efectivo o transferencia $13.000,00',
+      newPrecio: 'Precio con efectivo o transferencia $13.500,00',
       categoria: 'premium',
       imagen: '/Packs/roofriday.webp'
     },
@@ -79,7 +79,7 @@ const Productos = () => {
       id: 105,
       nombre: 'REMERA OVERSIZE CONQUER',
       precio: '$14.500,00',
-      newPrecio: 'Precio con efectivo o transferencia $13.000,00',
+      newPrecio: 'Precio con efectivo o transferencia $13.500,00',
       categoria: 'premium',
       imagen: '/Packs/rooconquer.webp'
     }
@@ -89,7 +89,7 @@ const Productos = () => {
     {
       id: 1,
       nombre: 'REMERA OVERSIZE OSO',
-      precio: '$13.000,00',
+      precio: '$13.500,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
       categoria: 'simple',
       imagen: '/ProductSimple/Remera Oso.webp'
@@ -97,7 +97,7 @@ const Productos = () => {
     {
       id: 2,
       nombre: 'REMERA OVERSIZE BELLOW',
-      precio: '$13.000,00',
+      precio: '$13.500,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
       categoria: 'simple',
       imagen: '/ProductSimple/Remeras Bellow Pack.webp'
@@ -106,7 +106,7 @@ const Productos = () => {
     {
       id: 3,
       nombre: 'REMERA OVERSIZE BUNNY TIME',
-      precio: '$13.000,00',
+      precio: '$13.500,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
       categoria: 'simple',
       imagen: '/ProductSimple/tesebe.webp'
@@ -114,7 +114,7 @@ const Productos = () => {
     {
       id: 4,
       nombre: 'REMERA OVERSIZE PARADISE',
-      precio: '$13.000,00',
+      precio: '$13.500,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
       categoria: 'simple',
       imagen: '/ProductSimple/paradise.webp'
@@ -122,7 +122,7 @@ const Productos = () => {
     {
       id: 5,
       nombre: 'REMERA OVERSIZE FELLOW',
-      precio: '$13.000,00',
+      precio: '$13.500,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
       categoria: 'simple',
       imagen: '/ProductSimple/Remeras Fellow Blanca (1).webp'
@@ -130,7 +130,7 @@ const Productos = () => {
     {
       id: 6,
       nombre: 'REMERA OVERSIZE FELLOW',
-      precio: '$13.000,00',
+      precio: '$13.500,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
       categoria: 'simple',
       imagen: '/ProductSimple/Remeras Evil dog blanca back.webp'
@@ -138,7 +138,7 @@ const Productos = () => {
     {
       id: 7,
       nombre: 'REMERA OVERSIZE SHADOW',
-      precio: '$13.000,00',
+      precio: '$13.500,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
       categoria: 'simple',
       imagen: '/ProductSimple/shadow.webp'
@@ -146,7 +146,7 @@ const Productos = () => {
     {
       id: 8,
       nombre: 'REMERA OVERSIZE REFRESH',
-      precio: '$13.000,00',
+      precio: '$13.500,00',
       newPrecio: 'Precio con efectivo o transferencia $11.000,00',
       categoria: 'simple',
       imagen: '/ProductSimple/refresh.webp'
