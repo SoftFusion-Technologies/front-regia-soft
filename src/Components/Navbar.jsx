@@ -2,34 +2,40 @@ import React, { useState, useContext } from 'react';
 import { menuItems } from '../Config/menu';
 import LogoCN from '../Images/LogoCorsaNera.png';
 import { Link } from 'react-router-dom';
-import { FaShoppingCart } from 'react-icons/fa'; // Importa el ícono del carrito
-import { CartContext } from '../Components/CartContext'; // Importa el contexto del carrito
+import { FaShoppingCart } from 'react-icons/fa';
+import { CartContext } from '../Components/CartContext';
 import '../Styles/animacionlinks.css';
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  
+  const toggleSubMenu = () => setIsSubMenuOpen(!isSubMenuOpen); // Función para abrir/cerrar el submenú
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  // Función para hacer el scroll hacia la sección de contacto
-  const scrollToContactSection = () => {
-    const section = document.getElementById('contacto');
-    section.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const { cartItems } = useContext(CartContext); // Obtener los productos del carrito
-
+  const { cartItems } = useContext(CartContext);
   const totalQuantity = cartItems.reduce(
     (total, item) => total + item.quantity,
     0
   );
 
+  let timeoutId; // Para manejar el retraso
+
+  const handleMouseEnter = () => {
+    clearTimeout(timeoutId);
+    setIsSubMenuOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutId = setTimeout(() => setIsSubMenuOpen(false), 300); // 300ms de retraso
+  };
+
   return (
     <nav className="bg-white shadow-md relative z-10">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
-        {/* Logo y Nombre */}
+        {/* Logo */}
         <div className="flex items-center space-x-3">
           <Link to="/">
-            {' '}
-            {/* Redirige al inicio cuando se hace clic */}
             <img src={LogoCN} alt="Corsa Nera Logo" className="h-14 w-auto" />
           </Link>
           <Link to="/" className="link">
@@ -41,19 +47,46 @@ const Navbar = () => {
 
         {/* Menú Desktop */}
         <div className="hidden md:flex space-x-8">
-          {menuItems.map((item) => (
-            <Link
-              key={item.id}
-              to={item.href}
-              className="link font-bignoodle text-lg font-medium text-black hover:text-gray-500 transition"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {menuItems.map((item) =>
+            item.submenu ? (
+              <div
+                key={item.id}
+                className="relative group"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+                <span className="link font-bignoodle text-lg font-medium text-black hover:text-gray-500 transition cursor-pointer">
+                  {item.label}
+                </span>
+
+                {/* Submenú */}
+                {isSubMenuOpen && (
+                  <div className="font-bignoodle text-lg  absolute left-0 mt-2 w-48 bg-white shadow-md border rounded-md">
+                    {item.submenu.map((subItem) => (
+                      <Link
+                        key={subItem.id}
+                        to={subItem.href}
+                        className="block px-4 py-2 text-black hover:bg-gray-200 transition"
+                      >
+                        {subItem.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                key={item.id}
+                to={item.href}
+                className="link font-bignoodle text-lg font-medium text-black hover:text-gray-500 transition"
+              >
+                {item.label}
+              </Link>
+            )
+          )}
         </div>
 
-        {/* Carrito de compras en Desktop */}
-        {/* Carrito de compras en Desktop */}
+        {/* Carrito */}
         <div className="relative">
           <Link to="/cart" className="flex items-center">
             <FaShoppingCart size={30} className="text-black" />
@@ -93,13 +126,38 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white">
           {menuItems.map((item) => (
-            <Link
-              key={item.id}
-              to={item.href}
-              className="font-bignoodle block px-4 py-2 text-black hover:bg-gray-100 transition"
-            >
-              {item.label}
-            </Link>
+            <div key={item.id}>
+              {item.submenu ? (
+                <>
+                  <button
+                    className="w-full text-left px-4 py-2 font-bignoodle text-lg font-medium text-black hover:bg-gray-100 transition"
+                    onClick={toggleSubMenu}
+                  >
+                    {item.label}
+                  </button>
+                  {isSubMenuOpen && (
+                    <div className="submenu-mobile">
+                      {item.submenu.map((subItem, index) => (
+                        <Link
+                          key={index}
+                          to={subItem.href}
+                          className="submenu-item font-bignoodle text-lg "
+                        >
+                          {subItem.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <Link
+                  to={item.href}
+                  className="font-bignoodle block px-4 py-2 text-black hover:bg-gray-100 transition"
+                >
+                  {item.label}
+                </Link>
+              )}
+            </div>
           ))}
         </div>
       )}
