@@ -5,8 +5,8 @@ export const productosURL = [
     imageBack: '/Product3/solaOla1.webp',
     imagePack: '/Packs/rooppack.webp',
     title: 'REMERA OVERSIZE OLA',
-    price: '$14.500,00',
-    priceDetails: 'Llevando 3 o más C/U: $13.000,00',
+    price: '$15.000,00',
+    priceDetails: 'Llevando 3 o más C/U: $13.500,00',
     description: `
      REMERA OVERSIZE OLA
 Descubre la Remera OLA. Esta remera oversize de manga corta.
@@ -24,8 +24,8 @@ Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, po
     imageBack: '/Product3/grafiti2.webp',
     imagePack: '/Packs/roografiti.webp',
     title: 'REMERA OVERSIZE GRAFITI',
-    price: '$14.500,00',
-    priceDetails: 'Llevando 3 o más C/U: $13.000,00',
+    price: '$15.000,00',
+    priceDetails: 'Llevando 3 o más C/U: $13.500,00',
     description: `
      REMERA OVERSIZE GRAFITI
 Descubre la Remera GRAFITI. Esta remera oversize de manga corta.
@@ -43,8 +43,8 @@ Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, po
     imageBack: '/Packs/rooboxi.webp',
     imagePack: '/Product3/talleboxifit.webp',
     title: 'REMERA OVERSIZE BOXYFIT ESTRELLA',
-    price: '$14.500,00',
-    priceDetails: 'Llevando 3 o más C/U: $13.000,00',
+    price: '$15.000,00',
+    priceDetails: 'Llevando 3 o más C/U: $13.500,00',
     description: `
      REMERA OVERSIZE BOXYFIT ESTRELLA
 Descubre la Remera BOXYFIT ESTRELLA. Esta remera oversize de manga corta.
@@ -62,8 +62,8 @@ Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, po
     imageBack: '/Product3/futureback.webp',
     imagePack: '/Packs/futurepack.webp',
     title: 'REMERA OVERSIZE FUTURE',
-    price: '$14.500,00',
-    priceDetails: 'Llevando 3 o más C/U: $13.000,00',
+    price: '$15.000,00',
+    priceDetails: 'Llevando 3 o más C/U: $13.500,00',
     description: `
      REMERA OVERSIZE FUTURE
 Descubre la Remera FUTURE. Esta remera oversize de manga corta.
@@ -81,8 +81,8 @@ Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, po
     imageBack: '/Product3/FRIDAYBACK.webp',
     imagePack: '/Packs/roofriday.webp',
     title: 'REMERA OVERSIZE FRIDAY',
-    price: '$14.500,00',
-    priceDetails: 'Llevando 3 o más C/U: $13.000,00',
+    price: '$15.000,00',
+    priceDetails: 'Llevando 3 o más C/U: $13.500,00',
     description: `
      REMERA OVERSIZE FRIDAY
 Descubre la Remera FRIDAY. Esta remera oversize de manga corta.
@@ -100,8 +100,8 @@ Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, po
     imageBack: '/Product3/conquerback.webp',
     imagePack: '/Packs/rooconquer.webp',
     title: 'REMERA OVERSIZE CONQUER',
-    price: '$14.500,00',
-    priceDetails: 'Llevando 3 o más C/U: $13.000,00',
+    price: '$15.000,00',
+    priceDetails: 'Llevando 3 o más C/U: $13.500,00',
     description: `
      REMERA OVERSIZE CONQUER
 Descubre la Remera CONQUER. Esta remera oversize de manga corta.

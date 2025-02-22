@@ -21,3 +21,98 @@
     transform-origin: left;
     transform: scaleX(1);
   }
+
+  .group:hover .submenu {
+  display: block;
+}
+
+/* 🔥 Estilos Mejorados para el Submenú */
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 8px 0;
+  min-width: 200px;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* 🎯 Muestra el submenú con animación */
+.group:hover .submenu {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 🔥 Estilo de cada opción */
+.submenu a {
+  display: block;
+  padding: 12px 15px;
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* 🌟 Efecto al pasar el mouse */
+.submenu a:hover {
+  background: #f4f4f4;
+  color: #000;
+  font-weight: bold;
+}
+
+/* ✨ Línea divisoria entre opciones */
+.submenu a:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Submenú Desktop */
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 8px 0;
+  min-width: 200px;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.group:hover .submenu {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Submenú Mobile */
+.submenu-mobile {
+  background: white;
+  border-left: 2px solid #ddd;
+  padding-left: 10px;
+}
+
+.submenu-item {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.submenu-item:hover {
+  background: #f4f4f4;
+  color: #000;
+  font-weight: bold;
+}
