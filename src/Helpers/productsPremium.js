@@ -5,7 +5,7 @@ export const products = [
     imageBack: '/ProductsDestacados/ImgCraneBack.webp',
     imagePack: '/Packs/imgCranePack.webp',
     title: 'REMERA OVERSIZE CRANE',
-    price: '$14.500,00',
+    price: '$15.000,00',
     priceDetails: 'Precio con efectivo o transferencia: $13.500,00',
     description: `
       La Remera OVERSIZE CRANE, la prenda ideal para quienes buscan comodidad y estilo. 
@@ -26,7 +26,7 @@ export const products = [
     imageBack: '/ProductsDestacados/Remeras OVer Brooklyn.webp',
     imagePack: '/Packs/Remeras OVer Brooklyn 1.webp',
     title: 'REMERA OVERSIZE BROOKLYN',
-    price: '$14.500,00',
+    price: '$15.000,00',
     priceDetails: 'Precio con efectivo o transferencia: $13.500,00',
     description: `
       La Remera "Brooklyn", la prenda ideal para quienes buscan comodidad y estilo. Esta remera oversize de manga corta.
@@ -63,7 +63,7 @@ Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, po
     imageBack: '/ProductsDestacados/Remeras OVer Positive Back.webp',
     imagePack: '/Packs/imgPositive.webp',
     title: 'REMERA OVERSIZE POSITIVE',
-    price: '$14.500,00',
+    price: '$15.000,00',
     priceDetails: 'Precio con efectivo o transferencia: $13.500,00',
     description: `
     REMERA OVERSIZE POSITIVE
@@ -82,7 +82,7 @@ Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, po
     imageBack: '/ProductsDestacados/imgCorazonFront.webp',
     imagePack: '/Packs/Remeras OVer Crazon 2 (1).webp',
     title: 'REMERA OVERSIZE CORAZÓN',
-    price: '$14.500,00',
+    price: '$15.000,00',
     priceDetails: 'Precio con efectivo o transferencia: $13.500,00',
     description: `
     REMERA OVERSIZE CORAZÓN
@@ -101,7 +101,7 @@ Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, po
     imageBack: '/ProductsDestacados/Remeras Fellow Blanca.webp',
     imagePack: '/Packs/fellow.webp',
     title: 'REMERA OVERSIZE FELLOW',
-    price: '$14.500,00',
+    price: '$15.000,00',
     priceDetails: 'Precio con efectivo o transferencia: $13.500,00',
     description: `
    REMERA CLASICA FELLOW

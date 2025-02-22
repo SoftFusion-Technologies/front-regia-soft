@@ -22,7 +22,7 @@ const Productos = () => {
     {
       id: 2,
       nombre: 'REMERA OVERSIZE BROOKLYN',
-      precio: '$14.500,00',
+      precio: '$15.000,00',
       newPrecio: 'Precio con efectivo o transferencia $13.500,00',
       categoria: 'premium',
       imagen: '/Packs/Remeras OVer Brooklyn 1.webp'
@@ -30,7 +30,7 @@ const Productos = () => {
     {
       id: 5,
       nombre: 'REMERA OVERSIZE CORAZÓN',
-      precio: '$14.500,00',
+      precio: '$15.000,00',
       newPrecio: 'Precio con efectivo o transferencia $13.500,00',
       categoria: 'premium',
       imagen: '/Packs/Remeras OVer Crazon 2 (1).webp'
@@ -38,7 +38,7 @@ const Productos = () => {
     {
       id: 100,
       nombre: 'REMERA OVERSIZE OLA',
-      precio: '$14.500,00',
+      precio: '$15.000,00',
       newPrecio: 'Precio con efectivo o transferencia $13.500,00',
       categoria: 'premium',
       imagen: '/Packs/rooppack.webp'
@@ -46,7 +46,7 @@ const Productos = () => {
     {
       id: 101,
       nombre: 'REMERA OVERSIZE GRAFITI',
-      precio: '$14.500,00',
+      precio: '$15.000,00',
       newPrecio: 'Precio con efectivo o transferencia $13.500,00',
       categoria: 'premium',
       imagen: '/Packs/roografiti.webp'
@@ -54,7 +54,7 @@ const Productos = () => {
     {
       id: 102,
       nombre: 'REMERA OVERSIZE BOXYFIT ESTRELLA',
-      precio: '$14.500,00',
+      precio: '$15.000,00',
       newPrecio: 'Precio con efectivo o transferencia $13.500,00',
       categoria: 'premium',
       imagen: '/Packs/rooboxi.webp'
@@ -62,7 +62,7 @@ const Productos = () => {
     {
       id: 103,
       nombre: 'REMERA OVERSIZE BACK TO FUTURE',
-      precio: '$14.500,00',
+      precio: '$15.000,00',
       newPrecio: 'Precio con efectivo o transferencia $13.500,00',
       categoria: 'premium',
       imagen: '/ProductSimple/roobackfuture.webp'
@@ -70,7 +70,7 @@ const Productos = () => {
     {
       id: 104,
       nombre: 'REMERA OVERSIZE FRIDAY',
-      precio: '$14.500,00',
+      precio: '$15.000,00',
       newPrecio: 'Precio con efectivo o transferencia $13.500,00',
       categoria: 'premium',
       imagen: '/Packs/roofriday.webp'
@@ -78,7 +78,7 @@ const Productos = () => {
     {
       id: 105,
       nombre: 'REMERA OVERSIZE CONQUER',
-      precio: '$14.500,00',
+      precio: '$15.000,00',
       newPrecio: 'Precio con efectivo o transferencia $13.500,00',
       categoria: 'premium',
       imagen: '/Packs/rooconquer.webp'

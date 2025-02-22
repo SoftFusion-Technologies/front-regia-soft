@@ -33,7 +33,7 @@ const FeaturedProducts = () => {
                 className="w-full h-full object-contain opacity-0 group-hover:opacity-100 absolute top-0 left-0 transition-opacity duration-1000 ease-in-out"
               />
               {/* Si el producto tiene id 2, mostramos el componente SinStock */}
-              {product.id === 5 && <SinStock />}
+              {/* {product.id === 5 && <SinStock />} */}
             </div>
             <div className="p-4">
               <h3 className="text-xl font-semibold font-bignoodle text-center">
