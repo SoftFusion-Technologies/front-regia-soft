@@ -11,7 +11,9 @@
   font-family: 'MessinaRegular';
   src: url('./fonts/MessinaSans-Regular.ttf') format('truetype');
 }
-
+body{
+  background-color: black;
+}
 .font-bignoodle {
   font-family: BigNoodle;
 }
