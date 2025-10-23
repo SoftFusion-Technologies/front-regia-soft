@@ -73,7 +73,7 @@ export default function NavbarGaláctico() {
   }, [isOpen]);
 
   const GOLD = '#F5D36C'; // dorado principal
-  const GOLD_SOFT = '#E2C35B'; // dorado suave
+  const GOLD_SOFT = '#ac8a1e'; // dorado suave
 
   return (
     <nav
