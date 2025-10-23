@@ -117,13 +117,13 @@ export default function NavbarGaláctico() {
                 >
                   REGIA
                 </span>
-                <span
+                {/* <span
                   className="hidden lg:block font-brand text-[12.5px] tracking-[0.12em] uppercase whitespace-nowrap truncate max-w-[420px]"
                   style={{ color: GOLD_SOFT }}
                   title="ALMACÉN DE MODA · INDUMENTARIA FEMENINA"
                 >
                   ALMACÉN DE MODA · INDUMENTARIA FEMENINA
-                </span>
+                </span> */}
               </Link>
             </div>
 
