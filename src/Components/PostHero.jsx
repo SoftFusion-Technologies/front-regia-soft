@@ -211,22 +211,6 @@ export default function PostHero({
           </div>
         </div>
 
-        {/* Indicador de scroll */}
-        <motion.div
-          initial={false}
-          animate={
-            shouldReduce ? { opacity: 0.9 } : { opacity: 0.95, y: [0, 6, 0] }
-          }
-          transition={
-            shouldReduce
-              ? { duration: 0.6 }
-              : { duration: 1.6, repeat: Infinity, ease: 'easeInOut' }
-          }
-          className="mx-auto mt-2 md:mt-3 text-[#caa042]"
-          aria-hidden
-        >
-          <ChevronDown className="h-6 w-6" />
-        </motion.div>
       </motion.div>
 
       {/* Keyframes globales del shimmer (Tailwind arbitrary) */}
