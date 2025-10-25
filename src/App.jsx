@@ -15,7 +15,6 @@ import SizeGuide from './Pages/SizeGuide';
 import FAQ from './Pages/FAQ';
 import FloatingCart from './Components/FloatingCart';
 import Prod_RemerasOCla from './Pages/Sections/Prod_RemerasOCla';
-import Prod_Bermudas from './Pages/Sections/Prod_Bermudas';
 const App = () => {
   return (
     <CartProvider>
@@ -39,7 +38,6 @@ const App = () => {
             path="/productos/remeras-over-clasicas"
             element={<Prod_RemerasOCla />}
           />
-          <Route path="/productos/bermudas" element={<Prod_Bermudas />} />
           <Route path="/faq" element={<FAQ />} />
           {/* Ruta para la página no encontrada */}
           <Route path="*" element={<NotFound />} />

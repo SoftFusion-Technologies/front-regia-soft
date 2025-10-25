@@ -1,64 +1,126 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-AR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+
+    <!-- SEO Básico -->
+    <title>Regia | Moda femenina en Monteros, Tucumán</title>
     <meta
       name="description"
-      content="Corsa Nera - La mejor tienda de ropa con estilo y elegancia."
+      content="Regia: tienda de ropa femenina en Monteros, Tucumán. Prendas modernas, elegantes y versátiles. Nueva temporada, talles reales y asesoramiento personalizado."
     />
     <meta
       name="keywords"
-      content="Corsa Nera, ropa, moda, tienda online, ecommerce, ropa de calidad"
+      content="Regia, tienda de ropa femenina, Monteros, Tucumán, moda mujer, vestidos, blusas, jeans, indumentaria, outfits, boutique"
     />
+    <meta name="author" content="Regia" />
+    <link rel="canonical" href="https://regia.com.ar/" /> <!-- COMPLETAR -->
+
+    <!-- Indexación -->
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="googlebot" content="index, follow" />
+
+    <!-- Colores / PWA hooks -->
+    <meta name="theme-color" content="#000000" />
+    <link rel="manifest" href="/site.webmanifest" /> <!-- opcional PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/src/Images/logoRegia.jpg" type="image/jpeg" />
+
+    <!-- Performance: fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Montserrat para UI + Cormorant para titulares elegantes -->
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Big+Noodle+Titling&display=swap"
-    />
-
-    <meta name="author" content="Corsa Nera" />
-    <title>Corsa Nera | Moda y Estilo</title>
-
-    <!-- Favicon: Logo -->
-    <link rel="icon" href="/src/Images/logoRegia.jpg" type="image/png" />
-
-    <!-- Fuentes de Google -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-   
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600&display=swap"
       rel="stylesheet"
     />
 
-    <!-- CSS Base -->
-    <!-- <link rel="stylesheet" href="/src/styles/reset.css" />
-    <link rel="stylesheet" href="/src/styles/main.css" /> -->
-
-    <!-- SEO Open Graph -->
-    <meta property="og:title" content="Corsa Nera | Moda y Estilo" />
+    <!-- Open Graph -->
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Regia" />
+    <meta property="og:title" content="Regia | Moda femenina en Monteros, Tucumán" />
     <meta
       property="og:description"
-      content="Descubre las últimas tendencias en moda y viste con estilo en Corsa Nera."
+      content="Descubrí la nueva colección de Regia. Estilo, calidad y tendencia en indumentaria femenina. Visitanos en Monteros, Tucumán."
     />
-    <meta property="og:image" content="/src/assets/corsa-nera-preview.jpg" />
-    <meta property="og:url" content="https://corsanera.com.ar" />
-    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://regia.com.ar/" /> <!-- COMPLETAR -->
+    <meta property="og:image" content="https://regia.com.ar/og/regia-cover.jpg" /> <!-- COMPLETAR -->
+    <meta property="og:image:alt" content="Lookbook Regia - Moda femenina" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Corsa Nera | Moda y Estilo" />
+    <meta name="twitter:site" content="@regia_ok" /> <!-- COMPLETAR o quitar -->
+    <meta name="twitter:title" content="Regia | Moda femenina en Monteros, Tucumán" />
     <meta
       name="twitter:description"
-      content="Descubre las últimas tendencias en moda y viste con estilo en Corsa Nera."
+      content="Nueva temporada Regia. Outfits para todos los días y ocasiones especiales."
     />
-    <meta name="twitter:image" content="/src/assets/corsa-nera-preview.jpg" />
+    <meta name="twitter:image" content="https://regia.com.ar/og/regia-cover.jpg" /> <!-- COMPLETAR -->
 
-    <!-- Responsivo -->
-    <meta name="theme-color" content="#000" />
+    <!-- Hreflang (si tenés solo Argentina, mantené solo es-AR) -->
+    <link rel="alternate" href="https://regia.com.ar/" hreflang="es-AR" />
+
+    <!-- Datos estructurados (Schema.org) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Regia",
+      "url": "https://regia.com.ar/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://regia.com.ar/buscar?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ClothingStore",
+      "name": "Regia",
+      "image": "https://regia.com.ar/og/regia-cover.jpg",
+      "url": "https://regia.com.ar/",
+      "telephone": "+54 9 381 XXXXXXX",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Dirección local Regia",  /* COMPLETAR */
+        "addressLocality": "Monteros",
+        "addressRegion": "Tucumán",
+        "postalCode": "4142",                      /* si aplica */
+        "addressCountry": "AR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -27.167,   /* COMPLETAR */
+        "longitude": -65.500   /* COMPLETAR */
+      },
+      "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+        "opens": "09:30",
+        "closes": "21:00"
+      }],
+      "sameAs": [
+        "https://www.instagram.com/regia.ok",      /* COMPLETAR */
+        "https://www.facebook.com/regia.ok"        /* COMPLETAR */
+      ]
+    }
+    </script>
+
+    <!-- Preload (opcional) de una imagen hero para Largest Contentful Paint -->
+    <!-- <link rel="preload" as="image" href="/hero/portada.webp" imagesrcset="/hero/portada@2x.webp 2x" /> -->
   </head>
+
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>

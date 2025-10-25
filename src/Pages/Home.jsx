@@ -15,12 +15,26 @@ const Home = () => {
   return (
     <div>
       <Hero
-        igImages={[imgInsta1, imgInsta2, imgInsta3, imgInsta4, imgInsta5,]}
+        igImages={[imgInsta1, imgInsta2, imgInsta3, imgInsta4, imgInsta5]}
       />
       <div className="mt-20">
         <FeaturedProducts />
       </div>
-      <InfoSection />
+      <InfoSection
+        whatsappNumber="+54 9 3812 472636"
+        whatsappMessage="Hola Regia 👋 Vi la nueva colección y quiero consultar por talles."
+        shippingText="Envíos a todo el país"
+        shippingBadge="Retiro en tienda sin costo"
+        payments={[
+          'Transferencia',
+          'Efectivo',
+          'Débito',
+          'Crédito',
+          '3 cuotas sin interés'
+        ]}
+        address="Monteros, Tucumán"
+        gmapsLink="https://maps.google.com/?q=Regia%20Monteros%20Tucum%C3%A1n"
+      />
       <ContactForm />
     </div>
   );
