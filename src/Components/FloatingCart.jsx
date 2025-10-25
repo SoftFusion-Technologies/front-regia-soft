@@ -29,7 +29,7 @@ const FloatingCart = () => {
   };
 
   // Enlace de WhatsApp con el mensaje generado
-  const whatsappLink = `https://wa.me/5493863531891?text=${generateWhatsAppMessage()}`;
+  const whatsappLink = `https://wa.me/549+54 9 3812 472636?text=${generateWhatsAppMessage()}`;
 
   return isFloatingCartOpen ? (
     <>

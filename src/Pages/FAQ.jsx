@@ -49,7 +49,7 @@ const FAQ = () => {
     {
       question: 'Ya realicé el pedido. ¿Por dónde me contactan?',
       answer:
-        'Una vez que el pedido ingresa al sistema, nos comunicamos a la brevedad a través de Whatsapp para continuar con el proceso de compra. En caso de no obtener mensaje, comunicate al 3863531891 indicando tu número de orden. Por eso es importante que llenes correctamente el formulario.'
+        'Una vez que el pedido ingresa al sistema, nos comunicamos a la brevedad a través de Whatsapp para continuar con el proceso de compra. En caso de no obtener mensaje, comunicate al +54 9 3812 472636 indicando tu número de orden. Por eso es importante que llenes correctamente el formulario.'
     },
     {
       question: '¿Cuánto se demora en armar el pedido?',

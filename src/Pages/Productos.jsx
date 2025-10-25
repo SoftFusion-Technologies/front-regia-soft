@@ -86,7 +86,7 @@ const Productos = () => {
   ];
 
   const handleWhatsAppClick = (nombre, precio) => {
-    const phoneNumber = '3863531891'; // Número de WhatsApp
+    const phoneNumber = '+54 9 3812 472636'; // Número de WhatsApp
     const message = `Hola, estoy interesado en el producto: ${nombre}, que tiene un precio de ${precio}.`;
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message

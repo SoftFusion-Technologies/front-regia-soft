@@ -15,11 +15,11 @@ const About = () => {
         QUIÉNES SOMOS
       </h1>
       <section className="about-content">
-        <h2 className="font-bignoodle">Sobre Corsa Nera</h2>
+        <h2 className="font-bignoodle">Sobre Regia</h2>
         <p>
-          Bienvenidos a <strong>Corsa Nera</strong>, una tienda de ropa
+          Bienvenidos a <strong>Regia</strong>, una tienda de ropa
           exclusiva dedicada a ofrecer moda de alta calidad para hombres que
-          buscan destacarse con estilo y elegancia. En Corsa Nera, cada prenda
+          buscan destacarse con estilo y elegancia. En Regia, cada prenda
           es seleccionada con atención al detalle para garantizar una
           experiencia de compra única y satisfactoria. Ya sea que busques ropa
           casual, de oficina o para una ocasión especial, tenemos la selección
@@ -28,7 +28,7 @@ const About = () => {
         </p>
         <h2 className="font-bignoodle">Nuestra Misión</h2>
         <p>
-          En <strong>Corsa Nera</strong>, nuestra misión es ser el destino
+          En <strong>Regia</strong>, nuestra misión es ser el destino
           predilecto para quienes buscan prendas de calidad superior y diseños
           sofisticados. Nos comprometemos a ofrecer a nuestros clientes una
           experiencia de compra excepcional, brindando un servicio personalizado
@@ -44,7 +44,7 @@ const About = () => {
           productos. Queremos seguir creciendo junto con nuestros clientes,
           adaptándonos a las nuevas tendencias sin perder la esencia de
           elegancia y distinción que nos caracteriza. En{' '}
-          <strong>Corsa Nera</strong>, buscamos no solo vestir a nuestros
+          <strong>Regia</strong>, buscamos no solo vestir a nuestros
           clientes, sino también inspirarlos a través de la moda, ayudándoles a
           resaltar lo mejor de sí mismos.
         </p>

@@ -30,19 +30,20 @@ const Contact = () => {
               {/* Texto de información */}
               <ul className="text-gray-700 mb-4 lg:mb-0 lg:mr-6">
                 <li className="mb-2">
-                  <span className="font-medium">Teléfono:</span> +54 9 3863
-                  531891
+                  <span className="font-medium">Teléfono:</span> +54 9 3812
+                  472636
                 </li>
                 <li className="mb-2">
-                  <span className="font-medium">WhatsApp:</span> 3863531891
+                  <span className="font-medium">WhatsApp:</span> +54 9 3812
+                  472636
                 </li>
                 <li className="mb-2">
                   <span className="font-medium">Correo Electrónico:</span>{' '}
                   <a
-                    href="mailto:corsaneraurban@gmail.com"
+                    href="mailto:regiaalmacendemoda@gmail.com"
                     className="text-blue-600 hover:underline"
                   >
-                    corsaneraurban@gmail.com
+                    regiaalmacendemoda@gmail.com
                   </a>
                 </li>
               </ul>
