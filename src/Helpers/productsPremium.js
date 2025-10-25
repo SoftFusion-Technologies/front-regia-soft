@@ -115,5 +115,68 @@ Se recomienda pedir un talle mas grande. (Si normalmente usas talle 3, pedi un t
 
 Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, por lo que el color puede variar levemente.`,
     color: null // Guardamos el color elegido
+  },
+  {
+    id: 6, // Agregar un id único
+    imageFront: '/ProductsDestacados/Remeras Fellow Blanca Frente.webp',
+    imageBack: '/ProductsDestacados/Remeras Fellow Blanca.webp',
+    imagePack: '/Packs/fellow.webp',
+    title: 'REMERA OVERSIZE FELLOW',
+    price: '$15.000,00',
+    priceDetails: 'Precio con efectivo o transferencia: $13.500,00',
+    description: `
+   REMERA CLASICA FELLOW
+La Remera "Fellow". Esta remera corte clásico de manga corta.
+
+Material de tela: Fabricada en jersey peinado 24.1, una tela suave y agradable al tacto que te mantendrá cómodo durante todo el día.
+Cuidado sencillo: Se recomienda lavar con agua fría para preservar la calidad y durabilidad de la prenda.
+Las medidas están disponibles en la última fotos.
+
+Se recomienda pedir un talle mas grande. (Si normalmente usas talle 3, pedi un talle 4)
+
+Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, por lo que el color puede variar levemente.`,
+    color: null // Guardamos el color elegido
+  },
+  {
+    id: 6, // Agregar un id único
+    imageFront: '/ProductsDestacados/Remeras Fellow Blanca Frente.webp',
+    imageBack: '/ProductsDestacados/Remeras Fellow Blanca.webp',
+    imagePack: '/Packs/fellow.webp',
+    title: 'REMERA OVERSIZE FELLOW',
+    price: '$15.000,00',
+    priceDetails: 'Precio con efectivo o transferencia: $13.500,00',
+    description: `
+   REMERA CLASICA FELLOW
+La Remera "Fellow". Esta remera corte clásico de manga corta.
+
+Material de tela: Fabricada en jersey peinado 24.1, una tela suave y agradable al tacto que te mantendrá cómodo durante todo el día.
+Cuidado sencillo: Se recomienda lavar con agua fría para preservar la calidad y durabilidad de la prenda.
+Las medidas están disponibles en la última fotos.
+
+Se recomienda pedir un talle mas grande. (Si normalmente usas talle 3, pedi un talle 4)
+
+Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, por lo que el color puede variar levemente.`,
+    color: null // Guardamos el color elegido
+  },
+  {
+    id: 6, // Agregar un id único
+    imageFront: '/ProductsDestacados/Remeras Fellow Blanca Frente.webp',
+    imageBack: '/ProductsDestacados/Remeras Fellow Blanca.webp',
+    imagePack: '/Packs/fellow.webp',
+    title: 'REMERA OVERSIZE FELLOW',
+    price: '$15.000,00',
+    priceDetails: 'Precio con efectivo o transferencia: $13.500,00',
+    description: `
+   REMERA CLASICA FELLOW
+La Remera "Fellow". Esta remera corte clásico de manga corta.
+
+Material de tela: Fabricada en jersey peinado 24.1, una tela suave y agradable al tacto que te mantendrá cómodo durante todo el día.
+Cuidado sencillo: Se recomienda lavar con agua fría para preservar la calidad y durabilidad de la prenda.
+Las medidas están disponibles en la última fotos.
+
+Se recomienda pedir un talle mas grande. (Si normalmente usas talle 3, pedi un talle 4)
+
+Nota: Las fotos han sido tomadas a luz natural con cámaras no profesionales, por lo que el color puede variar levemente.`,
+    color: null // Guardamos el color elegido
   }
 ];
