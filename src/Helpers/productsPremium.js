@@ -44,7 +44,7 @@ export const products = [
     imageBack: '/ProductsDestacados/Remera over lisa 2.webp',
     imagePack: '/Packs/remeraLisaTalle.webp',
     title: 'REMERA OVERSIZE LISA',
-    price: '$13.500,00,000',
+    price: '$13.500,000',
     priceDetails: 'Llevando 3 o más C/U: $10.000,00',
     description: `
      REMERA OVERSIZE LISA

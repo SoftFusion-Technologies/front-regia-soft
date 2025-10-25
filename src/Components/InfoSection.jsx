@@ -9,6 +9,7 @@ import {
   FaCopy,
   FaCheck
 } from 'react-icons/fa';
+import ParticlesBackground from './ParticlesBackground';
 // (Opcionales) íconos de marcas de pago si usás react-icons/si
 // import { SiMercadopago, SiVisa, SiMastercard, SiAmericanexpress } from 'react-icons/si';
 
@@ -100,6 +101,7 @@ export default function InfoSectionRegia({
     <section
       className={`relative py-14 sm:py-16 px-4 sm:px-6 lg:px-8 ${className}`}
     >
+      <ParticlesBackground></ParticlesBackground>
       <div className="max-w-6xl mx-auto">
         {/* Encabezado */}
         <div className="mb-8 text-center">
