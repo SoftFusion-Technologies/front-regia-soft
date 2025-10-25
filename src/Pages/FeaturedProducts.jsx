@@ -1,38 +1,37 @@
-import React, {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  useCallback
-} from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { ChevronRight, ChevronLeft, X, Sparkles } from 'lucide-react';
-// Fallback al catálogo local si no se pasan productos por props
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowRight, Heart, Eye } from 'lucide-react';
 import { products as catalogProducts } from '../Helpers/productsPremium.js';
+import FeaturedGallery from './FeaturedGallery.jsx';
 
 /**
- * FeaturedProductsAurora v2 — Regia
- *
- * Objetivo UX: menos invasivo al primer scroll, más elegante y escaneable.
- *
- * Cambios clave:
- * - "Teaser Row" horizontal con snap (3–4 cards) + CTA "Ver colección" que expande a grilla.
- * - Modo Expandido con filtros/chips (categoría, novedad, promo) y paginación por lotes (intersección / Ver más).
- * - Card premium Regia: halo dorado, glint sweep sutil, crossfade frente/espalda, focus visible.
- * - Imagenes optimizadas (decoding async, sizes). Respetamos prefers-reduced-motion.
- * - Empty state elegante + skeletons suaves.
- * - API simple: products (array) + onQuickView(product) opcional.
+ * NUEVO: pasa tus 4 imágenes a la prop `banners`.
+ * Ej: banners={[
+ *   '/banners/regia1.webp','/banners/regia2.webp',
+ *   '/banners/regia3.webp','/banners/regia4.webp'
+ * ]}
  */
 
-export default function FeaturedProductsAuroraV2({
+export default function FeaturedProducts({
   products: overrideProducts,
   title = 'Destacados',
-  categories = [], // ej.: ['Vestidos', 'Blusas', 'Jeans']
-  defaultExpanded = false,
-  onQuickView
+  initialBatch = 8,
+  batchSize = 8,
+  onQuickView,
+  banners = [] // << ADICIONADO: 4 imágenes para rotar
 }) {
   const shouldReduce = useReducedMotion();
 
+  const files = [
+    '/ProductsDestacados/Img_Dest1.jpg',
+    '/ProductsDestacados/Img_Dest2.jpg',
+    '/ProductsDestacados/Img_Dest3.jpg',
+    '/ProductsDestacados/Img_Dest4.jpg',
+    '/ProductsDestacados/Img_Dest5.jpg',
+    '/ProductsDestacados/Img_Dest6.jpg',
+    '/ProductsDestacados/Img_Dest7.jpg',
+    '/ProductsDestacados/Img_Dest8.jpg'
+  ];
   const all = useMemo(() => {
     const base =
       Array.isArray(overrideProducts) && overrideProducts.length
@@ -40,7 +39,6 @@ export default function FeaturedProductsAuroraV2({
         : Array.isArray(catalogProducts)
         ? catalogProducts
         : [];
-    // Normalización mínima de campos
     return base.map((p, i) => ({
       id: p.id ?? i,
       title: p.title ?? 'Producto',
@@ -49,330 +47,151 @@ export default function FeaturedProductsAuroraV2({
       priceDetails: p.priceDetails ?? '',
       imageFront: p.imageFront ?? p.image ?? '',
       imageBack: p.imageBack ?? '',
+      imagePack: p.imagePack ?? '',
       badge: p.badge ?? '',
-      category: p.category ?? 'Colección'
+      category: p.category ?? 'Colección',
+      // opcional: p.hero (array extra para spotlight) si querés
+      hero: Array.isArray(p.hero) ? p.hero : null
     }));
   }, [overrideProducts]);
 
-  // Filtros & estado expandido
-  const [expanded, setExpanded] = useState(!!defaultExpanded);
-  const [chip, setChip] = useState('Todos');
-  const [onlyPromo, setOnlyPromo] = useState(false);
-  const [onlyNew, setOnlyNew] = useState(false);
+  if (!all.length) return <Empty />;
 
-  const pool = useMemo(() => {
-    let arr = [...all];
-    if (chip && chip !== 'Todos')
-      arr = arr.filter(
-        (p) => (p.category || '').toLowerCase() === chip.toLowerCase()
-      );
-    if (onlyPromo) arr = arr.filter((p) => !!p.priceOld);
-    if (onlyNew)
-      arr = arr.filter((p) => /(nuevo|new|nueva)/i.test(p.badge || ''));
-    return arr;
-  }, [all, chip, onlyPromo, onlyNew]);
+  const [visible, setVisible] = useState(initialBatch);
+  const spotlight = all[0];
+  const rest = all.slice(1);
 
-  // Paginación perezosa en modo expandido
-  const [visible, setVisible] = useState(8);
-  useEffect(() => {
-    setVisible(8);
-  }, [chip, onlyPromo, onlyNew]);
-  const showMore = useCallback(
-    () => setVisible((v) => Math.min(v + 8, pool.length)),
-    [pool.length]
-  );
+  const GOLD = 'from-[#f1d08a] via-[#caa042] to-[#a38321]';
 
   return (
-    <section
-      id="featured-products"
-      className="relative py-14 sm:py-16 px-4 sm:px-6 lg:px-8"
-    >
-      {/* Encabezado */}
-      <Header
-        title={title}
-        expanded={expanded}
-        setExpanded={setExpanded}
-        total={pool.length}
-      />
-
-      {/* Modo teaser: menos invasivo */}
-      <AnimatePresence mode="wait">
-        {!expanded ? (
-          <motion.div
-            key="teaser"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="relative"
+    <section className="relative py-14 sm:py-16 px-4 sm:px-6 lg:px-8">
+      {/* Heading */}
+      <div className="max-w-7xl mx-auto mb-8 md:mb-10">
+        <h2 className="text-center md:text-left font-bignoodle tracking-tight uppercase text-3xl sm:text-4xl md:text-5xl">
+          <span
+            className={`bg-gradient-to-b ${GOLD} bg-clip-text text-transparent`}
           >
-            <TeaserRow products={pool.slice(0, 10)} onQuickView={onQuickView} />
-            <div className="mt-8 flex justify-center">
-              <button
-                type="button"
-                onClick={() => setExpanded(true)}
-                className="inline-flex items-center gap-2 rounded-xl border border-[#a38321]/40 px-4 py-2.5 text-sm text-white/90 hover:bg-[#a38321] hover:text-black transition-colors"
-                aria-label="Ver colección completa"
-              >
-                Ver colección
-                <ChevronRight size={18} />
-              </button>
-            </div>
-          </motion.div>
-        ) : (
-          <motion.div
-            key="grid"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            {title}
+          </span>
+        </h2>
+      </div>
+
+      {/* Spotlight unchanged en mobile; refinado en desktop */}
+      <div className="max-w-7xl mx-auto">
+        <FeaturedGallery files={files} />
+      </div>
+
+      <div className="max-w-7xl mx-auto mb-8 md:mb-10" id="featured-products">
+        <h2 className="text-center md:text-left font-bignoodle tracking-tight uppercase text-3xl sm:text-4xl md:text-5xl">
+          <span
+            className={`bg-gradient-to-b ${GOLD} bg-clip-text text-transparent`}
           >
-            <FiltersBar
-              categories={['Todos', ...categories]}
-              chip={chip}
-              setChip={setChip}
-              onlyPromo={onlyPromo}
-              setOnlyPromo={setOnlyPromo}
-              onlyNew={onlyNew}
-              setOnlyNew={setOnlyNew}
-              onCollapse={() => setExpanded(false)}
-            />
+            PRODUCTOS
+          </span>
+        </h2>
+      </div>
+      {/* Grid Luxe (sin cambios visuales en mobile) */}
+      <motion.ul
+        className="max-w-7xl mx-auto mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6 md:gap-7"
+        initial="hidden"
+        animate="show"
+        variants={{
+          hidden: { opacity: 1 },
+          show: { opacity: 1, transition: { staggerChildren: 0.06 } }
+        }}
+      >
+        {rest.slice(0, visible).map((p) => (
+          <motion.li
+            key={p.id}
+            variants={{
+              hidden: { opacity: 0, y: 10 },
+              show: { opacity: 1, y: 0 }
+            }}
+          >
+            <LuxeCard p={p} onQuickView={onQuickView} />
+          </motion.li>
+        ))}
+      </motion.ul>
 
-            {/* Grid */}
-            <motion.ul
-              className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6 md:gap-7 mt-6"
-              initial="hidden"
-              animate="show"
-              variants={{
-                hidden: { opacity: 1 },
-                show: { opacity: 1, transition: { staggerChildren: 0.06 } }
-              }}
-            >
-              {pool.slice(0, visible).map((p) => (
-                <motion.li
-                  key={p.id}
-                  variants={{
-                    hidden: { opacity: 0, y: 10 },
-                    show: { opacity: 1, y: 0 }
-                  }}
-                >
-                  <ProductCardRegia p={p} onQuickView={onQuickView} />
-                </motion.li>
-              ))}
-            </motion.ul>
-
-            {/* Ver más */}
-            {visible < pool.length && (
-              <div className="mt-8 flex justify-center">
-                <button
-                  type="button"
-                  onClick={showMore}
-                  className="inline-flex items-center gap-2 rounded-xl border border-[#a38321]/40 px-4 py-2.5 text-sm text-white/90 hover:bg-[#a38321] hover:text-black transition-colors"
-                >
-                  Ver más
-                  <ChevronRight size={18} />
-                </button>
-              </div>
-            )}
-
-            {/* Empty state */}
-            {pool.length === 0 && <EmptyState />}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Cargar más */}
+      {visible < rest.length && (
+        <div className="mt-8 flex justify-center">
+          <button
+            type="button"
+            onClick={() =>
+              setVisible((v) => Math.min(v + batchSize, rest.length))
+            }
+            className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-black/70 px-4 py-2.5 text-sm text-white/90 hover:bg-black focus:outline-none focus:ring-2 focus:ring-[#a38321] focus:ring-offset-2 focus:ring-offset-black"
+          >
+            Cargar más <ArrowRight size={16} />
+          </button>
+        </div>
+      )}
     </section>
   );
 }
 
-/* ============================ Subcomponentes ============================ */
-
-function Header({ title, expanded, setExpanded, total }) {
-  return (
-    <div className="max-w-7xl mx-auto mb-8 md:mb-10 flex items-end justify-between gap-4">
-      <h2 className="flex-1 text-center md:text-left font-bignoodle tracking-tight uppercase text-3xl sm:text-4xl md:text-5xl">
-        <span className="bg-gradient-to-b from-[#f1d08a] via-[#caa042] to-[#a38321] bg-clip-text text-transparent">
-          {title}
-        </span>
-      </h2>
-      {expanded && (
-        <button
-          type="button"
-          onClick={() => setExpanded(false)}
-          className="hidden md:inline-flex items-center gap-2 rounded-xl border border-white/15 px-3.5 py-2 text-sm text-white/80 hover:bg-white/10"
-          aria-label="Contraer"
-        >
-          <ChevronLeft size={18} /> Contraer
-        </button>
-      )}
-    </div>
-  );
-}
-
-function TeaserRow({ products, onQuickView }) {
-  if (!products || products.length === 0)
-    return (
-      <div className="max-w-7xl mx-auto">
-        <SkeletonRow />
-      </div>
-    );
-  return (
-    <div className="max-w-7xl mx-auto relative">
-      <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent px-1 py-1">
-        {products.map((p) => (
-          <div
-            key={p.id}
-            className="snap-start min-w-[72%] xs:min-w-[56%] sm:min-w-[44%] md:min-w-[32%] lg:min-w-[24%]"
-          >
-            <ProductCardRegia p={p} onQuickView={onQuickView} compact />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function FiltersBar({
-  categories,
-  chip,
-  setChip,
-  onlyPromo,
-  setOnlyPromo,
-  onlyNew,
-  setOnlyNew,
-  onCollapse
-}) {
-  return (
-    <div className="max-w-7xl mx-auto">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        {/* Chips de categoría */}
-        <div className="flex flex-wrap gap-2">
-          {categories.map((c) => (
-            <button
-              key={c}
-              type="button"
-              onClick={() => setChip(c)}
-              className={
-                'rounded-full px-3 py-1.5 text-xs md:text-sm border transition ' +
-                (chip === c
-                  ? 'border-[#a38321] text-black bg-[#a38321]'
-                  : 'border-white/15 text-white/80 hover:border-white/30')
-              }
-            >
-              {c}
-            </button>
-          ))}
-        </div>
-
-        {/* Toggles */}
-        <div className="flex items-center gap-2">
-          <Toggle checked={onlyNew} onChange={setOnlyNew}>
-            Nuevo
-          </Toggle>
-          <Toggle checked={onlyPromo} onChange={setOnlyPromo}>
-            Promo
-          </Toggle>
-          <button
-            type="button"
-            onClick={onCollapse}
-            className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-3 py-1.5 text-sm text-white/80 hover:bg-white/10"
-            aria-label="Contraer"
-          >
-            <ChevronLeft size={18} />
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Toggle({ checked, onChange, children }) {
-  return (
-    <button
-      type="button"
-      onClick={() => onChange(!checked)}
-      className={`relative inline-flex h-8 w-14 items-center rounded-full border px-1 transition ${
-        checked
-          ? 'bg-[#a38321] border-[#a38321]'
-          : 'bg-transparent border-white/20'
-      }`}
-      role="switch"
-      aria-checked={checked}
-    >
-      <span
-        className={`inline-block h-6 w-6 transform rounded-full bg-white transition ${
-          checked ? 'translate-x-6' : 'translate-x-0'
-        }`}
-      />
-      <span className="absolute left-1/2 -translate-x-1/2 text-xs font-medium text-white/80 select-none">
-        {children}
-      </span>
-    </button>
-  );
-}
-
-function EmptyState() {
-  return (
-    <div className="max-w-7xl mx-auto mt-8">
-      <div className="rounded-2xl border border-white/10 p-10 text-center text-white/70">
-        <Sparkles className="mx-auto mb-3" />
-        <p>
-          No encontramos productos con esos filtros. Probá ajustar la búsqueda.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function SkeletonRow() {
-  return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-      {Array.from({ length: 4 }).map((_, i) => (
-        <div
-          key={i}
-          className="rounded-2xl p-[1px] bg-gradient-to-br from-white/5 to-white/0"
-        >
-          <div className="rounded-2xl overflow-hidden border border-white/10">
-            <div className="aspect-[4/5] animate-pulse bg-white/5" />
-            <div className="p-4 space-y-2">
-              <div className="h-4 w-2/3 bg-white/10 rounded" />
-              <div className="h-3 w-1/2 bg-white/10 rounded" />
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function ProductCardRegia({ p, onQuickView, compact = false }) {
+function LuxeCard({ p, onQuickView }) {
   const shouldReduce = useReducedMotion();
+  const GOLD_GRAD =
+    'linear-gradient(135deg, rgba(213, 156, 33, 0.75) 0%, rgba(227, 160, 16, 0.62) 48%, rgba(181, 138, 7, 0.62) 100%)';
+
   return (
-    <div className="group relative">
+    <div className="group relative focus-within:outline-none"
+    >
       <a
         href={`/product/${p.id}/${encodeURIComponent(p.title || 'producto')}`}
         className="block focus:outline-none"
       >
-        <div className="relative rounded-2xl p-[1px] bg-[linear-gradient(135deg,rgba(241,208,138,0.7)_0%,rgba(202,160,66,0.7)_45%,rgba(163,131,33,0.7)_100%)] transition-transform duration-300 group-hover:-translate-y-1">
-          <div className="relative rounded-2xl overflow-hidden bg-transparent">
-            {/* Glow sutil */}
+        {/* Marco dorado más presente + sombra cálida */}
+        <motion.div
+          initial={false}
+          whileHover={
+            shouldReduce ? {} : { y: -5, rotateX: 0.35, rotateY: -0.35 }
+          }
+          transition={{
+            type: 'spring',
+            stiffness: 260,
+            damping: 22,
+            mass: 0.7
+          }}
+          className="relative rounded-2xl p-[1px]"
+          style={{
+            background: GOLD_GRAD,
+            boxShadow:
+              '0 28px 70px -30px rgba(241,208,138,0.18), 0 18px 40px -28px rgba(0,0,0,0.65)'
+          }}
+        >
+          {/* Cuerpo con fondo “no tan negro”: glass + baño dorado sutil */}
+          <div className="relative rounded-2xl overflow-hidden bg-[#0e0c08]/70 backdrop-blur-sm">
+            {/* Baño dorado muy suave al fondo */}
             <span
               aria-hidden
-              className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-[12px] bg-[radial-gradient(60%_60%_at_50%_10%,rgba(241,208,138,0.25),rgba(163,131,33,0.1)_60%,transparent_80%)]"
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  'radial-gradient(120% 80% at 50% 0%, rgba(241,208,138,0.14), rgba(202,160,66,0.10) 35%, rgba(0,0,0,0) 60%)'
+              }}
             />
 
             {/* Media */}
-            <div
-              className={`relative w-full ${
-                compact ? 'aspect-[4/5]' : 'aspect-[4/5]'
-              } bg-black/20`}
-            >
+            <div className="relative aspect-[4/5]">
+              {/* Vignette dorado que separa media del contenedor */}
+              <span
+                aria-hidden
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    'radial-gradient(80% 60% at 50% 35%, rgba(241,208,138,0.10), rgba(0,0,0,0) 55%)'
+                }}
+              />
               <img
                 src={p.imageFront}
                 alt={p.title}
-                className="absolute inset-0 h-full w-full object-contain transition-opacity duration-200 ease-out group-hover:opacity-0"
+                className="absolute inset-0 h-full w-full object-contain transition-transform duration-400 ease-out group-hover:scale-[1.045]"
                 loading="lazy"
                 decoding="async"
-                sizes="(min-width: 1024px) 22vw, (min-width: 768px) 30vw, 70vw"
+                sizes="(min-width:1280px) 20vw, (min-width:768px) 30vw, 92vw"
               />
               {p.imageBack && (
                 <img
@@ -381,64 +200,66 @@ function ProductCardRegia({ p, onQuickView, compact = false }) {
                   className="absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100"
                   loading="lazy"
                   decoding="async"
-                  sizes="(min-width: 1024px) 22vw, (min-width: 768px) 30vw, 70vw"
                 />
               )}
 
-              {/* Borde interior */}
+              {/* Glint sweep continuo (un toque más visible) */}
+              {!shouldReduce && (
+                <motion.span
+                  aria-hidden
+                  className="absolute inset-y-0 -left-[20%] w-[140%] pointer-events-none mix-blend-screen"
+                  style={{
+                    background:
+                      'linear-gradient(75deg, rgba(255,255,255,0) 45%, rgba(255,255,255,0.16) 50%, rgba(255,255,255,0) 55%)'
+                  }}
+                  animate={{ x: ['-120%', '140%'] }}
+                  transition={{
+                    duration: 3.1,
+                    repeat: Infinity,
+                    repeatDelay: 2.2,
+                    ease: [0.6, 0.05, 0.01, 0.99]
+                  }}
+                />
+              )}
+
+              {/* Borde interior dorado tenue */}
               <span
                 aria-hidden
-                className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-[#a38321]/25"
+                className="absolute inset-0 rounded-2xl ring-1 ring-[#a38321]/30"
               />
 
-              {/* Badge */}
+              {/* Badge más dorada */}
               {p.badge && (
-                <span className="absolute left-2.5 top-2.5 rounded-full border border-[#caa042]/40 bg-black/60 px-2.5 py-1 text-[11px] font-medium text-white">
+                <span className="absolute left-2.5 top-2.5 rounded-full border border-[#caa042]/55 bg-[#a38321]/20 backdrop-blur-[1px] px-2.5 py-1 text-[11px] font-medium text-[#f8e7bb]">
                   {p.badge}
                 </span>
               )}
 
-              {/* Glint sweep */}
-              {!shouldReduce && (
-                <motion.div
-                  aria-hidden
-                  className="absolute inset-0 pointer-events-none mix-blend-screen"
-                  initial={{ x: '-120%' }}
-                  animate={{ x: ['-120%', '140%'] }}
-                  transition={{
-                    duration: 3.2,
-                    delay: 0.35,
-                    repeat: Infinity,
-                    repeatDelay: 2.4,
-                    ease: [0.6, 0.05, 0.01, 0.99]
-                  }}
-                  style={{
-                    background:
-                      'linear-gradient(75deg, rgba(255,255,255,0) 45%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0) 55%)'
-                  }}
-                />
-              )}
+              {/* Favorito con borde dorado y hover dorado lleno */}
+              <button
+                type="button"
+                aria-label="Agregar a favoritos"
+                className="absolute right-2.5 top-2.5 grid place-items-center h-8 w-8 rounded-full border border-[#a38321]/40 bg-black/35 text-[#f1d08a]/90 hover:bg-[#a38321] hover:text-black transition-colors backdrop-blur-sm"
+              >
+                <Heart size={16} />
+              </button>
             </div>
 
-            {/* Info */}
-            <div
-              className={`p-3.5 sm:p-4 ${
-                compact ? 'text-left' : 'text-center'
-              }`}
-            >
-              <h3 className="font-bignoodle text-xl leading-tight">
+            {/* Info con acentos oro */}
+            <div className="p-3.5 sm:p-4 text-center relative">
+              <h3 className="font-bignoodle text-xl leading-tight text-white">
                 {p.title}
               </h3>
-              <div className="mt-1.5 text-sm text-white/70 min-h-[1.25rem]">
+              <div className="mt-1.5 text-sm text-white/75 min-h-[1.25rem]">
                 {p.priceDetails || ''}
               </div>
-              <div className={`mt-2.5 ${compact ? '' : ''}`}>
+              <div className="mt-2.5">
                 <span className="inline-flex items-baseline gap-1">
-                  <span className="text-lg font-semibold text-white">
+                  <span className="text-lg font-semibold bg-gradient-to-b from-[#f1d08a] via-[#caa042] to-[#a38321] bg-clip-text text-transparent">
                     {p.price}
                   </span>
                   {p.priceOld && (
-                    <span className="text-sm text-white/50 line-through">
+                    <span className="text-sm text-white/55 line-through">
                       {p.priceOld}
                     </span>
                   )}
@@ -452,17 +273,28 @@ function ProductCardRegia({ p, onQuickView, compact = false }) {
                     e.preventDefault();
                     onQuickView(p);
                   }}
-                  className="mt-3 inline-flex items-center justify-center rounded-xl border border-[#a38321]/30 px-3 py-2 text-sm text-white/90 hover:bg-[#a38321] hover:text-black transition-colors"
+                  className="mt-3 inline-flex items-center justify-center gap-2 rounded-xl border border-[#a38321]/40 px-3 py-2 text-sm text-[#f6e6b9] hover:bg-[#a38321] hover:text-black focus:outline-none focus:ring-2 focus:ring-[#a38321]/60"
                 >
-                  Vista rápida
+                  <Eye size={14} /> Vista rápida
                 </button>
               )}
             </div>
           </div>
-        </div>
+        </motion.div>
+
+        {/* Focus visible dorado al tab */}
+        <span className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-transparent group-focus-within:ring-[#a38321]" />
       </a>
-      {/* Focus a nivel tarjeta */}
-      <span className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-transparent group-focus-within:ring-[#a38321]" />
     </div>
+  );
+}
+
+function Empty() {
+  return (
+    <section className="py-12 px-4">
+      <div className="max-w-5xl mx-auto rounded-2xl border border-white/10 p-10 text-center text-white/70">
+        No hay productos para mostrar.
+      </div>
+    </section>
   );
 }
