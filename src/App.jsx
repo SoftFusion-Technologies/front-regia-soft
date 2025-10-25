@@ -15,12 +15,14 @@ import SizeGuide from './Pages/SizeGuide';
 import FAQ from './Pages/FAQ';
 import FloatingCart from './Components/FloatingCart';
 import Prod_RemerasOCla from './Pages/Sections/Prod_RemerasOCla';
+import ScrollToTop from './Components/ScrollToTop';
 const App = () => {
   return (
     <CartProvider>
       {' '}
       <Router>
         <Navbar />
+        <ScrollToTop top={0} behavior="smooth" />
         <Routes>
           {/* Definir la ruta para la página de inicio */}
           <Route path="/" element={<Home />} />
