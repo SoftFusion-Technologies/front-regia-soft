@@ -14,6 +14,11 @@ import imgInsta5 from '../Images/HeroInsta/imgInsta5.jpg';
 // video vertical (mobile).
 import heroVertical from '../Videos/hero-vertical.mp4';
 
+import DuoShowcase from '../Components/DuoShowcase';
+
+import imgA from '../Images/deluxe1.webp';
+import imgB from '../Images/denim1.webp';
+
 const Home = () => {
   return (
     <div>
@@ -22,6 +27,23 @@ const Home = () => {
         mobileVideoSrc={heroVertical}
         mobileVideoPoster={imgInsta1}
       />
+
+      <DuoShowcase
+        left={{
+          src: imgA,
+          alt: 'Nueva cápsula Denim',
+          href: '/coleccion/denim'
+        }}
+        right={{
+          src: imgB,
+          alt: 'Línea Essentials',
+          href: '/coleccion/essentials'
+        }}
+        ratio="4 / 5" // mismo formato en todas las resoluciones
+        gap="tight" // gap mínimo entre imágenes
+        bleed={true} // pegado a los bordes del viewport
+      />
+
       <div className="mt-20">
         <FeaturedProducts />
       </div>
