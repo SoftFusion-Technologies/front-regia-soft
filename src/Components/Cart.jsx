@@ -21,6 +21,81 @@ import {
  * - Link de WhatsApp con detalle de items, talles y color
  * - Respeta prefers-reduced-motion; estilos Regia (dorado)
  */
+import { DRESS_THUMBS } from '../data/dressThumbs';
+
+const PH_FALLBACK =
+  'data:image/svg+xml;utf8,\
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96">\
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">\
+<stop offset="0" stop-color="#111"/><stop offset="1" stop-color="#222"/></linearGradient></defs>\
+<rect width="100%" height="100%" fill="url(#g)"/><text x="50%" y="50%" dy=".35em" text-anchor="middle" fill="#777" font-size="10">Imagen</text></svg>';
+
+function CartItemThumb({ item, alt = 'Producto', className = '' }) {
+  const [src, setSrc] = React.useState(null);
+  const [error, setError] = React.useState(false);
+
+  const syncSrc = React.useMemo(() => {
+    const cands = [
+      item?.thumb,
+      item?.thumbnail,
+      item?.imageThumb,
+      item?.imageFront,
+      item?.imagePack,
+      item?.imageBack,
+      item?.image,
+      Array.isArray(item?.images) ? item.images[0] : null,
+      Array.isArray(item?.hero) ? item.hero[0] : null
+    ].filter(Boolean);
+    return cands[0] || null;
+  }, [item]);
+
+  const guessFromId = React.useMemo(() => {
+    const key = String(item?.id ?? '').replace(/\D+/g, '');
+    return key && DRESS_THUMBS[key] ? DRESS_THUMBS[key] : null;
+  }, [item?.id]);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      if (syncSrc) {
+        setSrc(syncSrc);
+        return;
+      }
+      if (guessFromId) {
+        setSrc(guessFromId);
+        return;
+      }
+      if (typeof item?.imageLoader === 'function') {
+        try {
+          const url = await item.imageLoader();
+          if (!cancelled) {
+            setSrc(url || PH_FALLBACK);
+            return;
+          }
+        } catch {}
+      }
+      if (!cancelled) setSrc(PH_FALLBACK);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [syncSrc, guessFromId, item]);
+
+  return (
+    <img
+      src={error ? PH_FALLBACK : src || PH_FALLBACK}
+      alt={alt}
+      className={className || 'h-full w-full object-cover'}
+      width={112}
+      height={112}
+      loading="lazy"
+      decoding="async"
+      draggable={false}
+      onError={() => setError(true)}
+    />
+  );
+}
+
 export default function CartRegia() {
   const shouldReduce = useReducedMotion();
   const {
@@ -153,18 +228,12 @@ export default function CartRegia() {
                   <div className="grid grid-cols-[96px_1fr_auto] sm:grid-cols-[112px_1fr_auto] items-center gap-3 sm:gap-4">
                     {/* Imagen */}
                     <div className="relative h-24 w-24 sm:h-28 sm:w-28 rounded-xl overflow-hidden border border-white/10 bg-black/30">
-                      <img
-                        src={it.imageFront || '/imgs/placeholder.webp'}
-                        alt={it.title}
-                        className="h-full w-full object-cover"
-                        loading="lazy"
-                        decoding="async"
-                      />
+                      <CartItemThumb item={it} alt={it.title} />
                     </div>
 
                     {/* Info */}
                     <div className="min-w-0">
-                      <h3 className="font-semibold leading-tight truncate">
+                      <h3 className="font-semibold leading-tight truncate text-white">
                         {it.title}
                       </h3>
                       <div className="mt-1 text-sm text-white/70 flex flex-wrap items-center gap-x-3 gap-y-1">
@@ -253,7 +322,7 @@ export default function CartRegia() {
         <div className="lg:col-span-1 mt-16">
           <div className="lg:sticky lg:top-20">
             <div className="rounded-2xl p-[1px] bg-[linear-gradient(135deg,rgba(241,208,138,0.35)_0%,rgba(202,160,66,0.25)_45%,rgba(163,131,33,0.25)_100%)]">
-              <div className="rounded-2xl bg-black/50 backdrop-blur-md p-5">
+              <div className="rounded-2xl bg-black/50 backdrop-blur-md p-5 text-white">
                 <h2 className="text-lg font-semibold">Resumen</h2>
 
                 {/* Cupón (UI dummy) */}

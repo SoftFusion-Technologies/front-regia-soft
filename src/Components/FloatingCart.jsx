@@ -1,131 +1,210 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { CartContext } from './CartContext';
+import { DRESS_THUMBS } from '../data/dressThumbs';
 
-const FloatingCart = () => {
+const PH_FALLBACK =
+  'data:image/svg+xml;utf8,\
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96">\
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">\
+<stop offset="0" stop-color="#111"/><stop offset="1" stop-color="#222"/></linearGradient></defs>\
+<rect width="100%" height="100%" fill="url(#g)"/><text x="50%" y="50%" dy=".35em" text-anchor="middle" fill="#777" font-size="10">Imagen</text></svg>';
+
+function moneyAR(n) {
+  if (n == null || n === '') return 'Consultar';
+  if (typeof n === 'string') return n;
+  try {
+    return new Intl.NumberFormat('es-AR', {
+      style: 'currency',
+      currency: 'ARS'
+    }).format(Number(n));
+  } catch {
+    return String(n);
+  }
+}
+
+function buildWhatsAppLink({ phone, text }) {
+  const digits = String(phone).replace(/\D+/g, '');
+  return `https://wa.me/${digits}?text=${encodeURIComponent(text || '')}`;
+}
+
+/** 1) Resolver síncrono por campos comunes, 2) por id con DRESS_THUMBS, 3) por imageLoader, 4) placeholder */
+function CartItemThumb({ item, alt = 'Producto', className = '' }) {
+  const [src, setSrc] = useState(null);
+  const [error, setError] = useState(false);
+
+  const syncSrc = useMemo(() => {
+    const cands = [
+      item?.thumb,
+      item?.thumbnail,
+      item?.imageThumb,
+      item?.imageFront,
+      item?.imagePack,
+      item?.imageBack,
+      item?.image,
+      Array.isArray(item?.images) ? item.images[0] : null,
+      Array.isArray(item?.hero) ? item.hero[0] : null
+    ].filter(Boolean);
+    return cands[0] || null;
+  }, [item]);
+
+  // Resolver por id con el mapa de vestidos (soporta items persistidos sin funciones)
+  const guessFromId = useMemo(() => {
+    const key = String(item?.id ?? '').replace(/\D+/g, '');
+    return key && DRESS_THUMBS[key] ? DRESS_THUMBS[key] : null;
+  }, [item?.id]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      // preferí síncrono si existe
+      if (syncSrc) {
+        setSrc(syncSrc);
+        return;
+      }
+      // luego por id (vestidos)
+      if (guessFromId) {
+        setSrc(guessFromId);
+        return;
+      }
+      // si AddToCart guardó la función (misma sesión)
+      if (typeof item?.imageLoader === 'function') {
+        try {
+          const url = await item.imageLoader();
+          if (!cancelled) {
+            setSrc(url || PH_FALLBACK);
+            return;
+          }
+        } catch {}
+      }
+      // fallback final
+      if (!cancelled) setSrc(PH_FALLBACK);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [syncSrc, guessFromId, item]);
+
+  return (
+    <img
+      src={error ? PH_FALLBACK : src || PH_FALLBACK}
+      alt={alt}
+      className={className || 'w-12 h-12 object-cover rounded'}
+      width={48}
+      height={48}
+      loading="lazy"
+      decoding="async"
+      draggable={false}
+      onError={() => setError(true)}
+    />
+  );
+}
+
+export default function FloatingCart() {
   const { isFloatingCartOpen, setIsFloatingCartOpen, cartItems } =
     useContext(CartContext);
 
-  // Función para generar el mensaje para WhatsApp
-  const generateWhatsAppMessage = () => {
-    let message =
-      '¡Hola! Quiero realizar una compra. Aquí están los detalles:\n\n';
+  const waMessage = useMemo(() => {
+    let lines = ['¡Hola! Quiero realizar una compra. Detalles:\n'];
+    for (const it of cartItems) {
+      lines.push(`• ${it.title || 'Producto'}`);
+      if (it.quantity != null) lines.push(`  Cantidad: ${it.quantity}`);
+      if (it.price != null) lines.push(`  Precio: ${moneyAR(it.price)}`);
+      if (it.selectedColor?.name)
+        lines.push(`  Color: ${it.selectedColor.name}`);
+      if (it.selectedSize?.name) lines.push(`  Talle: ${it.selectedSize.name}`);
+      lines.push('');
+    }
+    lines.push('¡Gracias!');
+    return lines.join('\n');
+  }, [cartItems]);
 
-    cartItems.forEach((item) => {
-      message += `Producto: ${item.title}\n`;
-      message += `Cantidad: ${item.quantity}\n`;
-      message += `Precio: ${item.price}\n`;
-      if (item.selectedColor) {
-        message += `Color: ${item.selectedColor.name}\n`;
-      }
-      if (item.selectedSize) {
-        message += `Talle: ${item.selectedSize.name}\n`; // Mostrar el talle
-      }
-      message += '\n'; // Línea en blanco para separar productos
-    });
-    message += '¡Gracias!';
+  const whatsappLink = buildWhatsAppLink({
+    phone: '5493812472636', // <- Ajustá tu número acá
+    text: waMessage
+  });
 
-    // Codificar el mensaje para URL
-    return encodeURIComponent(message);
-  };
+  if (!isFloatingCartOpen) return null;
 
-  // Enlace de WhatsApp con el mensaje generado
-  const whatsappLink = `https://wa.me/549+54 9 3812 472636?text=${generateWhatsAppMessage()}`;
+  return (
+    <div className="fixed top-0 right-0 w-80 max-w-[90vw] h-full bg-[#0b0b0b] text-white shadow-2xl border-l border-white/10 z-[120]">
+      {/* Header */}
+      <div className="flex items-center justify-between p-4 border-b border-white/10">
+        <h2 className="text-lg font-semibold tracking-wide">Mi Carrito</h2>
+        <button
+          onClick={() => setIsFloatingCartOpen(false)}
+          className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white/10 hover:bg-white/15 active:scale-95 transition"
+          aria-label="Cerrar"
+        >
+          ✕
+        </button>
+      </div>
 
-  return isFloatingCartOpen ? (
-    <>
-      {/* Botón flotante para abrir/cerrar el carrito */}
-      {/* <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-5 right-5 bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-600"
-      >
-        {isOpen ? 'Cerrar' : 'Carrito'}
-      </button> */}
-
-      {/* Carrito flotante */}
-      <div className="fixed top-0 right-0 w-80 h-full bg-white shadow-lg border-l border-gray-300 overflow-y-auto z-50">
-        <div className="flex justify-between items-center p-4 border-b">
-          <h2 className="text-xl font-bold">Mi Carrito</h2>
-          <button
-            onClick={() => setIsFloatingCartOpen(false)}
-            className="text-red-500 font-semibold"
-          >
-            X
-          </button>
+      {/* Items */}
+      {cartItems.length === 0 ? (
+        <div className="p-6 text-center text-white/70">
+          El carrito está vacío.
         </div>
-        {cartItems.length === 0 ? (
-          <div className="p-4 text-center">El carrito está vacío.</div>
-        ) : (
-          <ul className="p-4 space-y-4">
-            {cartItems.map((item) => (
-              <li
-                key={item.id}
-                className="flex items-center justify-between p-2 border-b"
-              >
-                <img
-                  src={item.imageFront || '/path/to/default-image.jpg'}
-                  alt={item.title}
-                  className="w-12 h-12 object-cover rounded"
-                />
-                <div className="flex-1 ml-4">
-                  <p className="text-sm font-medium">{item.title}</p>
-                  <p className="text-xs text-gray-500">
-                    Cantidad: {item.quantity}
-                  </p>
+      ) : (
+        <ul className="p-4 space-y-4 overflow-y-auto max-h-[calc(100vh-180px)]">
+          {cartItems.map((item) => (
+            <li
+              key={`${item.id}-${item.selectedColor?.id ?? ''}-${
+                item.selectedSize?.id ?? ''
+              }`}
+              className="flex items-center gap-3 p-2 rounded-lg ring-1 ring-white/10 bg-white/[0.03]"
+            >
+              <CartItemThumb item={item} alt={item.title} />
 
-                  {/* Mostrar el color seleccionado */}
-                  {item.selectedColor && item.selectedColor.name && (
-                    <div className="flex items-center mt-2">
-                      <div
-                        style={{
-                          backgroundColor: item.selectedColor.hex,
-                          width: '20px',
-                          height: '20px',
-                          borderRadius: '50%'
-                        }}
-                        className="mr-2"
-                      ></div>
-                      <p className="text-sm text-gray-600">
-                        {item.selectedColor.name}
-                      </p>
-                    </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium truncate">{item.title}</p>
+                <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-white/70">
+                  <span>Cant: {item.quantity ?? 1}</span>
+                  {item.selectedColor?.name && (
+                    <span className="inline-flex items-center gap-1">
+                      <span
+                        className="inline-block w-3.5 h-3.5 rounded-full ring-1 ring-white/20"
+                        style={{ backgroundColor: item.selectedColor.hex }}
+                        aria-hidden
+                      />
+                      {item.selectedColor.name}
+                    </span>
                   )}
-                  {/* Mostrar el talle seleccionado */}
-                  {item.selectedSize && (
-                    <p className="text-sm text-gray-600 mt-2">
-                      Talle: {item.selectedSize.name}
-                    </p>
+                  {item.selectedSize?.name && (
+                    <span>Talle: {item.selectedSize.name}</span>
                   )}
                 </div>
-                <p className="text-sm font-semibold">{item.price}</p>
-              </li>
-            ))}
-          </ul>
-        )}
-        {/* Botón para finalizar compra */}
-        {cartItems.length !== 0 && (
-          <div className="text-center mt-6">
-            <a
-              href={whatsappLink}
-              className="px-6 py-2 bg-green-500 text-white text-lg font-semibold rounded-md hover:bg-green-600"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Finalizar Compra
-            </a>
-          </div>
-        )}
+              </div>
 
-        <div className="text-center mt-6">
+              <p className="text-sm font-semibold shrink-0">
+                {moneyAR(item.price)}
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* Footer */}
+      {cartItems.length > 0 && (
+        <div className="p-4 border-t border-white/10 space-y-3">
+          <a
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white font-semibold transition"
+          >
+            Finalizar compra por WhatsApp
+          </a>
+
           <button
             onClick={() => (window.location.href = '/productos')}
-            className="px-6 py-2 bg-blue-500 text-white text-lg font-semibold rounded-md hover:bg-blue-600"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 bg-white/[0.06] hover:bg-white/[0.1] text-white font-medium transition"
           >
-            Seguir Comprando
+            Seguir comprando
           </button>
         </div>
-      </div>
-    </>
-  ) : null;
-};
-
-export default FloatingCart;
+      )}
+    </div>
+  );
+}

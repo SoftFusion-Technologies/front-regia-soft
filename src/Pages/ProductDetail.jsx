@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -8,62 +8,147 @@ import {
   Star,
   ChevronRight,
   CheckCircle2,
-  Sparkles
+  Sparkles,
+  Maximize2,
+  X
 } from 'lucide-react';
 
-// Tu data existente
+// Data legacy (seguís usando tu fuente actual)
 import { products } from '../Helpers/productsPremium';
 import { productosURL } from '../Helpers/productosURL';
 import { colors, sizes } from '../Helpers/helpers';
 import AddToCartButton from '../Config/AddToCartButton';
 import ProductNotFound from '../Components/ProductNotFound';
 
-/**
- * ProductDetail — Deluxe Gold/Black Edition
- *
- * Objetivos UX:
- * - Look & feel premium (negro + dorado) con micro-interacciones fluidas
- * - Galería con hover-zoom, thumbnails activos y teclado accesible
- * - Selectores de talle/color como radios accesibles
- * - Panel de compra sticky en desktop, CTA visible en mobile
- * - Breadcrumb compacto con separación clara
- * - Badges de confianza (envío, cambios, garantía)
- */
-export default function ProductDetail() {
-  // Scroll-to-top al montar
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+// MODO VESTIDOS (grupos colapsados). Es opcional: si no existe el archivo, comentá estas 3 líneas.
+import {
+  getGroupById,
+  loadAllImages,
+  moneyAR as moneyVest
+} from '../data/vestidos';
 
+const GOLD_GRAD = 'from-[#f0d68a] to-[#d4af37]';
+
+function moneyAR(n) {
+  if (n == null || n === '' || isNaN(Number(n))) return 'Consultar';
+  try {
+    return new Intl.NumberFormat('es-AR', {
+      style: 'currency',
+      currency: 'ARS'
+    }).format(Number(n));
+  } catch {
+    return String(n);
+  }
+}
+
+export default function ProductDetail() {
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const [currentImage, setCurrentImage] = useState(null);
+
+  // Estado principal
+  const [product, setProduct] = useState(null); // objeto "comprable" (siempre existe si hay algo que vender)
+  const [images, setImages] = useState([]); // urls de galería (1..n)
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
+  const [lightbox, setLightbox] = useState(false);
 
-  // Cargar producto (merge de arrays, sin duplicar ids)
+  // Al montar, subir al top (UX)
   useEffect(() => {
-    const merged = [
-      ...products,
-      ...productosURL.filter((p2) => !products.some((p1) => p1.id === p2.id))
-    ];
-    const found = merged.find((p) => p.id === Number(id));
-    setProduct(found || null);
-    if (found)
-      setCurrentImage(found.imageFront || found.imagePack || found.imageBack);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [id]);
 
-  const gallery = useMemo(() => {
-    if (!product) return [];
-    const candidates = [
-      product.imageFront,
-      product.imageBack,
-      product.imagePack
-    ].filter(Boolean);
-    const dedup = Array.from(new Set(candidates));
-    while (dedup.length < 4) dedup.push(null); // tiles vacíos de marca
-    return dedup.slice(0, 4);
-  }, [product]);
+  // Carga de datos:
+  // 1) intenta VESTIDOS (galería completa del grupo); 2) sino usa legacy (imageFront/back/pack)
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      // ----- MODO VESTIDOS -----
+      const g = typeof getGroupById === 'function' ? getGroupById(id) : null;
+      if (g) {
+        // Construyo un "producto" compatible con AddToCartButton
+        const p = {
+          id: g.id,
+          title: g.name,
+          price: g.price ?? null, // null => "Consultar"
+          priceDetails: '',
+          subtitle: '',
+          category: 'Vestidos',
+          // para compat: dejamos imageFront/Back/Pack con la primera foto (no se usan si hay gallery)
+          imageFront: null,
+          imageBack: null,
+          imagePack: null
+        };
+        // Cargo todas las imágenes del grupo
+        const urls = await loadAllImages(g);
+        if (cancelled) return;
+        setProduct(p);
+        setImages(urls);
+        setCurrentIndex(0);
+        return;
+      }
+
+      // ----- LEGACY (como lo tenías) -----
+      const merged = [
+        ...products,
+        ...productosURL.filter((p2) => !products.some((p1) => p1.id === p2.id))
+      ];
+      const found = merged.find((p) => p.id === Number(id)) || null;
+
+      if (!found) {
+        if (!cancelled) {
+          setProduct(null);
+          setImages([]);
+        }
+        return;
+      }
+
+      const gallery = Array.from(
+        new Set(
+          [found.imageFront, found.imageBack, found.imagePack].filter(Boolean)
+        )
+      );
+
+      if (!cancelled) {
+        setProduct(found);
+        setImages(gallery);
+        setCurrentIndex(0);
+      }
+    }
+    load();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
+
+  // Pre-carga la siguiente imagen (suaviza el cambio)
+  useEffect(() => {
+    const next = images[currentIndex + 1];
+    if (!next) return;
+    const img = new Image();
+    img.src = next;
+  }, [images, currentIndex]);
+
+  // Navegación por teclado entre imágenes
+  const onKeyDown = useCallback(
+    (e) => {
+      if (!images.length) return;
+      if (e.key === 'ArrowRight') {
+        setCurrentIndex((i) => Math.min(i + 1, images.length - 1));
+      } else if (e.key === 'ArrowLeft') {
+        setCurrentIndex((i) => Math.max(i - 1, 0));
+      } else if (e.key === 'Escape') {
+        setLightbox(false);
+      }
+    },
+    [images.length]
+  );
+
+  useEffect(() => {
+    window.addEventListener('keydown', onKeyDown, { passive: true });
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [onKeyDown]);
 
   if (!product) {
     return (
@@ -75,12 +160,27 @@ export default function ProductDetail() {
     );
   }
 
+  const title = product.title || 'Producto';
+  const priceText =
+    typeof product.price === 'number'
+      ? moneyAR(product.price)
+      : product.category === 'Vestidos'
+      ? moneyVest?.(product.price) ?? 'Consultar'
+      : moneyAR(product.price);
+
+  const mainImage =
+    images[currentIndex] ||
+    product.imageFront ||
+    product.imageBack ||
+    product.imagePack ||
+    null;
+
   return (
     <section className="bg-[#0a0a0a] text-white">
-      {/* Hero strip dorado sutil */}
+      {/* Strip dorado superior */}
       <div className="h-[3px] bg-gradient-to-r from-[#d4af37] via-[#f0d68a] to-[#d4af37]" />
 
-      {/* Contenedor principal */}
+      {/* Contenedor */}
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb" className="mb-6">
@@ -93,11 +193,13 @@ export default function ProductDetail() {
                 Inicio <ChevronRight className="w-4 h-4 opacity-60" />
               </Link>
             </li>
-            <li className="hidden xs:block">Hombre</li>
-            <li className="hidden xs:block opacity-60">/</li>
-            <li className="hidden xs:block">Remeras</li>
-            <li className="hidden xs:block opacity-60">/</li>
-            <li className="font-medium text-white">{product.title}</li>
+            {product.category && (
+              <>
+                <li className="hidden xs:block">{product.category}</li>
+                <li className="hidden xs:block opacity-60">/</li>
+              </>
+            )}
+            <li className="font-medium text-white">{title}</li>
           </ol>
         </nav>
 
@@ -106,54 +208,88 @@ export default function ProductDetail() {
           <div>
             <div className="relative group rounded-2xl overflow-hidden ring-1 ring-white/10 bg-black/40">
               <AnimatePresence mode="wait">
-                <motion.img
-                  key={currentImage || 'brand-tile'}
-                  src={
-                    currentImage ||
-                    product.imageFront ||
-                    product.imageBack ||
-                    product.imagePack
-                  }
-                  alt={product.title}
-                  className="w-full h-auto select-none will-change-transform"
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0.2, scale: 1.02 }}
-                  transition={{ duration: 0.35, ease: 'easeOut' }}
-                />
+                {mainImage ? (
+                  <motion.img
+                    key={mainImage}
+                    src={mainImage}
+                    alt={title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{ aspectRatio: '4 / 5' }}
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0.2, scale: 1.02 }}
+                    transition={{ duration: 0.35, ease: 'easeOut' }}
+                    draggable={false}
+                    decoding="async"
+                  />
+                ) : (
+                  <div
+                    key="skeleton"
+                    className="absolute inset-0 bg-white/5 animate-pulse"
+                    style={{ aspectRatio: '4 / 5' }}
+                  />
+                )}
               </AnimatePresence>
 
-              {/* Hover zoom */}
+              {/* Gradiente y botón lightbox */}
               <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-white/5" />
               </div>
+
+              {mainImage && (
+                <button
+                  type="button"
+                  onClick={() => setLightbox(true)}
+                  className="absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-black/60 backdrop-blur px-3 py-2 text-sm hover:bg-black/75 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f0d68a]"
+                  aria-label="Ver imagen a pantalla completa"
+                >
+                  <Maximize2 className="w-4 h-4 text-white/90" />
+                  <span className="text-white/90">Ampliar</span>
+                </button>
+              )}
+
+              {/* Mantener altura estable */}
+              <div className="invisible" style={{ aspectRatio: '4 / 5' }} />
             </div>
 
             {/* Thumbnails */}
             <div className="mt-4 grid grid-cols-4 gap-3">
-              {gallery.map((url, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => url && setCurrentImage(url)}
-                  className={`relative aspect-square rounded-xl overflow-hidden ring-1 ring-white/10 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f0d68a] ${
-                    currentImage === url ? 'ring-2 ring-[#d4af37]' : ''
-                  } ${url ? 'cursor-pointer' : 'opacity-80'}`}
-                  aria-label={url ? `Ver imagen ${idx + 1}` : 'Marca'}
-                >
-                  {url ? (
-                    <img
-                      src={url}
-                      alt="Vista"
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full grid place-items-center bg-black/60">
-                      <Sparkles className="w-6 h-6 text-[#f0d68a]" />
-                    </div>
-                  )}
-                </button>
-              ))}
+              {(images.length ? images : [null, null, null, null])
+                .slice(0, 4)
+                .map((url, idx) => {
+                  const active = idx === currentIndex;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => url && setCurrentIndex(idx)}
+                      className={`relative aspect-square rounded-xl overflow-hidden ring-1 transition
+                                focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f0d68a]
+                                ${
+                                  active
+                                    ? 'ring-2 ring-[#d4af37]'
+                                    : 'ring-white/10'
+                                }
+                                ${url ? 'cursor-pointer' : 'opacity-80'}`}
+                      aria-label={url ? `Ver imagen ${idx + 1}` : 'Marca'}
+                    >
+                      {url ? (
+                        <img
+                          src={url}
+                          alt={`Vista ${idx + 1}`}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                          decoding="async"
+                          draggable={false}
+                        />
+                      ) : (
+                        <div className="w-full h-full grid place-items-center bg-black/60">
+                          <Sparkles className="w-6 h-6 text-[#f0d68a]" />
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
             </div>
 
             {/* Badges confianza */}
@@ -173,14 +309,13 @@ export default function ProductDetail() {
             </ul>
           </div>
 
-          {/* Panel de compra */}
+          {/* Panel de compra (conserva AddToCartButton + lógica) */}
           <div className="lg:sticky lg:top-24">
-            {/* Header */}
             <div className="rounded-2xl ring-1 ring-white/10 bg-gradient-to-b from-black/60 to-black/30 p-5 md:p-6">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">
-                    {product.title}
+                    {title}
                   </h1>
                   {product.subtitle && (
                     <p className="text-white/70 mt-1 text-sm">
@@ -189,8 +324,10 @@ export default function ProductDetail() {
                   )}
                 </div>
                 <div className="text-right">
-                  <div className="text-[28px] leading-none font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#f0d68a] to-[#d4af37]">
-                    {product.price}
+                  <div
+                    className={`text-[28px] leading-none font-semibold bg-clip-text text-transparent bg-gradient-to-r ${GOLD_GRAD}`}
+                  >
+                    {priceText}
                   </div>
                   {product.priceDetails && (
                     <p className="text-xs text-white/70 mt-1">
@@ -200,7 +337,7 @@ export default function ProductDetail() {
                 </div>
               </div>
 
-              {/* Rating demo opcional */}
+              {/* Rating demo */}
               <div className="mt-3 flex items-center gap-1 text-xs text-white/80">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
@@ -287,7 +424,7 @@ export default function ProductDetail() {
                 </div>
               </div>
 
-              {/* CTA */}
+              {/* CTA (tu mismo botón) */}
               <div className="mt-6">
                 <AddToCartButton
                   product={product}
@@ -308,9 +445,14 @@ export default function ProductDetail() {
                   <h3 className="text-base font-medium">Descripción</h3>
                 </summary>
                 <div className="mt-3 text-sm leading-relaxed text-white/85 space-y-3">
-                  {(product.description || '').split('\n').map((line, i) => (
-                    <p key={i}>{line.trim()}</p>
-                  ))}
+                  {(
+                    product.description ||
+                    'Producto de la nueva colección. Consultá disponibilidad.'
+                  )
+                    .split('\n')
+                    .map((line, i) => (
+                      <p key={i}>{line.trim()}</p>
+                    ))}
                 </div>
               </details>
               <div className="h-px bg-white/10 mx-5" />
@@ -318,32 +460,74 @@ export default function ProductDetail() {
                 <div className="rounded-xl bg-black/40 ring-1 ring-white/10 p-4">
                   <p className="font-medium mb-1">Composición</p>
                   <p className="text-white/80">
-                    Algodón premium + costuras reforzadas.
+                    Textiles seleccionados y terminación premium.
                   </p>
                 </div>
                 <div className="rounded-xl bg-black/40 ring-1 ring-white/10 p-4">
                   <p className="font-medium mb-1">Cuidados</p>
                   <p className="text-white/80">
-                    Lavar del revés con agua fría. No usar cloro.
+                    Lavar con agua fría. No cloro. Secado a la sombra.
                   </p>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
 
-            {/* Sello de marca */}
-            {/* <div className="mt-6 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#f0d68a] to-[#d4af37]" />
-              <p className="text-sm text-white/70">
-                Edición <span className="text-[#f0d68a] font-medium">Gold</span>{' '}
-                — diseño cuidado al detalle.
-              </p>
-            </div> */}
+        {/* Sticky CTA mobile (opcional) */}
+        <div className="lg:hidden fixed inset-x-0 bottom-0 z-40 p-3 pointer-events-none">
+          <div className="pointer-events-auto mx-auto max-w-6xl">
+            <div className="rounded-2xl ring-1 ring-white/10 bg-black/70 backdrop-blur p-3">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-sm text-white/70 leading-tight">{title}</p>
+                  <p
+                    className={`text-base font-semibold bg-clip-text text-transparent bg-gradient-to-r ${GOLD_GRAD}`}
+                  >
+                    {priceText}
+                  </p>
+                </div>
+                <AddToCartButton
+                  product={product}
+                  selectedColor={selectedColor}
+                  selectedSize={selectedSize}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Footer strip dorado */}
+      {/* Strip dorado inferior */}
       <div className="h-[2px] bg-gradient-to-r from-[#d4af37] via-[#f0d68a] to-[#d4af37]" />
+
+      {/* Lightbox fullscreen */}
+      <AnimatePresence>
+        {lightbox && mainImage && (
+          <motion.div
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <button
+              onClick={() => setLightbox(false)}
+              className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f0d68a]"
+              aria-label="Cerrar"
+            >
+              <X className="w-6 h-6 text-white" />
+            </button>
+            <div className="h-full w-full grid place-items-center p-4">
+              <img
+                src={mainImage}
+                alt={title}
+                className="max-h-[90vh] max-w-[95vw] object-contain"
+                draggable={false}
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
