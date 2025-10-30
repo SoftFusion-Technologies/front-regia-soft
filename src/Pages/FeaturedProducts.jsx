@@ -66,7 +66,7 @@ export default function FeaturedProducts({
   return (
     <section className="relative py-14 sm:py-16 px-4 sm:px-6 lg:px-8">
       {/* Heading */}
-      <div className="max-w-7xl mx-auto mb-8 md:mb-10">
+      {/* <div className="max-w-7xl mx-auto mb-8 md:mb-10">
         <h2 className="text-center md:text-left font-bignoodle tracking-tight uppercase text-3xl sm:text-4xl md:text-5xl">
           <span
             className={`bg-gradient-to-b ${GOLD} bg-clip-text text-transparent`}
@@ -74,44 +74,53 @@ export default function FeaturedProducts({
             {title}
           </span>
         </h2>
-      </div>
+      </div> */}
 
       {/* Spotlight unchanged en mobile; refinado en desktop */}
-      <div className="max-w-7xl mx-auto">
+      {/* <div className="max-w-7xl mx-auto">
         <FeaturedGallery files={files} />
-      </div>
+      </div> */}
 
       <div className="max-w-7xl mx-auto mb-8 md:mb-10" id="featured-products">
         <h2 className="text-center md:text-left font-bignoodle tracking-tight uppercase text-3xl sm:text-4xl md:text-5xl">
           <span
             className={`bg-gradient-to-b ${GOLD} bg-clip-text text-transparent`}
           >
-            PRODUCTOS
+            PRODUCTOS BY REGIA
           </span>
         </h2>
       </div>
       {/* Grid Luxe (sin cambios visuales en mobile) */}
-      <motion.ul
-        className="max-w-7xl mx-auto mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6 md:gap-7"
-        initial="hidden"
-        animate="show"
-        variants={{
-          hidden: { opacity: 1 },
-          show: { opacity: 1, transition: { staggerChildren: 0.06 } }
-        }}
-      >
-        {rest.slice(0, visible).map((p) => (
-          <motion.li
-            key={p.id}
+      {/* Full-bleed, sin overflow lateral y pegado a los bordes */}
+        <div className="sm:ml-2 relative mx-[calc(50%-50vw)] w-[95vw] max-w-[95vw]">
+          <motion.ul
+            className="
+        mt-6
+        grid grid-cols-2        /* ⬅️ mínimo 2 en mobile */
+        md:grid-cols-4          /* ⬅️ 4 en desktop/pc */
+        gap-2 sm:gap-3 md:gap-4 lg:gap-6
+      "
+            initial="hidden"
+            animate="show"
             variants={{
-              hidden: { opacity: 0, y: 10 },
-              show: { opacity: 1, y: 0 }
+              hidden: { opacity: 1 },
+              show: { opacity: 1, transition: { staggerChildren: 0.06 } }
             }}
           >
-            <LuxeCard p={p} onQuickView={onQuickView} />
-          </motion.li>
-        ))}
-      </motion.ul>
+            {rest.slice(0, visible).map((p) => (
+              <motion.li
+                key={p.id}
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  show: { opacity: 1, y: 0 }
+                }}
+                className="h-full"
+              >
+                <LuxeCard p={p} onQuickView={onQuickView} />
+              </motion.li>
+            ))}
+          </motion.ul>
+        </div>
 
       {/* Cargar más */}
       {visible < rest.length && (
