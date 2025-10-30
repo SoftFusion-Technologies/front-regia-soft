@@ -15,7 +15,11 @@ import ParticlesBackground from './ParticlesBackground';
  * - Respeta prefers-reduced-motion
  * - Optimiza imágenes (decoding, fetchPriority, sizes)
  */
-export default function Hero({ igImages = [] }) {
+export default function Hero({
+  igImages = [],
+  mobileVideoSrc,
+  mobileVideoPoster
+}) {
   const shouldReduce = useReducedMotion();
   const images = useMemo(() => (igImages || []).slice(0, 5), [igImages]);
 
@@ -76,43 +80,53 @@ export default function Hero({ igImages = [] }) {
 
   return (
     <section className="relative isolate w-full min-h-[clamp(60svh,72svh,86svh)] md:min-h-[clamp(50svh,64svh,76svh)] lg:min-h-[clamp(60svh,72svh,86svh)] overflow-hidden">
-      {/* Fondo */}
+      {/* Fondo negro común */}
       <div aria-hidden className="absolute inset-0 -z-30 bg-black" />
 
-      {/* Partículas globales (ya existente) */}
-      <ParticlesBackground />
+      {/* Partículas: solo desktop para performance */}
+      <div className="hidden md:block">
+        <ParticlesBackground />
+      </div>
 
-      {/* Sutil grain para dar textura de alta calidad */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-20 opacity-[0.08] pointer-events-none"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), transparent 40%), radial-gradient(circle at 80% 0%, rgba(255,255,255,0.06), transparent 40%), radial-gradient(circle at 0% 100%, rgba(255,255,255,0.05), transparent 40%)'
-        }}
-      />
+      {/* ---------- MOBILE: video vertical ---------- */}
+      {mobileVideoSrc && (
+        <div className="relative block md:hidden h-[88svh]">
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            src={mobileVideoSrc}
+            poster={mobileVideoPoster}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            disablePictureInPicture
+            aria-hidden
+          />
+          {/* Filtro/gradientes para legibilidad */}
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/60"
+          />
+        </div>
+      )}
 
-      {/* Tira de imágenes IG */}
+      {/* ---------- DESKTOP: tira IG ---------- */}
       <div
         ref={stripRef}
-        className="absolute inset-x-0 top-1/2 -translate-y-1/2 mx-auto w-full max-w-[1600px] md:max-w-[1760px] px-2 sm:px-4 md:px-6"
+        className="hidden md:block absolute inset-x-0 top-1/2 -translate-y-1/2 mx-auto w-full max-w-[1600px] md:max-w-[1760px] px-2 sm:px-4 md:px-6"
         style={{ height: 'clamp(360px, 58svh, 780px)' }}
       >
         <div className="relative w-full h-full">
-          {/* Slot 1 como referencia de origen */}
           <div
             className="absolute left-0 top-0 h-full"
             style={{ width: slotW }}
           />
-
           {images.map((src, i) => {
             const xTarget = i * (slotW + gap);
             const delay = baseDelay * i;
-
-            // micro-parallax por tarjeta (muy sutil y respetuoso de accesibilidad)
-            const parallaxX = shouldReduce ? 0 : cursor.x * (i - 2) * 2; // -4..+4 aprox.
-            const parallaxY = shouldReduce ? 0 : cursor.y * (i - 2) * 1.5; // -3..+3 aprox.
-
+            const parallaxX = shouldReduce ? 0 : cursor.x * (i - 2) * 2;
+            const parallaxY = shouldReduce ? 0 : cursor.y * (i - 2) * 1.5;
             return (
               <motion.div
                 key={`${src}-${i}`}
@@ -132,9 +146,7 @@ export default function Hero({ igImages = [] }) {
               >
                 <motion.div
                   className="relative h-full rounded-[22px] overflow-hidden bg-black/70 ring-1 ring-[#a38321]/30 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)]"
-                  style={{
-                    transformStyle: 'preserve-3d'
-                  }}
+                  style={{ transformStyle: 'preserve-3d' }}
                   animate={shouldReduce ? {} : { x: parallaxX, y: parallaxY }}
                   transition={{
                     type: 'spring',
@@ -143,7 +155,6 @@ export default function Hero({ igImages = [] }) {
                     mass: 0.4
                   }}
                 >
-                  {/* Imagen */}
                   <motion.img
                     src={src}
                     alt={`Colección Regia ${i + 1}`}
@@ -164,8 +175,6 @@ export default function Hero({ igImages = [] }) {
                       ease: [0.16, 1, 0.3, 1]
                     }}
                   />
-
-                  {/* Halo dorado exterior muy sutil */}
                   <div
                     aria-hidden
                     className="absolute -inset-[1px] rounded-[22px] pointer-events-none"
@@ -174,14 +183,10 @@ export default function Hero({ igImages = [] }) {
                         'radial-gradient(120% 100% at 50% 0%, rgba(250,215,160,0.12), rgba(163,131,33,0.06) 35%, transparent 60%)'
                     }}
                   />
-
-                  {/* Borde dorado suave */}
                   <span
                     aria-hidden
                     className="pointer-events-none absolute inset-0 rounded-[22px] border border-[#a38321]/40"
                   />
-
-                  {/* GLINT SWEEP (destello diagonal que barre) */}
                   {!shouldReduce && (
                     <motion.div
                       aria-hidden
@@ -201,8 +206,6 @@ export default function Hero({ igImages = [] }) {
                       }}
                     />
                   )}
-
-                  {/* BRILLITOS discretos (sparkles) */}
                   {!shouldReduce && <SparklesLayer seed={i} />}
                 </motion.div>
               </motion.div>
@@ -211,28 +214,24 @@ export default function Hero({ igImages = [] }) {
         </div>
       </div>
 
-      {/* Fade inferior para legibilidad */}
+      {/* Fade inferior para legibilidad en ambos modos */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 h-28 -z-10 bg-gradient-to-b from-transparent to-black/60"
       />
 
-      {/* Overlay del hero (texto/CTA) */}
+      {/* Overlay (CTA/texto) visible en ambos */}
       <PostHero targetId="featured-products" />
     </section>
   );
 }
 
-/**
- * SparklesLayer — capa de pequeños destellos animados
- * Genera micro puntos con radial-gradient y los flota sutilmente.
- */
+/* SparklesLayer igual que ya lo tenías */
 function SparklesLayer({ seed = 0 }) {
-  // Distribución pseudo-aleatoria determinística basada en seed
-  const points = useMemo(() => {
+  const points = React.useMemo(() => {
     const rnd = mulberry32(seed + 12345);
-    const total = 8; // pocos para mantener elegancia
-    return new Array(total).fill(0).map((_, i) => ({
+    const total = 8;
+    return new Array(total).fill(0).map(() => ({
       left: Math.round(rnd() * 1000) / 10 + '%',
       top: Math.round(rnd() * 1000) / 10 + '%',
       size: 2 + Math.round(rnd() * 4),
@@ -275,7 +274,6 @@ function SparklesLayer({ seed = 0 }) {
   );
 }
 
-// PRNG simple para distribución de sparkles
 function mulberry32(a) {
   return function () {
     let t = (a += 0x6d2b79f5);

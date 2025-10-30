@@ -11,11 +11,16 @@ import imgInsta3 from '../Images/HeroInsta/imgInsta3.jpg';
 import imgInsta4 from '../Images/HeroInsta/imgInsta4.jpg';
 import imgInsta5 from '../Images/HeroInsta/imgInsta5.jpg';
 
+// video vertical (mobile).
+import heroVertical from '../Videos/hero-vertical.mp4';
+
 const Home = () => {
   return (
     <div>
       <Hero
         igImages={[imgInsta1, imgInsta2, imgInsta3, imgInsta4, imgInsta5]}
+        mobileVideoSrc={heroVertical}
+        mobileVideoPoster={imgInsta1}
       />
       <div className="mt-20">
         <FeaturedProducts />
