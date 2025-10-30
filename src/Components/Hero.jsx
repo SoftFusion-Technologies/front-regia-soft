@@ -90,7 +90,7 @@ export default function Hero({
 
       {/* ---------- MOBILE: video vertical ---------- */}
       {mobileVideoSrc && (
-        <div className="relative block md:hidden h-[88svh]">
+        <div className="relative block md:hidden h-[100svh]">
           <video
             className="absolute inset-0 w-full h-full object-cover"
             src={mobileVideoSrc}

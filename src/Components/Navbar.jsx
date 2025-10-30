@@ -5,15 +5,14 @@ import LogoRg from '../Images/logoRegia.jpg';
 import { menuItems } from '../Config/menu';
 import { CartContext } from '../Components/CartContext';
 import ParticlesBackground from './ParticlesBackground';
+
 /**
- * NavbarGaláctico
- * — Tema: negro/azul galáctico + acentos dorados
- * — UX: centrado en claridad, contraste y accesibilidad
- * — Desktop: menú con submenús tipo popover de vidrio (glass)
- * — Mobile: drawer lateral con overlay + acordeones
- * — Accesibilidad: navegación por teclado, aria-* consistentes
+ * Navbar (overlay inteligente + FAB en mobile)
+ * - En Home, arriba del todo: nav transparente (no tapa hero). En mobile, oculto y con FAB para abrir menú.
+ * - Al scrollear (>=50px) o abrir menú: nav aparece con bg negro + blur + borde/sombra.
+ * - En otras páginas: agrega spacer para que el contenido no quede debajo del nav fijo.
  */
-export default function NavbarGaláctico() {
+export default function Navbar() {
   const { cartItems } = useContext(CartContext);
   const total = useMemo(
     () => cartItems.reduce((a, b) => a + b.quantity, 0),
@@ -26,6 +25,11 @@ export default function NavbarGaláctico() {
   const [prefersReduced, setPrefersReduced] = useState(false);
   const drawerRef = useRef(null);
   const location = useLocation();
+
+  const GOLD = '#F5D36C';
+  const GOLD_SOFT = '#ac8a1e';
+
+  const isHome = location.pathname === '/';
 
   // Cerrar menús al cambiar de ruta
   useEffect(() => {
@@ -42,13 +46,13 @@ export default function NavbarGaláctico() {
     return () => media.removeEventListener('change', onChange);
   }, []);
 
-  // Detecta scroll para estilo sticky/blur (inspirado en ejemplo)
+  // Detecta scroll para estilo sticky/blur
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY || document.documentElement.scrollTop;
       setScrolled(y > 50);
     };
-    window.addEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -72,219 +76,235 @@ export default function NavbarGaláctico() {
     return () => (document.body.style.overflow = '');
   }, [isOpen]);
 
-  const GOLD = '#F5D36C'; // dorado principal
-  const GOLD_SOFT = '#ac8a1e'; // dorado suave
+  // Estado de overlay en Home (tope, sin scroll y sin menú abierto)
+  const overlayTop = isHome && !scrolled && !isOpen;
+  // En mobile, cuando overlayTop => ocultamos nav y mostramos FAB
+  const hideBarMobile = overlayTop;
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 text-gray-100 max-w-full mx-auto px-6 border-b ${
-        isOpen
-          ? 'h-24 bg-black border-white/10'
-          : scrolled
-          ? 'h-20 bg-black/80 backdrop-blur-md border-white/10 shadow-lg shadow-black/20 transition-all duration-300 ease-in-out'
-          : 'h-24 bg-black border-transparent transition-all duration-300 ease-in-out'
-      }`}
-      aria-label="Navegación principal"
-    >
-      {/* Partículas con opacidad dinámica */}
-      <div className={`transition-opacity duration-300 pointer-events-none`}>
-        <ParticlesBackground />
-      </div>
-      {/* Capa de fondo galáctico */}
-      <div className="relative w-full">
-        {/* Contenedor */}
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          {/* GRID: marca | menú | acciones */}
-          <div className="grid grid-cols-[auto_1fr_auto] items-center gap-2 md:gap-4 h-20">
-            {/* Marca */}
-            <div className="flex items-center gap-3 min-w-0">
-              <Link to="/" className="shrink-0" aria-label="Inicio">
-                <img
-                  src={LogoRg}
-                  alt="Regia"
-                  className="h-9 w-auto rounded-md ring-1 ring-white/10 shadow-sm"
-                />
-              </Link>
+    <>
+      {/* NAV principal */}
+      <nav
+        className={[
+          'fixed top-0 left-0 w-full z-50 text-gray-100 max-w-full mx-auto px-6 border-b',
+          'transition-all duration-300 ease-in-out',
+          overlayTop
+            ? 'bg-transparent border-transparent shadow-none'
+            : 'bg-black/80 backdrop-blur-md border-white/10 shadow-lg shadow-black/20',
+          isOpen ? 'h-24' : 'h-20',
+          hideBarMobile
+            ? 'md:h-20 md:opacity-100 opacity-0 pointer-events-none'
+            : 'opacity-100 pointer-events-auto'
+        ].join(' ')}
+        aria-label="Navegación principal"
+      >
+        {/* Partículas: solo cuando no estamos en overlayTop para no competir con el hero */}
+        {!overlayTop && (
+          <div
+            className="absolute inset-0 -z-10 opacity-60 pointer-events-none"
+            aria-hidden
+          >
+            <ParticlesBackground />
+          </div>
+        )}
 
-              <Link
-                to="/"
-                aria-label="Regia - Almacén de Moda"
-                className="flex flex-col leading-none select-none min-w-0"
-              >
-                <span
-                  className="font-brand text-[20px] sm:text-[22px] md:text-[24px] font-semibold tracking-[0.02em] uppercase"
-                  style={{ color: GOLD }}
-                >
-                  REGIA
-                </span>
-                {/* <span
-                  className="hidden lg:block font-brand text-[12.5px] tracking-[0.12em] uppercase whitespace-nowrap truncate max-w-[420px]"
-                  style={{ color: GOLD_SOFT }}
-                  title="ALMACÉN DE MODA · INDUMENTARIA FEMENINA"
-                >
-                  ALMACÉN DE MODA · INDUMENTARIA FEMENINA
-                </span> */}
-              </Link>
-            </div>
+        {/* Capa de fondo galáctico + contenido */}
+        <div className="relative w-full">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6">
+            {/* GRID: marca | menú | acciones */}
+            <div className="grid grid-cols-[auto_1fr_auto] items-center gap-2 md:gap-4 h-20">
+              {/* Marca */}
+              <div className="flex items-center gap-3 min-w-0">
+                <Link to="/" className="shrink-0" aria-label="Inicio">
+                  <img
+                    src={LogoRg}
+                    alt="Regia"
+                    className="h-9 w-auto rounded-md ring-1 ring-white/10 shadow-sm"
+                  />
+                </Link>
 
-            {/* Menú desktop (estilo ejemplo: centrado + subrayado dinámico) */}
-            <div className="hidden xl:flex items-center justify-center">
-              <ul
-                className={`flex items-center gap-10 transition-all duration-300 ${
-                  scrolled ? 'text-xs' : 'text-sm 2xl:text-lg'
-                }`}
-              >
-                {menuItems.map((item) => (
-                  <li
-                    key={item.id}
-                    className="relative group"
-                    onMouseEnter={() => setOpenSub(item.id)}
-                    onMouseLeave={() => setOpenSub(null)}
-                    onBlur={(e) => {
-                      // Cierra si el foco se va fuera de este <li> (accesibilidad teclado)
-                      if (!e.currentTarget.contains(e.relatedTarget))
-                        setOpenSub(null);
-                    }}
+                <Link
+                  to="/"
+                  aria-label="Regia - Almacén de Moda"
+                  className="flex flex-col leading-none select-none min-w-0"
+                >
+                  <span
+                    className="font-brand text-[20px] sm:text-[22px] md:text-[24px] font-semibold tracking-[0.02em] uppercase"
+                    style={{ color: GOLD }}
                   >
-                    {item.submenu ? (
-                      <>
-                        <button
-                          className={`uppercase tracking-[0.12em] font-semibold transition-all duration-200 ${
-                            scrolled
-                              ? 'text-gray-100 drop-shadow-[0_0_8px_rgba(255,255,255,0.35)]'
-                              : 'text-gray-200 drop-shadow-[0_0_6px_rgba(200,200,200,0.25)]'
-                          } group-hover:-translate-y-[1px] group-hover:tracking-[0.14em]`}
-                          style={{ color: GOLD_SOFT }}
-                          aria-expanded={openSub === item.id}
-                          aria-haspopup="true"
-                        >
-                          {item.label}
-                        </button>
+                    REGIA
+                  </span>
+                </Link>
+              </div>
 
-                        {/* Submenú */}
-                        {openSub === item.id && (
-                          <div
-                            className="
-      absolute left-0 top-full z-[200] min-w-64
-      rounded-xl border border-white/10 ring-1 ring-white/10
-      bg-black/95 backdrop-blur-xl shadow-2xl overflow-hidden pointer-events-auto
-      before:content-[''] before:absolute before:-top-2 before:left-0 before:h-2 before:w-full
-    "
-                            // Opcional: si querés máxima tolerancia:
-                            onMouseEnter={() => setOpenSub(item.id)}
-                            onMouseLeave={() => setOpenSub(null)}
-                          >
-                            <ul
-                              className={`p-2 ${
-                                item.submenu.length > 6
-                                  ? 'grid grid-cols-2 gap-1'
-                                  : ''
-                              }`}
-                            >
-                              {item.submenu.map((sub) => (
-                                <li key={sub.id}>
-                                  <NavLink
-                                    to={sub.href}
-                                    className={({ isActive }) =>
-                                      [
-                                        'block px-3 py-2 rounded-md font-brand uppercase tracking-[0.06em] text-[14.5px] transition',
-                                        isActive
-                                          ? 'bg-white/5 font-semibold'
-                                          : 'hover:bg-white/5'
-                                      ].join(' ')
-                                    }
-                                    style={({ isActive }) => ({
-                                      color: isActive ? GOLD : GOLD_SOFT
-                                    })}
-                                  >
-                                    {sub.label}
-                                  </NavLink>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        <NavLink
-                          to={item.href}
-                          className={({ isActive }) =>
-                            [
-                              'uppercase tracking-[0.12em] font-semibold transition-all duration-200',
+              {/* Menú desktop centrado */}
+              <div className="hidden xl:flex items-center justify-center">
+                <ul
+                  className={`flex items-center gap-10 transition-all duration-300 ${
+                    scrolled ? 'text-xs' : 'text-sm 2xl:text-lg'
+                  }`}
+                >
+                  {menuItems.map((item) => (
+                    <li
+                      key={item.id}
+                      className="relative group"
+                      onMouseEnter={() => setOpenSub(item.id)}
+                      onMouseLeave={() => setOpenSub(null)}
+                      onBlur={(e) => {
+                        if (!e.currentTarget.contains(e.relatedTarget))
+                          setOpenSub(null);
+                      }}
+                    >
+                      {item.submenu ? (
+                        <>
+                          <button
+                            className={`uppercase tracking-[0.12em] font-semibold transition-all duration-200 ${
                               scrolled
                                 ? 'text-gray-100 drop-shadow-[0_0_8px_rgba(255,255,255,0.35)]'
-                                : 'text-gray-200 drop-shadow-[0_0_6px_rgba(200,200,200,0.25)]',
-                              'group-hover:-translate-y-[1px] group-hover:tracking-[0.14em]',
-                              isActive
-                                ? 'opacity-100'
-                                : 'opacity-90 hover:opacity-100'
-                            ].join(' ')
-                          }
-                          style={({ isActive }) => ({
-                            color: isActive ? GOLD : GOLD_SOFT
-                          })}
-                        >
-                          {item.label}
-                        </NavLink>
-                        {/* underline effect */}
-                        <span className="pointer-events-none absolute -bottom-1 left-0 w-full h-[2px] bg-gray-600/50 rounded-full" />
-                        <span
-                          className={`pointer-events-none absolute -bottom-1 left-0 h-[2px] w-full rounded-full origin-left scale-x-0 transition-all duration-200 group-hover:scale-x-100 ${
-                            scrolled ? 'bg-gray-100' : 'bg-gray-300'
-                          }`}
-                        />
-                      </>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
+                                : 'text-gray-200 drop-shadow-[0_0_6px_rgba(200,200,200,0.25)]'
+                            } group-hover:-translate-y-[1px] group-hover:tracking-[0.14em]`}
+                            style={{ color: GOLD_SOFT }}
+                            aria-expanded={openSub === item.id}
+                            aria-haspopup="true"
+                          >
+                            {item.label}
+                          </button>
 
-            {/* Acciones */}
-            <div className="ml-auto flex items-center gap-2 md:gap-3">
-              <Link
-                to="/cart"
-                className="relative inline-flex items-center justify-center gap-2 rounded-xl border px-3 py-2 transition backdrop-blur-sm bg-white/[0.03] hover:bg-white/[0.06] border-white/10 ring-1 ring-white/10"
-                aria-label="Ver carrito"
-              >
-                <ShoppingCart className="h-5 w-5" style={{ color: GOLD }} />
-                <span
-                  className="hidden sm:inline text-[14.5px] font-brand font-medium uppercase tracking-[0.08em]"
-                  style={{ color: GOLD_SOFT }}
+                          {/* Submenú (popover) */}
+                          {openSub === item.id && (
+                            <div
+                              className="
+                                absolute left-0 top-full z-[200] min-w-64
+                                rounded-xl border border-white/10 ring-1 ring-white/10
+                                bg-black/95 backdrop-blur-xl shadow-2xl overflow-hidden pointer-events-auto
+                                before:content-[''] before:absolute before:-top-2 before:left-0 before:h-2 before:w-full
+                              "
+                              onMouseEnter={() => setOpenSub(item.id)}
+                              onMouseLeave={() => setOpenSub(null)}
+                            >
+                              <ul
+                                className={`p-2 ${
+                                  item.submenu.length > 6
+                                    ? 'grid grid-cols-2 gap-1'
+                                    : ''
+                                }`}
+                              >
+                                {item.submenu.map((sub) => (
+                                  <li key={sub.id}>
+                                    <NavLink
+                                      to={sub.href}
+                                      className={({ isActive }) =>
+                                        [
+                                          'block px-3 py-2 rounded-md font-brand uppercase tracking-[0.06em] text-[14.5px] transition',
+                                          isActive
+                                            ? 'bg-white/5 font-semibold'
+                                            : 'hover:bg-white/5'
+                                        ].join(' ')
+                                      }
+                                      style={({ isActive }) => ({
+                                        color: isActive ? GOLD : GOLD_SOFT
+                                      })}
+                                    >
+                                      {sub.label}
+                                    </NavLink>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <NavLink
+                            to={item.href}
+                            className={({ isActive }) =>
+                              [
+                                'uppercase tracking-[0.12em] font-semibold transition-all duration-200',
+                                scrolled
+                                  ? 'text-gray-100 drop-shadow-[0_0_8px_rgba(255,255,255,0.35)]'
+                                  : 'text-gray-200 drop-shadow-[0_0_6px_rgba(200,200,200,0.25)]',
+                                'group-hover:-translate-y-[1px] group-hover:tracking-[0.14em]',
+                                isActive
+                                  ? 'opacity-100'
+                                  : 'opacity-90 hover:opacity-100'
+                              ].join(' ')
+                            }
+                            style={({ isActive }) => ({
+                              color: isActive ? GOLD : GOLD_SOFT
+                            })}
+                          >
+                            {item.label}
+                          </NavLink>
+                          {/* underline effect */}
+                          <span className="pointer-events-none absolute -bottom-1 left-0 w-full h-[2px] bg-gray-600/50 rounded-full" />
+                          <span
+                            className={`pointer-events-none absolute -bottom-1 left-0 h-[2px] w-full rounded-full origin-left scale-x-0 transition-all duration-200 group-hover:scale-x-100 ${
+                              scrolled ? 'bg-gray-100' : 'bg-gray-300'
+                            }`}
+                          />
+                        </>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Acciones derecha */}
+              <div className="ml-auto flex items-center gap-2 md:gap-3">
+                <Link
+                  to="/cart"
+                  className="relative inline-flex items-center justify-center gap-2 rounded-xl border px-3 py-2 transition backdrop-blur-sm bg-white/[0.03] hover:bg-white/[0.06] border-white/10 ring-1 ring-white/10"
+                  aria-label="Ver carrito"
                 >
-                  Carrito
-                </span>
-                {total > 0 && (
+                  <ShoppingCart className="h-5 w-5" style={{ color: GOLD }} />
                   <span
-                    className="absolute -right-2 -top-2 min-w-[22px] h-[22px] rounded-full text-[11px] font-semibold grid place-items-center shadow-xl"
-                    style={{ background: GOLD, color: '#0b1224' }}
-                    aria-label={`Tienes ${total} productos en el carrito`}
+                    className="hidden sm:inline text-[14.5px] font-brand font-medium uppercase tracking-[0.08em]"
+                    style={{ color: GOLD_SOFT }}
                   >
-                    {total}
+                    Carrito
                   </span>
-                )}
-              </Link>
+                  {total > 0 && (
+                    <span
+                      className="absolute -right-2 -top-2 min-w-[22px] h-[22px] rounded-full text-[11px] font-semibold grid place-items-center shadow-xl"
+                      style={{ background: GOLD, color: '#0b1224' }}
+                      aria-label={`Tienes ${total} productos en el carrito`}
+                    >
+                      {total}
+                    </span>
+                  )}
+                </Link>
 
-              <button
-                className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] ring-1 ring-white/10"
-                onClick={() => setIsOpen((s) => !s)}
-                aria-label="Abrir menú"
-                aria-expanded={isOpen}
-                aria-controls="drawer-nav"
-              >
-                {isOpen ? (
-                  <X className="h-5 w-5" style={{ color: GOLD }} />
-                ) : (
-                  <Menu className="h-5 w-5" style={{ color: GOLD }} />
-                )}
-              </button>
+                <button
+                  className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] ring-1 ring-white/10"
+                  onClick={() => setIsOpen((s) => !s)}
+                  aria-label="Abrir menú"
+                  aria-expanded={isOpen}
+                  aria-controls="drawer-nav"
+                >
+                  {isOpen ? (
+                    <X className="h-5 w-5" style={{ color: GOLD }} />
+                  ) : (
+                    <Menu className="h-5 w-5" style={{ color: GOLD }} />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </nav>
 
-      {/* Drawer Mobile */}
+      {/* FAB mobile cuando el nav está oculto al entrar en Home */}
+      {hideBarMobile && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="md:hidden fixed top-4 right-4 z-[60] w-11 h-11 rounded-full bg-black/70 backdrop-blur border border-white/20 text-white shadow-lg active:scale-95 transition"
+          aria-label="Abrir menú"
+        >
+          <Menu className="mx-auto" size={18} />
+        </button>
+      )}
+
+      {/* Drawer Mobile (fuera del <nav> para no heredar pointer-events-none) */}
       {/* Overlay */}
       <div
         className={`md:hidden fixed inset-0 z-[70] bg-black/50 backdrop-blur-sm transition-opacity ${
@@ -399,6 +419,9 @@ export default function NavbarGaláctico() {
           </Link>
         </div>
       </aside>
-    </nav>
+
+      {/* Spacer SOLO en páginas que NO son Home */}
+      {!isHome && <div className="h-20" />}
+    </>
   );
 }
