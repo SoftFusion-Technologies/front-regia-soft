@@ -101,17 +101,17 @@ export default function DuoShowcase({
   bleed = true,
   className = ''
 }) {
-  // gap mínimo en el medio; sin padding lateral
   const gapCls =
     gap === 'tight' ? 'gap-[6px] sm:gap-2 md:gap-3' : 'gap-2 sm:gap-3 md:gap-4';
 
-  // full-bleed contra bordes del viewport, incluso si el padre tiene paddings
+  // ✅ Full-bleed sin overflow: centrado por translate + ancho viewport
+  // Tip: si querés, podés cambiar w-[100vw] por w-[100svw] (más preciso en mobile modernos)
   const bleedCls = bleed
-    ? 'relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen'
+    ? 'relative left-1/2 -translate-x-1/2 w-[100vw] max-w-[100vw] overflow-x-clip'
     : 'mx-auto max-w-7xl px-4 sm:px-6';
 
   return (
-    <section className={['w-full', className].join(' ')}>
+    <section className={['w-full overflow-x-clip', className].join(' ')}>
       <div className={bleedCls}>
         <div className={`mt-5 grid grid-cols-2 ${gapCls}`}>
           <ImageCard {...left} ratio={ratio} priority />
