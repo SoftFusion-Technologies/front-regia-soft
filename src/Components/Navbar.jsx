@@ -93,7 +93,7 @@ export default function Navbar() {
             : 'bg-black/80 backdrop-blur-md border-white/10 shadow-lg shadow-black/20',
           isOpen ? 'h-24' : 'h-20',
           hideBarMobile
-            ? 'md:h-20 md:opacity-100 opacity-0 pointer-events-none'
+            ? 'md:h-20 md:opacity-100 md:pointer-events-auto opacity-0 pointer-events-none'
             : 'opacity-100 pointer-events-auto'
         ].join(' ')}
         aria-label="Navegación principal"
