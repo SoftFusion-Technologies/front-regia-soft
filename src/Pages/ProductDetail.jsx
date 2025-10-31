@@ -13,14 +13,17 @@ import {
   X
 } from 'lucide-react';
 
-// Data legacy (seguís usando tu fuente actual)
+// Legacy data (se mantiene)
 import { products } from '../Helpers/productsPremium';
 import { productosURL } from '../Helpers/productosURL';
-import { colors, sizes } from '../Helpers/helpers';
+import {
+  colors as defaultColors,
+  sizes as defaultSizes
+} from '../Helpers/helpers';
 import AddToCartButton from '../Config/AddToCartButton';
 import ProductNotFound from '../Components/ProductNotFound';
 
-// MODO VESTIDOS (grupos colapsados). Es opcional: si no existe el archivo, comentá estas 3 líneas.
+// Vestidos (grupos colapsados)
 import {
   getGroupById,
   loadAllImages,
@@ -41,54 +44,139 @@ function moneyAR(n) {
   }
 }
 
+// Normaliza (sin acentos, minúsculas)
+const norm = (s = '') =>
+  s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim();
+
+// Paleta por nombre normalizado
+const PALETTE = {
+  negro: '#111111',
+  blanco: '#ffffff',
+  fucsia: '#d81b60',
+  petroleo: '#1e4b5b',
+  chocolate: '#4e342e',
+  oro: '#d4af37',
+  plata: '#c0c0c0',
+  rojo: '#c62828',
+  azul: '#1565c0',
+  verde: '#2e7d32'
+};
+
+// Gradientes para combos del estilo “negro con oro/plata”
+const gradientForCombo = (name = '') => {
+  const n = norm(name);
+  if (n.includes('negro con oro'))
+    return 'linear-gradient(45deg,#111 50%,#d4af37 50%)';
+  if (n.includes('negro con plata'))
+    return 'linear-gradient(45deg,#111 50%,#c0c0c0 50%)';
+  if (n.includes('azul con chocolate') || n.includes('chocolate con azul'))
+    return 'linear-gradient(45deg,#1565c0 50%,#4e342e 50%)';
+
+  return null;
+};
+
+// Acepta strings u objetos { name, hex, bg } y asegura id/hex/bg
+const normalizeColors = (arr = []) =>
+  arr.map((c, i) => {
+    if (typeof c === 'string') {
+      const name = c.trim();
+      const key = norm(name);
+      return {
+        id: `c${i}-${key}`,
+        name,
+        hex: PALETTE[key] || '#999999',
+        bg: gradientForCombo(name)
+      };
+    }
+    const name = (c.name || `Color ${i + 1}`).trim();
+    const key = norm(name);
+    return {
+      id: c.id || `c${i}-${key}`,
+      name,
+      hex: c.hex || PALETTE[key] || '#999999', // 👈 prioriza hex del override
+      bg: c.bg || gradientForCombo(name)
+    };
+  });
+
+// arriba del componente (junto al normalizeColors si lo tenés)
+const normalizeSizes = (arr = []) =>
+  arr.map((s, i) => ({ id: String(s ?? i), name: String(s) }));
+
 export default function ProductDetail() {
   const { id } = useParams();
 
   // Estado principal
-  const [product, setProduct] = useState(null); // objeto "comprable" (siempre existe si hay algo que vender)
-  const [images, setImages] = useState([]); // urls de galería (1..n)
+  const [product, setProduct] = useState(null);
+  const [images, setImages] = useState([]); // urls galería
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedColor, setSelectedColor] = useState(null);
-  const [selectedSize, setSelectedSize] = useState(null);
   const [lightbox, setLightbox] = useState(false);
 
-  // Al montar, subir al top (UX)
+  // Variantes (dinámicas si vienen de vestidos; si no, defaults)
+  const [colorOptions, setColorOptions] = useState(defaultColors);
+  const [sizeOptions, setSizeOptions] = useState(defaultSizes);
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(null);
+
+  // Scroll top al cambiar id
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [id]);
 
-  // Carga de datos:
-  // 1) intenta VESTIDOS (galería completa del grupo); 2) sino usa legacy (imageFront/back/pack)
+  // Carga de datos: 1) vestidos (si existe grupo) 2) legacy
   useEffect(() => {
     let cancelled = false;
 
     async function load() {
-      // ----- MODO VESTIDOS -----
-      const g = typeof getGroupById === 'function' ? getGroupById(id) : null;
+      // ---- MODO VESTIDOS ----
+      const g = getGroupById?.(id) || null;
       if (g) {
-        // Construyo un "producto" compatible con AddToCartButton
         const p = {
           id: g.id,
           title: g.name,
-          price: g.price ?? null, // null => "Consultar"
+          price: g.price ?? null,
           priceDetails: '',
           subtitle: '',
           category: 'Vestidos',
-          // para compat: dejamos imageFront/Back/Pack con la primera foto (no se usan si hay gallery)
           imageFront: null,
           imageBack: null,
-          imagePack: null
+          imagePack: null,
+          description:
+            'Vestido de nuestra colección. Consultá disponibilidad por color y talle.'
         };
-        // Cargo todas las imágenes del grupo
+
+        // ⬇️ variantes dinámicas desde overrides
+        const dynamicColors =
+          Array.isArray(g.colors) && g.colors.length
+            ? normalizeColors(g.colors)
+            : defaultColors;
+
+        const dynamicSizes =
+          Array.isArray(g.sizes) && g.sizes.length
+            ? normalizeSizes(g.sizes) // ['1','2','3'] -> [{id:'1',name:'1'},...]
+            : defaultSizes;
+
         const urls = await loadAllImages(g);
         if (cancelled) return;
+
         setProduct(p);
         setImages(urls);
         setCurrentIndex(0);
+
+        // ⬇️ importante: aplicar al estado que usa el render
+        setColorOptions(dynamicColors);
+        setSizeOptions(dynamicSizes);
+
+        // (opcional) preseleccionar el primero
+        setSelectedSize(dynamicSizes[0] || null);
+        setSelectedColor(dynamicColors[0] || null);
         return;
       }
 
-      // ----- LEGACY (como lo tenías) -----
+      // ---- LEGACY (como lo tenías) ----
       const merged = [
         ...products,
         ...productosURL.filter((p2) => !products.some((p1) => p1.id === p2.id))
@@ -113,6 +201,10 @@ export default function ProductDetail() {
         setProduct(found);
         setImages(gallery);
         setCurrentIndex(0);
+        setColorOptions(defaultColors);
+        setSizeOptions(defaultSizes);
+        setSelectedColor(null);
+        setSelectedSize(null);
       }
     }
     load();
@@ -122,7 +214,7 @@ export default function ProductDetail() {
     };
   }, [id]);
 
-  // Pre-carga la siguiente imagen (suaviza el cambio)
+  // Pre-carga siguiente imagen (suaviza cambio)
   useEffect(() => {
     const next = images[currentIndex + 1];
     if (!next) return;
@@ -130,7 +222,7 @@ export default function ProductDetail() {
     img.src = next;
   }, [images, currentIndex]);
 
-  // Navegación por teclado entre imágenes
+  // Navegación teclado
   const onKeyDown = useCallback(
     (e) => {
       if (!images.length) return;
@@ -309,7 +401,7 @@ export default function ProductDetail() {
             </ul>
           </div>
 
-          {/* Panel de compra (conserva AddToCartButton + lógica) */}
+          {/* Panel de compra */}
           <div className="lg:sticky lg:top-24">
             <div className="rounded-2xl ring-1 ring-white/10 bg-gradient-to-b from-black/60 to-black/30 p-5 md:p-6">
               <div className="flex items-start justify-between gap-4">
@@ -350,7 +442,7 @@ export default function ProductDetail() {
                 <span className="ml-1">(124)</span>
               </div>
 
-              {/* Talles */}
+              {/* Talles (dinámicos si vienen de vestidos) */}
               <div className="mt-6">
                 <div className="flex items-center justify-between">
                   <h2 className="text-sm font-medium tracking-wide uppercase text-white/80">
@@ -366,7 +458,7 @@ export default function ProductDetail() {
                   role="radiogroup"
                   className="mt-3 grid grid-cols-4 sm:grid-cols-6 gap-2"
                 >
-                  {sizes.map((size) => {
+                  {sizeOptions.map((size) => {
                     const active = selectedSize?.id === size.id;
                     return (
                       <button
@@ -388,7 +480,7 @@ export default function ProductDetail() {
                 </div>
               </div>
 
-              {/* Colores */}
+              {/* Colores (dinámicos si vienen de vestidos) */}
               <div className="mt-6">
                 <div className="flex items-center justify-between">
                   <h2 className="text-sm font-medium tracking-wide uppercase text-white/80">
@@ -401,7 +493,7 @@ export default function ProductDetail() {
                   )}
                 </div>
                 <div role="radiogroup" className="mt-3 flex flex-wrap gap-2">
-                  {colors.map((c) => {
+                  {(colorOptions || []).map((c) => {
                     const active = selectedColor?.id === c.id;
                     return (
                       <button
@@ -410,21 +502,37 @@ export default function ProductDetail() {
                         role="radio"
                         aria-checked={active}
                         onClick={() => setSelectedColor(c)}
-                        className={`w-9 h-9 rounded-full ring-1 ring-white/10 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f0d68a] ${
+                        className={[
+                          // tamaño y forma
+                          'h-10 w-10 rounded-full p-[2px]',
+                          // borde: blanco si está activo, gris si no
                           active
-                            ? 'scale-110 ring-2 ring-[#d4af37]'
-                            : 'hover:scale-105'
-                        }`}
-                        style={{ backgroundColor: c.hex }}
+                            ? 'border-2 border-white'
+                            : 'border border-gray-500/60',
+                          // focus visible
+                          'focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f0d68a]',
+                          // micro animación
+                          active ? 'scale-110' : 'hover:scale-105',
+                          'transition'
+                        ].join(' ')}
                         aria-label={c.name}
                         title={c.name}
-                      />
+                      >
+                        <span
+                          className="block h-full w-full rounded-full"
+                          style={
+                            c.bg
+                              ? { background: c.bg }
+                              : { backgroundColor: c.hex }
+                          }
+                        />
+                      </button>
                     );
                   })}
                 </div>
               </div>
 
-              {/* CTA (tu mismo botón) */}
+              {/* CTA */}
               <div className="mt-6">
                 <AddToCartButton
                   product={product}
@@ -474,7 +582,7 @@ export default function ProductDetail() {
           </div>
         </div>
 
-        {/* Sticky CTA mobile (opcional) */}
+        {/* Sticky CTA mobile */}
         <div className="lg:hidden fixed inset-x-0 bottom-0 z-40 p-3 pointer-events-none">
           <div className="pointer-events-auto mx-auto max-w-6xl">
             <div className="rounded-2xl ring-1 ring-white/10 bg-black/70 backdrop-blur p-3">

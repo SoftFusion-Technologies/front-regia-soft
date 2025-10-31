@@ -4,11 +4,10 @@ const modules = import.meta.glob(
   '../Images/Vestidos/vestido*.{jpg,jpeg,png,webp,avif}'
 );
 
-// Reglas de colapso: [inicio, fin] inclusivos
-// 👇 podés agregar más rangos si tu clienta detecta otros duplicados
+// Reglas de colapso (ya las tenías)
 const COLLAPSE_RULES = [
-  [1, 5], // 1..5 => se muestra como "Vestido 1"
-  [6, 8], // 6..8 => se muestra como "Vestido 6"
+  [1, 5],
+  [6, 8],
   [9, 11],
   [12, 14],
   [15, 17],
@@ -56,23 +55,238 @@ function slugify(text) {
     .replace(/(^-|-$)/g, '');
 }
 
+export const moneyAR = (n) =>
+  n == null
+    ? null
+    : new Intl.NumberFormat('es-AR', {
+        style: 'currency',
+        currency: 'ARS'
+      }).format(Number(n) || 0);
+
+// ---- Overrides de catálogo (editable por vos / tu clienta) ----
+// Clave = id de grupo (el representante del rango)
+const DETAILS_OVERRIDES = {
+  1: {
+    // 1..5 -> grupo 1
+    name: 'Vestido Lola',
+    price: 44000,
+    colors: ['Negro', 'Fucsia']
+    // sizes: [] // si luego te pasan talles, agregalos
+  },
+  6: {
+    // 6..8 -> grupo 6
+    name: 'Vestido BECCA',
+    price: 44000,
+    // sizes: [] // si luego te pasan talles, agregalos
+    colors: ['Petróleo', 'Chocolate']
+  },
+  9: {
+    // 9.. -> grupo 9
+    name: 'Vestido Lara Aplique',
+    price: 19900,
+    // sizes: [] // si luego te pasan talles, agregalos
+    colors: ['Negro', 'Chocolate']
+  },
+  12: {
+    name: 'Vestido GlorY',
+    price: 36900,
+    colors: ['Negro', 'Rosa']
+  },
+  15: {
+    name: 'Set Emy Aplique',
+    price: 36000,
+    colors: ['Negro']
+  },
+  18: {
+    name: 'Vestido Shine',
+    price: 50000,
+    colors: ['Negro', 'Oro', 'Negro con plata']
+  },
+  22: {
+    name: 'Vestido CHECH',
+    price: 60000,
+    colors: ['Negro', 'Dorado']
+  },
+  25: {
+    name: 'Strapless LIZZ',
+    price: 24900,
+    colors: ['Beige']
+  },
+  29: {
+    // 9.. -> grupo 9
+    name: 'Vestido ELISKA',
+    price: 66000,
+    sizes: ['1', '2', '3'],
+    colors: ['Negro', 'Negro con oro', 'Negro con plata']
+  },
+  33: {
+    // 9.. -> grupo 9
+    name: 'Set KALEN',
+    price: 59900,
+    colors: ['Único']
+  },
+  37: {
+    // 9.. -> grupo 9
+    name: 'Vestido sublimado  Microtul',
+    price: 30000,
+    colors: ['azul con chocolate']
+  },
+  40: {
+    // 9.. -> grupo 9
+    name: 'Vestido IVANNA',
+    price: 50000,
+    colors: ['Negro']
+  },
+  43: {
+    // 1..5 -> grupo 1
+    name: 'Vestido Lola',
+    price: 44000,
+    colors: ['Negro', 'Fucsia']
+    // sizes: [] // si luego te pasan talles, agregalos
+  },
+  47: {
+    // 1..5 -> grupo 1
+    name: 'Vestido Aplique LILI',
+    price: 37900,
+    colors: ['Negro', 'Petróleo']
+    // sizes: [] // si luego te pasan talles, agregalos
+  },
+  50: {
+    // 9.. -> grupo 9
+    name: 'Vestido Elisa',
+    price: 38000,
+    colors: ['Negro']
+  },
+  53: {
+    // 9.. -> grupo 9
+    name: 'Vestido AMI',
+    price: 38000,
+    colors: ['Negro', 'Amarillo']
+  },
+  58: {
+    // 9.. -> grupo 9
+    name: 'Vestido CANDY',
+    price: 28000,
+    colors: ['Negro']
+  },
+  62: {
+    // 9.. -> grupo 9
+    name: 'Vestido Katy',
+    price: 27900,
+    colors: ['Negro', 'Negro con oro', 'Negro con plata']
+  },
+  65: {
+    // 9.. -> grupo 9
+    name: 'Vestido SIRENA',
+    price: 33000,
+    colors: ['Negro']
+  },
+  66: {
+    // 9.. -> grupo 9
+    name: 'Vestido LINA',
+    price: 22000,
+    colors: ['Azul']
+  },
+  68: {
+    // 9.. -> grupo 9
+    name: 'Vestido ANNA',
+    price: 36000,
+    colors: ['Negro']
+  },
+  70: {
+    // 9.. -> grupo 9
+    name: 'Vestido ALOHA',
+    price: 28000,
+    colors: ['Rosa', 'Celeste']
+  },
+  72: {
+    // 9.. -> grupo 9
+    name: 'Vestido ADA',
+    price: 25000,
+    colors: ['Negro', 'Celeste']
+  },
+  74: {
+    // 9.. -> grupo 9
+    name: 'Vestido MOLLY',
+    price: 17000,
+    colors: ['Amarillo', 'Petróleo', 'Negro']
+  },
+  77: {
+    // 9.. -> grupo 9
+    name: 'Vestido EMY',
+    price: 17000,
+    colors: ['Celeste', 'Negro']
+  }
+};
+
+// Paleta para puntito de color (heurística simpática)
+const normalize = (s = '') =>
+  s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // quita acentos
+    .replace(/\s+/g, ' ')
+    .trim();
+
+// 🎨 Paleta con claves NORMALIZADAS
+const COLOR_HEX = {
+  negro: '#000000',
+  blanco: '#ffffff',
+  fucsia: '#d81b60', // alias abajo
+  fucia: '#d81b60',
+
+  petroleo: '#1e4b5b', // ✅ Petróleo
+  chocolate: '#4e342e', // ✅ Chocolate
+
+  'negro con oro': '#d4af37', // fallback cuando no usemos gradiente
+  'negro con plata': '#c0c0c0',
+  oro: '#d4af37',
+  plata: '#c0c0c0',
+  rosa: '#ff69b4',
+  dorado: '#d4af37',
+  beige: '#D7C4A3',
+  azul: '#1565c0', // ✅ Azul
+  'azul con chocolate': '#1565c0', // ✅ fallback cuando no usemos gradiente
+  celeste: '#74ACDF',
+  unico: '#9e9e9e', // ✅ “Único” (neutro)
+  único: '#9e9e9e', // (con tilde, por si te pasan así el texto)
+  amarillo: '#FFEB3B'
+};
+
+// 🌗 Gradientes para combos (opcional)
+const GRADIENT_BG = {
+  'negro con oro': 'linear-gradient(45deg,#111 50%,#d4af37 50%)',
+  'negro con plata': 'linear-gradient(45deg,#111 50%,#c0c0c0 50%)'
+};
+
+function colorToSwatch(name = '') {
+  const key = normalize(name); // <-- ahora “Petróleo” => “petroleo”
+  const bg = GRADIENT_BG[key] || null;
+  const hex = COLOR_HEX[key] || '#999999'; // si no existe, gris
+  // devolvemos bg si hay combo; el hex queda como fallback
+  return bg ? { name, hex, bg } : { name, hex };
+}
+
 function makeGroup(rep, ids) {
-  const loaders = ids.map((n) => byNum.get(n).importFn);
-  const name = `Vestido ${String(rep).padStart(2, '0')}`;
+  const loaders = ids.map((n) => byNum.get(n)?.importFn).filter(Boolean);
+  const baseName = `Vestido ${String(rep).padStart(2, '0')}`;
+  const ov = DETAILS_OVERRIDES[rep] || {};
+  const name = ov.name || baseName;
   const slug = slugify(`${rep}-${name}`);
   return {
     id: rep,
     ids,
     name,
     slug,
-    price: null, // null => “Consultar”
+    price: ov.price ?? null, // número (o null => “Consultar”)
+    sizes: Array.isArray(ov.sizes) ? ov.sizes : null,
+    colors: Array.isArray(ov.colors) ? ov.colors.map(colorToSwatch) : null,
     primaryLoader: loaders[0], // imagen para tarjetas/listado
-    loaders // todas las imágenes del grupo (para detalle)
+    loaders // todas las del grupo (para detalle)
   };
 }
 
 const groups = [];
-
 // 1) Colapsa según reglas
 for (const [start, end] of COLLAPSE_RULES) {
   const ids = [];
@@ -84,21 +298,22 @@ for (const [start, end] of COLLAPSE_RULES) {
   }
   if (ids.length) groups.push(makeGroup(ids[0], ids));
 }
-
-// 2) El resto (no incluidos en reglas) quedan como grupo individual
+// 2) El resto (no incluidos) como grupo individual
 for (const f of files) {
   if (!used.has(f.num)) groups.push(makeGroup(f.num, [f.num]));
 }
-
 groups.sort((a, b) => a.id - b.id);
 
+// --------- Helpers de carga de imágenes ----------
 export const VESTIDOS_GROUPS = groups;
+
+export const getGroupById = (id) =>
+  VESTIDOS_GROUPS.find((g) => g.id === Number(id));
 
 export async function loadPrimaryImage(group) {
   const m = await group.primaryLoader();
   return m.default;
 }
-
 export async function loadAllImages(group) {
   const arr = await Promise.all(
     group.loaders.map((fn) => fn().then((m) => m.default))
@@ -106,13 +321,25 @@ export async function loadAllImages(group) {
   return arr;
 }
 
-export const getGroupById = (id) =>
-  VESTIDOS_GROUPS.find((g) => g.id === Number(id));
+// --------- Adaptador a “producto UI” (para grillas) ----------
+export function groupToUiProduct(g) {
+  return {
+    id: g.id,
+    slug: g.slug,
+    title: g.name,
+    price: g.price == null ? 'Consultar' : moneyAR(g.price),
+    priceRaw: g.price ?? null,
+    // para grillas y tarjetas lazy:
+    imageLoader: () => loadPrimaryImage(g),
+    // para detalle:
+    galleryLoader: () => loadAllImages(g),
+    // variantes (si no hay override, podés usar tus defaults en el detalle)
+    variants: {
+      colors: g.colors, // [{name,hex}] o null
+      sizes: g.sizes // ['S','M','L'] o ['1','2','3'] o null
+    }
+  };
+}
 
-export const moneyAR = (n) =>
-  n == null
-    ? null
-    : new Intl.NumberFormat('es-AR', {
-        style: 'currency',
-        currency: 'ARS'
-      }).format(Number(n) || 0);
+// Colección lista para pintar en grillas (FeaturedProducts, etc.)
+export const VESTIDOS_PRODUCTS = VESTIDOS_GROUPS.map(groupToUiProduct);
