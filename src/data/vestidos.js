@@ -37,7 +37,7 @@ const COLLAPSE_RULES = [
   [88, 90],
   [91, 93],
   [94, 96],
-  [97,100]
+  [97, 100]
 ];
 
 const files = Object.entries(modules)
@@ -76,7 +76,8 @@ const DETAILS_OVERRIDES = {
     // 1..5 -> grupo 1
     name: 'Vestido Lola',
     price: 44000,
-    colors: ['Negro', 'Fucsia']
+    colors: ['Negro', 'Fucsia'],
+    sizes: ['Único']
     // sizes: [] // si luego te pasan talles, agregalos
   },
   6: {
@@ -84,144 +85,169 @@ const DETAILS_OVERRIDES = {
     name: 'Vestido BECCA',
     price: 44000,
     // sizes: [] // si luego te pasan talles, agregalos
-    colors: ['Petróleo', 'Chocolate']
+    colors: ['Petróleo', 'Chocolate'],
+    sizes: ['Único']
   },
   9: {
     // 9.. -> grupo 9
     name: 'Vestido Lara Aplique',
     price: 19900,
     // sizes: [] // si luego te pasan talles, agregalos
-    colors: ['Negro', 'Chocolate']
+    colors: ['Negro', 'Chocolate'],
+    sizes: ['Único']
   },
   12: {
     name: 'Vestido GlorY',
     price: 36900,
-    colors: ['Negro', 'Rosa']
+    colors: ['Negro', 'Rosa'],
+    sizes: ['Único']
   },
   15: {
     name: 'Set Emy Aplique',
     price: 36000,
-    colors: ['Negro']
+    colors: ['Negro'],
+    sizes: ['Único']
   },
   18: {
     name: 'Vestido Shine',
     price: 50000,
-    colors: ['Negro', 'Oro', 'Negro con plata']
+    colors: ['Negro', 'Oro', 'Negro con plata'],
+    sizes: ['Único']
   },
   22: {
     name: 'Vestido CHECH',
     price: 60000,
-    colors: ['Negro', 'Dorado']
+    colors: ['Negro', 'Dorado'],
+    sizes: ['Único']
   },
   25: {
     name: 'Strapless LIZZ',
     price: 24900,
-    colors: ['Beige']
+    colors: ['Beige'],
+    sizes: ['Único']
   },
   29: {
     // 9.. -> grupo 9
     name: 'Vestido ELISKA',
     price: 66000,
     sizes: ['1', '2', '3'],
-    colors: ['Negro', 'Negro con oro', 'Negro con plata']
+    colors: ['Negro', 'Negro con oro', 'Negro con plata'],
   },
   33: {
     // 9.. -> grupo 9
     name: 'Set KALEN',
     price: 59900,
-    colors: ['Único']
+    colors: ['Único'],
+    sizes: ['Único']
   },
   37: {
     // 9.. -> grupo 9
     name: 'Vestido sublimado  Microtul',
     price: 30000,
-    colors: ['azul con chocolate']
+    colors: ['azul con chocolate'],
+    sizes: ['Único']
   },
   40: {
     // 9.. -> grupo 9
     name: 'Vestido IVANNA',
     price: 50000,
-    colors: ['Negro']
+    colors: ['Negro'],
+    sizes: ['Único']
   },
   43: {
     // 1..5 -> grupo 1
     name: 'Vestido Lola',
     price: 44000,
-    colors: ['Negro', 'Fucsia']
+    colors: ['Negro', 'Fucsia'],
+    sizes: ['Único']
+
     // sizes: [] // si luego te pasan talles, agregalos
   },
   47: {
     // 1..5 -> grupo 1
     name: 'Vestido Aplique LILI',
     price: 37900,
-    colors: ['Negro', 'Petróleo']
+    colors: ['Negro', 'Petróleo'],
+    sizes: ['Único']
+
     // sizes: [] // si luego te pasan talles, agregalos
   },
   50: {
     // 9.. -> grupo 9
     name: 'Vestido Elisa',
     price: 38000,
-    colors: ['Negro']
+    colors: ['Negro'],
+    sizes: ['Único']
   },
   53: {
     // 9.. -> grupo 9
     name: 'Vestido AMI',
     price: 38000,
-    colors: ['Negro', 'Amarillo']
+    colors: ['Negro', 'Amarillo'],
+    sizes: ['Único']
   },
   58: {
     // 9.. -> grupo 9
     name: 'Vestido CANDY',
     price: 28000,
-    colors: ['Negro']
+    colors: ['Negro'],
+    sizes: ['Único']
   },
   62: {
     // 9.. -> grupo 9
     name: 'Vestido Katy',
     price: 27900,
-    colors: ['Negro', 'Negro con oro', 'Negro con plata']
+    colors: ['Negro', 'Negro con oro', 'Negro con plata'],
+    sizes: ['Único']
   },
   65: {
     // 9.. -> grupo 9
     name: 'Vestido SIRENA',
     price: 33000,
-    colors: ['Negro']
+    colors: ['Negro'],
+    sizes: ['Único']
   },
   66: {
     // 9.. -> grupo 9
     name: 'Vestido LINA',
     price: 22000,
-    colors: ['Azul']
+    colors: ['Azul'],
+    sizes: ['Único']
   },
   68: {
     // 9.. -> grupo 9
     name: 'Vestido ANNA',
     price: 36000,
-    colors: ['Negro']
+    colors: ['Negro'],
+    sizes: ['Único']
   },
   70: {
     // 9.. -> grupo 9
     name: 'Vestido ALOHA',
     price: 28000,
-    colors: ['Rosa', 'Celeste']
+    colors: ['Rosa', 'Celeste'],
+    sizes: ['Único']
   },
   72: {
     // 9.. -> grupo 9
     name: 'Vestido ADA',
     price: 25000,
-    colors: ['Negro', 'Celeste']
+    colors: ['Negro', 'Celeste'],
+    sizes: ['Único']
   },
   74: {
     // 9.. -> grupo 9
     name: 'Vestido MOLLY',
     price: 17000,
-    colors: ['Amarillo', 'Petróleo', 'Negro']
+    colors: ['Amarillo', 'Petróleo', 'Negro'],
+    sizes: ['Único']
   },
   77: {
     // 9.. -> grupo 9
     name: 'Vestido EMY',
     price: 17000,
-    colors: ['Celeste', 'Negro']
+    colors: ['Celeste', 'Negro'],
+    sizes: ['Único']
   },
   80: {
     // 9.. -> grupo 9
@@ -234,31 +260,36 @@ const DETAILS_OVERRIDES = {
     // 9.. -> grupo 9
     name: 'Vestido EUGE',
     price: 45000,
-    colors: ['Azul']
+    colors: ['Azul'],
+    sizes: ['Único']
   },
   88: {
     // 9.. -> grupo 9
     name: 'Vestido MIRI',
     price: 55000,
-    colors: ['Azul', 'Negro']
+    colors: ['Azul', 'Negro'],
+    sizes: ['Único']
   },
   91: {
     // 9.. -> grupo 9
     name: 'Vestido ZOE',
     price: 55000,
-    colors: ['Negro']
+    colors: ['Negro'],
+    sizes: ['Único']
   },
   94: {
     // 9.. -> grupo 9
     name: 'Vestido PAULI',
     price: 44000,
-    colors: ['Negro']
+    colors: ['Negro'],
+    sizes: ['Único']
   },
   97: {
     // 9.. -> grupo 9
     name: 'Vestido KAROL',
     price: 44000,
-    colors: ['Negro', 'Azul']
+    colors: ['Negro', 'Azul'],
+    sizes: ['Único']
   }
 };
 
