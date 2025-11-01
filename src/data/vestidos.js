@@ -4,7 +4,7 @@ const modules = import.meta.glob(
   '../Images/Vestidos/vestido*.{jpg,jpeg,png,webp,avif}'
 );
 
-// Reglas de colapso (ya las tenías)
+// Reglas de colapso
 const COLLAPSE_RULES = [
   [1, 5],
   [6, 8],
@@ -31,7 +31,13 @@ const COLLAPSE_RULES = [
   [72, 73],
   [74, 76],
   [77, 78],
-  [79, 79]
+  [79, 79],
+  [80, 83],
+  [84, 87],
+  [88, 90],
+  [91, 93],
+  [94, 96],
+  [97,100]
 ];
 
 const files = Object.entries(modules)
@@ -216,6 +222,43 @@ const DETAILS_OVERRIDES = {
     name: 'Vestido EMY',
     price: 17000,
     colors: ['Celeste', 'Negro']
+  },
+  80: {
+    // 9.. -> grupo 9
+    name: 'Mono ALISON',
+    price: 65000,
+    sizes: ['Único'],
+    colors: ['Negro con plata']
+  },
+  84: {
+    // 9.. -> grupo 9
+    name: 'Vestido EUGE',
+    price: 45000,
+    colors: ['Azul']
+  },
+  88: {
+    // 9.. -> grupo 9
+    name: 'Vestido MIRI',
+    price: 55000,
+    colors: ['Azul', 'Negro']
+  },
+  91: {
+    // 9.. -> grupo 9
+    name: 'Vestido ZOE',
+    price: 55000,
+    colors: ['Negro']
+  },
+  94: {
+    // 9.. -> grupo 9
+    name: 'Vestido PAULI',
+    price: 44000,
+    colors: ['Negro']
+  },
+  97: {
+    // 9.. -> grupo 9
+    name: 'Vestido KAROL',
+    price: 44000,
+    colors: ['Negro', 'Azul']
   }
 };
 
