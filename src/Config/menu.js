@@ -16,12 +16,12 @@ export const menuItems = [
   {
     id: 2,
     label: 'Productos',
-    href: 'productos',
+    href: 'vestidos',
     submenu: [
       {
         id: 21,
-        label: 'Remeras Over Premium',
-        href: 'productos/remeras-over-premium'
+        label: 'Vestidos',
+        href: 'productos/vestidos'
       },
       {
         id: 22,

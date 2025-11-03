@@ -16,6 +16,7 @@ import FAQ from './Pages/FAQ';
 import FloatingCart from './Components/FloatingCart';
 import Prod_RemerasOCla from './Pages/Sections/Prod_RemerasOCla';
 import ScrollToTop from './Components/ScrollToTop';
+import FeaturedProducts from './Pages/FeaturedProducts';
 const App = () => {
   return (
     <CartProvider>
@@ -32,10 +33,7 @@ const App = () => {
           {/* <Route path="/productos" element={<Productos />} /> */}
           <Route path="/contacto" element={<Contact />} />
           <Route path="/guia-de-talles" element={<SizeGuide />} />
-          <Route
-            path="/productos/remeras-over-premium"
-            element={<Productos />}
-          />
+          <Route path="/productos/Vestidos" element={<FeaturedProducts />} />
           <Route
             path="/productos/remeras-over-clasicas"
             element={<Prod_RemerasOCla />}
