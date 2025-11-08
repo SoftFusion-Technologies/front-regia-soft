@@ -53,6 +53,10 @@ const DETAILS_OVERRIDES = {
     name: 'Set LARA Forrado ',
     colors: ['Negro', 'Beige', 'Verde']
   },
+  7: {
+    name: 'Set LARA Forrado ',
+    colors: ['Negro', 'Beige', 'Verde']
+  },
   14: {
     name: 'Blazer ARMANI',
     colors: ['Negro', 'Beige', 'Celeste', 'Blanco', 'Rosa', 'Amarillo'],
