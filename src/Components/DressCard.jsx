@@ -2,10 +2,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { moneyAR } from '../data/vestidos';
+import { moneyAR } from '../data/sastrero'; // 👈 mover a utils
 
 export default function DressCard({ item }) {
-  const { id, slug, name, price, imageLoader } = item;
+  const { name, price, imageLoader, to } = item; // 👈 traemos `to`
   const [src, setSrc] = useState(null);
   const ref = useRef(null);
 
@@ -35,7 +35,9 @@ export default function DressCard({ item }) {
   }, [imageLoader]);
 
   return (
-    <Link to={`/product/${id}/${slug}`} aria-label={name}>
+    <Link to={to} aria-label={name}>
+      {' '}
+      {/* 👈 usar `to` directamente */}
       <motion.article
         ref={ref}
         className="group relative overflow-hidden rounded-xl ring-1 ring-white/10 bg-black/40"

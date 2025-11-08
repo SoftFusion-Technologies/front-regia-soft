@@ -25,10 +25,15 @@ import ProductNotFound from '../Components/ProductNotFound';
 
 // Vestidos (grupos colapsados)
 import {
-  getGroupById,
-  loadAllImages,
+  getGroupById as getVestido,
+  loadAllImages as loadAllImagesVestidos,
   moneyAR as moneyVest
 } from '../data/vestidos';
+
+import {
+  getGroupById as getSastrero,
+  loadAllImages as loadAllImagesSastrero
+} from '../data/sastrero';
 
 const GOLD_GRAD = 'from-[#f0d68a] to-[#d4af37]';
 
@@ -107,7 +112,7 @@ const normalizeSizes = (arr = []) =>
   arr.map((s, i) => ({ id: String(s ?? i), name: String(s) }));
 
 export default function ProductDetail() {
-  const { id } = useParams();
+  const { catalog, id } = useParams();
 
   // Estado principal
   const [product, setProduct] = useState(null);
@@ -126,54 +131,67 @@ export default function ProductDetail() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [id]);
 
-  // Carga de datos: 1) vestidos (si existe grupo) 2) legacy
+  // Carga de datos: 1) por catálogo (vestidos / sastrero)  2) legacy
   useEffect(() => {
     let cancelled = false;
 
     async function load() {
-      // ---- MODO VESTIDOS ----
-      const g = getGroupById?.(id) || null;
-      if (g) {
-        const p = {
-          id: g.id,
-          title: g.name,
-          price: g.price ?? null,
-          priceDetails: '',
-          subtitle: '',
-          category: 'Vestidos',
-          imageFront: null,
-          imageBack: null,
-          imagePack: null,
-          description:
-            'Vestido de nuestra colección. Consultá disponibilidad por color y talle.'
-        };
+      // ---- DATA SOURCES POR CATÁLOGO ----
+      const sources = {
+        vestidos: {
+          get: getVestido,
+          load: loadAllImagesVestidos,
+          label: 'Vestidos'
+        },
+        sastrero: {
+          get: getSastrero,
+          load: loadAllImagesSastrero,
+          label: 'Sastrero'
+        }
+      };
 
-        // ⬇️ variantes dinámicas desde overrides
-        const dynamicColors =
-          Array.isArray(g.colors) && g.colors.length
-            ? normalizeColors(g.colors)
-            : defaultColors;
+      const src = sources[catalog];
 
-        const dynamicSizes =
-          Array.isArray(g.sizes) && g.sizes.length
-            ? normalizeSizes(g.sizes) // ['1','2','3'] -> [{id:'1',name:'1'},...]
-            : defaultSizes;
+      if (src) {
+        const g = src.get?.(Number(id)) || null;
+        if (g) {
+          const p = {
+            id: g.id,
+            title: g.name,
+            price: g.price ?? null,
+            priceDetails: '',
+            subtitle: '',
+            category: src.label,
+            imageFront: null,
+            imageBack: null,
+            imagePack: null,
+            description:
+              'Producto de nuestra colección. Consultá disponibilidad por color y talle.'
+          };
 
-        const urls = await loadAllImages(g);
-        if (cancelled) return;
+          // variantes dinámicas desde overrides
+          const dynamicColors =
+            Array.isArray(g.colors) && g.colors.length
+              ? normalizeColors(g.colors)
+              : defaultColors;
 
-        setProduct(p);
-        setImages(urls);
-        setCurrentIndex(0);
+          const dynamicSizes =
+            Array.isArray(g.sizes) && g.sizes.length
+              ? normalizeSizes(g.sizes)
+              : defaultSizes;
 
-        // ⬇️ importante: aplicar al estado que usa el render
-        setColorOptions(dynamicColors);
-        setSizeOptions(dynamicSizes);
+          const urls = await src.load(g);
+          if (cancelled) return;
 
-        // (opcional) preseleccionar el primero
-        setSelectedSize(dynamicSizes[0] || null);
-        setSelectedColor(dynamicColors[0] || null);
-        return;
+          setProduct(p);
+          setImages(urls);
+          setCurrentIndex(0);
+          setColorOptions(dynamicColors);
+          setSizeOptions(dynamicSizes);
+          setSelectedSize(dynamicSizes[0] || null);
+          setSelectedColor(dynamicColors[0] || null);
+          return;
+        }
       }
 
       // ---- LEGACY (como lo tenías) ----
@@ -207,12 +225,12 @@ export default function ProductDetail() {
         setSelectedSize(null);
       }
     }
-    load();
 
+    load();
     return () => {
       cancelled = true;
     };
-  }, [id]);
+  }, [catalog, id]);
 
   // Pre-carga siguiente imagen (suaviza cambio)
   useEffect(() => {

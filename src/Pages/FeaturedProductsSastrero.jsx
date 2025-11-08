@@ -1,23 +1,23 @@
-// src/Components/FeaturedProducts.jsx
+// src/Components/FeaturedProductsSastrero.jsx
 import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import DressCard from '../Components/DressCard'; 
-import { VESTIDOS_GROUPS, loadPrimaryImage } from '../data/vestidos.js';
-// ^ Asegurate que tu data exporte VESTIDOS_GROUPS con { id, uid, to, name, price, slug, ... }
+import { SASTREROS_GROUP, loadPrimaryImage } from '../data/sastrero';
 
-export default function FeaturedProducts({
-  title = 'Productos by Regia - Vestidos',
+export default function FeaturedProductsSastrero({
+  title = 'Productos by Regia - Sastreros',
   initialBatch = 8,
   batchSize = 8
 }) {
   const GOLD = 'from-[#f1d08a] via-[#caa042] to-[#a38321]';
 
+  // g ya trae { id, uid, category, slug, name, price, to, ... }
   const groups = useMemo(
     () =>
-      VESTIDOS_GROUPS.map((g) => ({
-        ...g, // 👈 trae uid, to, etc.
-        imageLoader: () => loadPrimaryImage(g)
+      SASTREROS_GROUP.map((g) => ({
+        ...g,
+        imageLoader: () => loadPrimaryImage(g) // portada
       })),
     []
   );
@@ -28,14 +28,13 @@ export default function FeaturedProducts({
     <section className="relative py-14 sm:py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto mb-8 md:mb-10" id="featured-products">
         <h2 className="text-center md:text-left font-bignoodle tracking-tight uppercase text-3xl sm:text-4xl md:text-5xl">
-          <span
-            className={`bg-gradient-to-b ${GOLD} bg-clip-text text-transparent`}
-          >
+          <span className={`bg-gradient-to-b ${GOLD} bg-clip-text text-transparent`}>
             {title}
           </span>
         </h2>
       </div>
 
+      {/* full-bleed estable, sin scroll lateral */}
       <section className="w-full overflow-x-hidden">
         <div
           className="
@@ -57,14 +56,11 @@ export default function FeaturedProducts({
           >
             {groups.slice(0, visible).map((item) => (
               <motion.li
-                key={item.uid} // 👈 clave única global
-                variants={{
-                  hidden: { opacity: 0, y: 10 },
-                  show: { opacity: 1, y: 0 }
-                }}
+                key={item.uid}
+                variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}
                 className="h-full"
               >
-                <DressCard item={item} /> {/* usa item.to internamente */}
+                <DressCard item={item} /> {/* usa item.to adentro */}
               </motion.li>
             ))}
           </motion.ul>
@@ -75,9 +71,7 @@ export default function FeaturedProducts({
         <div className="mt-8 flex justify-center">
           <button
             type="button"
-            onClick={() =>
-              setVisible((v) => Math.min(v + batchSize, groups.length))
-            }
+            onClick={() => setVisible((v) => Math.min(v + batchSize, groups.length))}
             className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-black/70 px-4 py-2.5 text-sm text-white/90 hover:bg-black focus:outline-none focus:ring-2 focus:ring-[#a38321] focus:ring-offset-2 focus:ring-offset-black"
           >
             Cargar más <ArrowRight size={16} />

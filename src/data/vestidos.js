@@ -4,6 +4,8 @@ const modules = import.meta.glob(
   '../Images/Vestidos/vestido*.{jpg,jpeg,png,webp,avif}'
 );
 
+export const CATEGORY = 'vestidos'; // namespace del catálogo
+
 // Reglas de colapso
 const COLLAPSE_RULES = [
   [1, 5],
@@ -131,7 +133,7 @@ const DETAILS_OVERRIDES = {
     name: 'Vestido ELISKA',
     price: 66000,
     sizes: ['1', '2', '3'],
-    colors: ['Negro', 'Negro con oro', 'Negro con plata'],
+    colors: ['Negro', 'Negro con oro', 'Negro con plata']
   },
   33: {
     // 9.. -> grupo 9
@@ -349,14 +351,16 @@ function makeGroup(rep, ids) {
   const slug = slugify(`${rep}-${name}`);
   return {
     id: rep,
-    ids,
-    name,
+    uid: `${CATEGORY}-${rep}`, // 👈 único global
+    category: CATEGORY, // 👈 para resolver data source
     slug,
-    price: ov.price ?? null, // número (o null => “Consultar”)
+    name,
+    to: `/product/${CATEGORY}/${rep}/${slug}`, // 👈 URL namespaced
+    price: ov.price ?? null,
     sizes: Array.isArray(ov.sizes) ? ov.sizes : null,
     colors: Array.isArray(ov.colors) ? ov.colors.map(colorToSwatch) : null,
-    primaryLoader: loaders[0], // imagen para tarjetas/listado
-    loaders // todas las del grupo (para detalle)
+    primaryLoader: loaders[0],
+    loaders
   };
 }
 

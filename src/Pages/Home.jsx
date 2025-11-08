@@ -18,6 +18,7 @@ import DuoShowcase from '../Components/DuoShowcase';
 
 import imgA from '../Images/deluxe1.webp';
 import imgB from '../Images/denim1.webp';
+import FeaturedProductsSastrero from './FeaturedProductsSastrero';
 
 const Home = () => {
   return (
@@ -46,6 +47,7 @@ const Home = () => {
 
       <div className="mt-20">
         <FeaturedProducts />
+        <FeaturedProductsSastrero></FeaturedProductsSastrero>
       </div>
       <InfoSection
         whatsappNumber="+54 9 3812 472636"

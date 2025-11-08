@@ -25,10 +25,10 @@ export const menuItems = [
       },
       {
         id: 22,
-        label: 'Remeras Over Clásicas',
-        href: 'productos/remeras-over-clasicas'
+        label: 'Sastreros',
+        href: 'productos/sastreros'
       },
-      { id: 23, label: 'Bermudas', href: 'productos/bermudas' }
+      // { id: 23, label: 'Bermudas', href: 'productos/bermudas' }
     ]
   },
   { id: 3, label: 'Nosotros', href: 'about' },
