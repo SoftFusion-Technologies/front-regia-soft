@@ -26,7 +26,7 @@ import ProductNotFound from '../Components/ProductNotFound';
 // Vestidos (grupos colapsados)
 import {
   getGroupById as getVestido,
-  loadAllImages as loadAllImagesVestidos,
+  loadAllImages as loadAllImagesVestidos
 } from '../data/vestidos';
 export { moneyAR as moneyVest } from '../utils/money';
 
@@ -316,14 +316,14 @@ export default function ProductDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
           {/* Galería */}
           <div>
-            <div className="relative group rounded-2xl overflow-hidden ring-1 ring-white/10 bg-black/40">
+            <div className="relative group rounded-2xl overflow-hidden ring-2 ring-[#d4af37] bg-black/40">
               <AnimatePresence mode="wait">
                 {mainImage ? (
                   <motion.img
                     key={mainImage}
                     src={mainImage}
                     alt={title}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover  "
                     style={{ aspectRatio: '4 / 5' }}
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -365,7 +365,7 @@ export default function ProductDetail() {
             {/* Thumbnails */}
             <div className="mt-4 grid grid-cols-4 gap-3">
               {(images.length ? images : [null, null, null, null])
-                .slice(0, 4)
+                .slice(0, 10)
                 .map((url, idx) => {
                   const active = idx === currentIndex;
                   return (

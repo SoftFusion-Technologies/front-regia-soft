@@ -13,8 +13,7 @@ import moneyAR from '../utils/money.js';
 // Reglas de colapso
 const COLLAPSE_RULES = [
   [1, 3],
-  [4, 6],
-  [7, 9],
+  [4, 9],
   [10, 11],
   [12, 13],
   [14, 15],
