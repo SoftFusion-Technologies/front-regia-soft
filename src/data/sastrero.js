@@ -65,12 +65,52 @@ const DETAILS_OVERRIDES = {
     // sizes: ['Único']
     // sizes: [] // si luego te pasan talles, agregalos
   },
- 14: {
+  14: {
     // 1..5 -> grupo 1
     name: 'Blazer ARMANI',
     //price: 44000,
-    colors: ['Negro', 'Beige', 'Celeste','Blanco','Rosa','Amarillo'],
-    sizes: ['1','2','3']
+    colors: ['Negro', 'Beige', 'Celeste', 'Blanco', 'Rosa', 'Amarillo'],
+    sizes: ['1', '2', '3']
+    // sizes: [] // si luego te pasan talles, agregalos
+  },
+  15: {
+    // 1..5 -> grupo 1
+    name: 'Chaleco CADILLAC',
+    //price: 44000,
+    colors: ['Negro', 'Beige', 'Blanco', 'Amarillo'],
+    sizes: ['1', '2', '3']
+    // sizes: [] // si luego te pasan talles, agregalos
+  },
+  16: {
+    // 1..5 -> grupo 1
+    name: 'Chaleco CADILLAC',
+    //price: 44000,
+    colors: ['Negro', 'Beige', 'Blanco', 'Amarillo'],
+    sizes: ['1', '2', '3']
+    // sizes: [] // si luego te pasan talles, agregalos
+  },
+  17: {
+    // 1..5 -> grupo 1
+    name: 'Set GUCCI',
+    //price: 44000,
+    colors: ['Celeste', 'Beige', 'Negro', 'Amarillo'],
+    sizes: ['1', '2', '3']
+    // sizes: [] // si luego te pasan talles, agregalos
+  },
+  19: {
+    // 1..5 -> grupo 1
+    name: 'Short Zadic',
+    //price: 44000,
+    colors: ['Blanco', 'Negro'],
+    sizes: ['1', '2', '3', '4']
+    // sizes: [] // si luego te pasan talles, agregalos
+  },
+  20: {
+    // 1..5 -> grupo 1
+    name: 'Set MIRI Brodery ',
+    //price: 44000,
+    colors: ['Blanco', 'Negro'],
+    sizes: ['Talles M al XL']
     // sizes: [] // si luego te pasan talles, agregalos
   }
 };
