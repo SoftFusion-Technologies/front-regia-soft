@@ -2,10 +2,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { moneyAR } from '../data/sastrero'; // 👈 mover a utils
+import { moneyAR } from '../utils/money';
 
 export default function DressCard({ item }) {
-  const { name, price, imageLoader, to } = item; // 👈 traemos `to`
+  const { name, price, imageLoader, to } = item;
   const [src, setSrc] = useState(null);
   const ref = useRef(null);
 

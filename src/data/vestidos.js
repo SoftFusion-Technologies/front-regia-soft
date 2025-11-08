@@ -3,7 +3,8 @@
 const modules = import.meta.glob(
   '../Images/Vestidos/vestido*.{jpg,jpeg,png,webp,avif}'
 );
-
+import { swatchFromName } from '../utils/colors';
+import moneyAR from '../utils/money.js';
 export const CATEGORY = 'vestidos'; // namespace del catálogo
 
 // Reglas de colapso
@@ -62,14 +63,6 @@ function slugify(text) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '');
 }
-
-export const moneyAR = (n) =>
-  n == null
-    ? null
-    : new Intl.NumberFormat('es-AR', {
-        style: 'currency',
-        currency: 'ARS'
-      }).format(Number(n) || 0);
 
 // ---- Overrides de catálogo (editable por vos / tu clienta) ----
 // Clave = id de grupo (el representante del rango)
@@ -295,54 +288,6 @@ const DETAILS_OVERRIDES = {
   }
 };
 
-// Paleta para puntito de color (heurística simpática)
-const normalize = (s = '') =>
-  s
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // quita acentos
-    .replace(/\s+/g, ' ')
-    .trim();
-
-// 🎨 Paleta con claves NORMALIZADAS
-const COLOR_HEX = {
-  negro: '#000000',
-  blanco: '#ffffff',
-  fucsia: '#d81b60', // alias abajo
-  fucia: '#d81b60',
-
-  petroleo: '#1e4b5b', // ✅ Petróleo
-  chocolate: '#4e342e', // ✅ Chocolate
-
-  'negro con oro': '#d4af37', // fallback cuando no usemos gradiente
-  'negro con plata': '#c0c0c0',
-  oro: '#d4af37',
-  plata: '#c0c0c0',
-  rosa: '#ff69b4',
-  dorado: '#d4af37',
-  beige: '#D7C4A3',
-  azul: '#1565c0', // ✅ Azul
-  'azul con chocolate': '#1565c0', // ✅ fallback cuando no usemos gradiente
-  celeste: '#74ACDF',
-  unico: '#9e9e9e', // ✅ “Único” (neutro)
-  único: '#9e9e9e', // (con tilde, por si te pasan así el texto)
-  amarillo: '#FFEB3B'
-};
-
-// 🌗 Gradientes para combos (opcional)
-const GRADIENT_BG = {
-  'negro con oro': 'linear-gradient(45deg,#111 50%,#d4af37 50%)',
-  'negro con plata': 'linear-gradient(45deg,#111 50%,#c0c0c0 50%)'
-};
-
-function colorToSwatch(name = '') {
-  const key = normalize(name); // <-- ahora “Petróleo” => “petroleo”
-  const bg = GRADIENT_BG[key] || null;
-  const hex = COLOR_HEX[key] || '#999999'; // si no existe, gris
-  // devolvemos bg si hay combo; el hex queda como fallback
-  return bg ? { name, hex, bg } : { name, hex };
-}
-
 function makeGroup(rep, ids) {
   const loaders = ids.map((n) => byNum.get(n)?.importFn).filter(Boolean);
   const baseName = `Vestido ${String(rep).padStart(2, '0')}`;
@@ -358,7 +303,7 @@ function makeGroup(rep, ids) {
     to: `/product/${CATEGORY}/${rep}/${slug}`, // 👈 URL namespaced
     price: ov.price ?? null,
     sizes: Array.isArray(ov.sizes) ? ov.sizes : null,
-    colors: Array.isArray(ov.colors) ? ov.colors.map(colorToSwatch) : null,
+    colors: Array.isArray(ov.colors) ? ov.colors.map(swatchFromName) : null,
     primaryLoader: loaders[0],
     loaders
   };

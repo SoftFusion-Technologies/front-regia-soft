@@ -27,8 +27,8 @@ import ProductNotFound from '../Components/ProductNotFound';
 import {
   getGroupById as getVestido,
   loadAllImages as loadAllImagesVestidos,
-  moneyAR as moneyVest
 } from '../data/vestidos';
+export { moneyAR as moneyVest } from '../utils/money';
 
 import {
   getGroupById as getSastrero,
