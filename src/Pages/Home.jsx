@@ -17,7 +17,7 @@ import heroVertical from '../Videos/hero-vertical.mp4';
 import DuoShowcase from '../Components/DuoShowcase';
 
 import imgA from '../Images/deluxe1.webp';
-import imgB from '../Images/denim1.webp';
+import imgB from '../Images/portadaSastreria.jpeg';
 import FeaturedProductsSastrero from './FeaturedProductsSastrero';
 
 const Home = () => {
@@ -37,8 +37,8 @@ const Home = () => {
         }}
         right={{
           src: imgB,
-          alt: 'Línea Essentials',
-          href: '/coleccion/essentials'
+          alt: 'Productos de Sastreria',
+          href: '/productos/sastreros'
         }}
         ratio="4 / 5" // mismo formato en todas las resoluciones
         gap="tight" // gap mínimo entre imágenes

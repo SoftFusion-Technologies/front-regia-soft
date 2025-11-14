@@ -18,7 +18,12 @@ const COLLAPSE_RULES = [
   [12, 13],
   [14, 15],
   [17, 18],
-  [20, 21]
+  [20, 21],
+  [22, 24],
+  [25, 26],
+  [27, 29],
+  [30, 32],
+  [33, 34]
 ];
 
 const files = Object.entries(modules)
@@ -85,6 +90,36 @@ const DETAILS_OVERRIDES = {
     name: 'Set MIRI Brodery ',
     colors: ['Blanco', 'Negro'],
     sizes: ['Talles M al XL']
+  },
+  22: {
+    name: 'Sets Sastrero Lola',
+    price: 56000,
+    colors: ['Blanco', 'Negro'],
+    sizes: ['S', 'M', 'L', 'XL']
+  },
+  25: {
+    name: 'Set sastrero MISONY  Brodery',
+    price: 55000,
+    colors: ['Blanco', 'Negro'],
+    sizes: ['S', 'M', 'L', 'XL']
+  },
+  27: {
+    name: 'Set Sastrero LADY',
+    price: 62000,
+    colors: ['Blanco', 'Negro', 'Beige', 'Amarillo'],
+    sizes: ['1', '2', '3']
+  },
+  30: {
+    name: 'Denim Flower',
+    price: 60000,
+    colors: ['Blanco', 'Negro'],
+    sizes: ['Talles 34 al 44']
+  },
+  33: {
+    name: 'Chaleco Bordado AMY',
+    price: 45000,
+    colors: ['Blanco', 'Negro'],
+    sizes: ['Talles S al Xl']
   }
 };
 
