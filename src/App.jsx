@@ -20,6 +20,7 @@ import ScrollToTop from './Components/ScrollToTop';
 // 👇 Asegurate que las rutas de import coincidan con dónde están los archivos
 import FeaturedProductsVestidos from './Pages/FeaturedProducts';
 import FeaturedProductsSastrero from './Pages/FeaturedProductsSastrero';
+import FeaturedProductsDenin from './Pages/FeaturedProductsDenim';
 
 const App = () => {
   return (
@@ -50,7 +51,7 @@ const App = () => {
             path="/productos/sastreros"
             element={<FeaturedProductsSastrero />}
           />
-
+          <Route path="/productos/denim" element={<FeaturedProductsDenin />} />
           {/* Otros */}
           <Route
             path="/productos/remeras-over-clasicas"

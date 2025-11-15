@@ -1,10 +1,10 @@
-// src/data/sastrero.js
+// src/data/denim.js
 // Descubre imágenes sin eager
 const modules = import.meta.glob(
-  '../Images/Sastrero/sastrero*.{jpg,jpeg,png,webp,avif}'
+  '../Images/Denim/denim*.{jpg,jpeg,png,webp,avif}'
 );
 
-export const CATEGORY = 'sastrero'; // namespace del catálogo
+export const CATEGORY = 'denim'; // namespace del catálogo
 
 // === NUEVO: imports reutilizables ===
 import { swatchFromName } from '../utils/colors.js';
@@ -13,22 +13,28 @@ import moneyAR from '../utils/money.js';
 // Reglas de colapso
 const COLLAPSE_RULES = [
   [1, 3],
-  [4, 9],
-  [10, 11],
-  [12, 13],
-  [14, 15],
-  [17, 18],
-  [20, 21],
-  [22, 24],
-  [25, 26],
+  [4, 5],
+  [6, 8],
+  [9, 10],
+  [11, 14],
+  [15, 17],
+  [18, 19],
+  [20, 22],
+  [24, 26],
   [27, 29],
-  [30, 31],
-  [32, 34]
+  [30, 32],
+  [34, 36],
+  [37, 39],
+  [40, 41],
+  [42, 43],
+  [44, 47],
+  [49, 52],
+  [53, 56]
 ];
 
 const files = Object.entries(modules)
   .map(([path, importFn]) => {
-    const filename = path.split('/').pop(); // "sastrero12.jpeg"
+    const filename = path.split('/').pop(); // "denim12.jpeg"
     const num = Number(filename.match(/\d+/)?.[0] ?? 0);
     return { num, filename, importFn };
   })
@@ -50,73 +56,138 @@ function slugify(text) {
 // Clave = id de grupo (el representante del rango)
 const DETAILS_OVERRIDES = {
   1: {
-    name: 'Set KAREN',
-    colors: ['Rosa', 'Beige', 'Celeste']
+    name: 'Denim Flower',
+    price: 60000,
+    colors: ['Celeste'],
+    sizes: ['Talles 34 al 44']
   },
   4: {
-    name: 'Set LARA Forrado ',
-    colors: ['Negro', 'Beige', 'Verde']
+    name: 'Chaleco Bordado AMY ',
+    price: 45000,
+    colors: ['Celeste'],
+    sizes: ['Talles S al XL']
   },
-  7: {
-    name: 'Set LARA Forrado ',
-    colors: ['Negro', 'Beige', 'Verde']
-  },
-  14: {
-    name: 'Blazer ARMANI',
-    colors: ['Negro', 'Beige', 'Celeste', 'Blanco', 'Rosa', 'Amarillo'],
-    sizes: ['1', '2', '3']
-  },
-  15: {
-    name: 'Chaleco CADILLAC',
-    colors: ['Negro', 'Beige', 'Blanco', 'Amarillo'],
-    sizes: ['1', '2', '3']
-  },
-  16: {
-    name: 'Chaleco CADILLAC',
-    colors: ['Negro', 'Beige', 'Blanco', 'Amarillo'],
-    sizes: ['1', '2', '3']
-  },
-  17: {
-    name: 'Set GUCCI',
-    colors: ['Celeste', 'Beige', 'Negro', 'Amarillo'],
-    sizes: ['1', '2', '3']
-  },
-  19: {
-    name: 'Short Zadic',
-    colors: ['Blanco', 'Negro'],
-    sizes: ['1', '2', '3', '4']
-  },
-  20: {
-    name: 'Set MIRI Brodery ',
-    colors: ['Blanco', 'Negro'],
+  6: {
+    name: 'Vestido Bordado NARA',
+    price: 43000,
+    colors: ['Celeste'],
     sizes: ['Talles M al XL']
   },
-  22: {
-    name: 'Sets Sastrero Lola',
-    price: 56000,
-    colors: ['Blanco', 'Negro'],
-    sizes: ['S', 'M', 'L', 'XL']
+  9: {
+    name: 'Jeans Óxido Inquieta',
+    price: 60000,
+    colors: ['Celeste', 'Oscuro'],
+    sizes: ['Talles 36 al 46']
   },
-  25: {
-    name: 'Set sastrero MISONY  Brodery',
+  11: {
+    name: 'Short Star',
+    price: 35000,
+    colors: ['Celeste', 'Oscuro'],
+    sizes: ['Talles 36 al 46']
+  },
+  15: {
+    name: 'Shorts Tiro Bajo',
+    price: 37000,
+    colors: ['Celeste', 'Oscuro'],
+    sizes: ['Talles 36 al 42']
+  },
+  18: {
+    name: 'Denim GREEN',
+    price: 40000,
+    colors: ['Verde', 'Oscuro'],
+    sizes: ['Talles 34 al 44']
+  },
+  20: {
+    name: 'Wide Tiro Bajo ROBBIN',
+    price: 58000,
+    colors: ['Celeste'],
+    sizes: ['Talles 34 al 44']
+  },
+  23: {
+    name: 'Tiro bajo',
+    price: 37000,
+    colors: ['Celeste', 'Oscuro'],
+    sizes: ['Talles 36 al 42']
+  },
+  24: {
+    name: 'Baggy Tylor',
     price: 55000,
-    colors: ['Blanco', 'Negro'],
-    sizes: ['S', 'M', 'L', 'XL']
+    colors: ['Negro', 'Oscuro'],
+    sizes: ['Talles 36 al 46']
   },
   27: {
-    name: 'Set Sastrero LADY',
-    price: 62000,
-    colors: ['Blanco', 'Negro', 'Beige', 'Amarillo'],
-    sizes: ['1', '2', '3']
+    name: 'Tiro Bajo LÍA',
+    price: 75000,
+    colors: ['Negro', 'Oscuro'],
+    sizes: ['Talles 34 al 44']
   },
-
+  30: {
+    name: 'Short Moom COAST',
+    price: 40000,
+    colors: ['Negro', 'Oscuro'],
+    sizes: ['Talles 34 al 44']
+  },
+  33: {
+    name: 'Tiro Bajo',
+    price: 37000,
+    colors: ['Negro', 'Oscuro'],
+    sizes: ['Talles 34 al 42']
+  },
+  34: {
+    name: 'Denim Shine ',
+    price: 74900,
+    colors: ['Negro', 'Oscuro'],
+    sizes: ['Talles 34 al 42']
+  },
+  37: {
+    name: 'Pantalón Corte Chino con Cinto ',
+    price: 55000,
+    colors: ['Blanco', 'Oscuro'],
+    sizes: ['Talles 36 al 46']
+  },
+  40: {
+    name: 'Skort Lina',
+    // price: 55000,
+    colors: ['Blanco', 'Oscuro'],
+    sizes: ['Talles 36 al 46']
+  },
+  42: {
+    name: 'Wide LATTE',
+    price: 33000,
+    colors: ['Blanco', 'Oscuro'],
+    sizes: ['Talles 34 al 44']
+  },
+  44: {
+    name: 'Wide Prestton',
+    price: 60000,
+    colors: ['Blanco', 'Celeste'],
+    sizes: ['Talles 34 al 44']
+  },
+  48: {
+    name: 'Short Gabardina Elástizado',
+    price: 27000,
+    colors: ['Blanco', 'Celeste'],
+    sizes: ['Talles 36 al 46']
+  },
+  49: {
+    name: 'Jardinero ÁCID',
+    price: 69900,
+    colors: ['Blanco', 'Celeste'],
+    sizes: ['Talles 36 al 42']
+  },
+  53: {
+    name: 'Wide Carol Clásico ',
+    price: 60000,
+    colors: ['Blanco', 'Celeste'],
+    sizes: ['Talles 34 al 44']
+  }
 };
 
 // === ELIMINADO: normalize, COLOR_HEX, GRADIENT_BG, colorToSwatch ===
 
 function makeGroup(rep, ids) {
   const loaders = ids.map((n) => byNum.get(n)?.importFn).filter(Boolean);
-  const baseName = `Sastrero ${String(rep).padStart(2, '0')}`;
+  const baseName = `Denim ${String(rep).padStart(2, '0')}`;
   const ov = DETAILS_OVERRIDES[rep] || {};
   const name = ov.name || baseName;
   const slug = slugify(`${rep}-${name}`);
@@ -154,10 +225,10 @@ for (const f of files) {
 groups.sort((a, b) => a.id - b.id);
 
 // --------- Helpers de carga de imágenes ----------
-export const SASTREROS_GROUP = groups;
+export const DENIM_GROUP = groups;
 
 export const getGroupById = (id) =>
-  SASTREROS_GROUP.find((g) => g.id === Number(id));
+  DENIM_GROUP.find((g) => g.id === Number(id));
 
 export async function loadPrimaryImage(group) {
   const m = await group.primaryLoader();
@@ -190,4 +261,4 @@ export function groupToUiProduct(g) {
 }
 
 // Colección lista para pintar en grillas (FeaturedProducts, etc.)
-export const SASTREROS_PRODUCTS = SASTREROS_GROUP.map(groupToUiProduct);
+export const DENIM_PRODUCTS = DENIM_GROUP.map(groupToUiProduct);

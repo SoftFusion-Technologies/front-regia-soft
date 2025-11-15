@@ -28,9 +28,13 @@ export const menuItems = [
         label: 'Sastreros',
         href: 'productos/sastreros'
       },
-      // { id: 23, label: 'Bermudas', href: 'productos/bermudas' }
+      {
+        id: 23,
+        label: 'Denin',
+        href: 'productos/denim'
+      }
     ]
   },
   { id: 3, label: 'Nosotros', href: 'about' },
-  { id: 4, label: 'Contacto', href: 'contacto' },
+  { id: 4, label: 'Contacto', href: 'contacto' }
 ];

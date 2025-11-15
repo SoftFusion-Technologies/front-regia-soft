@@ -65,7 +65,7 @@ export default function DressCard({ item }) {
         </div>
 
         <div className="relative z-10 p-3">
-          <h3 className="text-white text-sm font-medium leading-snug">
+          <h3 className="text-white text-sm font-medium leading-snug uppercase">
             {name}
           </h3>
           <p className="text-white/80 text-sm">

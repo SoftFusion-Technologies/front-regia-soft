@@ -35,6 +35,10 @@ import {
   loadAllImages as loadAllImagesSastrero
 } from '../data/sastrero';
 
+import {
+  getGroupById as getDenim,
+  loadAllImages as loadAllImagesDenim
+} from '../data/denim';
 const GOLD_GRAD = 'from-[#f0d68a] to-[#d4af37]';
 
 function moneyAR(n) {
@@ -110,39 +114,65 @@ const normalizeColors = (arr = []) =>
 // Orden estándar de talles de letras
 const ALPHA_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
 
-// Expande descripciones tipo "Talles M al XXl" -> ['M','L','XL','XXL']
-const expandAlphaSizeRange = (descriptor) => {
+// Expande descripciones tipo:
+// - "Talles M al XXl"  -> ['M','L','XL','XXL']
+// - "Talles 34 al 42"  -> ['34','36','38','40','42']
+const expandSizeRange = (descriptor) => {
   if (!descriptor) return null;
 
-  const raw = String(descriptor).toUpperCase(); // "TALLES M AL XXL"
+  const raw = String(descriptor).toUpperCase(); // ej: "TALLES 34 AL 42"
 
-  // Buscamos explícitamente "M AL XXL", "S AL XL", etc. (con espacios)
-  const match = raw.match(
+  // 1) Rangos ALFABÉTICOS (XS, S, M, L, XL...)
+  const alphaMatch = raw.match(
     /(XS|S|M|L|XL|XXL|XXXL)\s+AL\s+(XS|S|M|L|XL|XXL|XXXL)/
   );
 
-  if (!match) return null;
+  if (alphaMatch) {
+    const from = alphaMatch[1];
+    const to = alphaMatch[2];
 
-  const from = match[1]; // ej: "M"
-  const to = match[2];   // ej: "XXL"
+    const startIdx = ALPHA_SIZES.indexOf(from);
+    const endIdx = ALPHA_SIZES.indexOf(to);
+    if (startIdx === -1 || endIdx === -1) return null;
 
-  const startIdx = ALPHA_SIZES.indexOf(from);
-  const endIdx = ALPHA_SIZES.indexOf(to);
+    const [fromIdx, toIdx] =
+      startIdx <= endIdx ? [startIdx, endIdx] : [endIdx, startIdx];
 
-  if (startIdx === -1 || endIdx === -1) return null;
+    return ALPHA_SIZES.slice(fromIdx, toIdx + 1);
+  }
 
-  const [fromIdx, toIdx] =
-    startIdx <= endIdx ? [startIdx, endIdx] : [endIdx, startIdx];
+  // 2) Rangos NUMÉRICOS (ej: 34 al 42)
+  const numMatch = raw.match(/(\d+)\s+AL\s+(\d+)/);
+  if (numMatch) {
+    let from = parseInt(numMatch[1], 10);
+    let to = parseInt(numMatch[2], 10);
+    if (Number.isNaN(from) || Number.isNaN(to)) return null;
 
-  return ALPHA_SIZES.slice(fromIdx, toIdx + 1); // ['M','L','XL','XXL']
+    // Aseguramos orden
+    if (from > to) [from, to] = [to, from];
+
+    // Heurística: si ambos son pares y rango típico de pantalones → saltos de 2
+    let step = 1;
+    if (from % 2 === 0 && to % 2 === 0 && to - from >= 4) {
+      step = 2; // 34,36,38,40,42
+    }
+
+    const res = [];
+    for (let n = from; n <= to; n += step) {
+      res.push(String(n));
+    }
+    return res;
+  }
+
+  return null;
 };
 
 const normalizeSizes = (arr = []) => {
   if (!Array.isArray(arr) || arr.length === 0) return [];
 
-  // Caso especial: viene una sola descripción tipo "Talles S al XL"
+  // Caso especial: viene una sola descripción tipo "Talles S al XL" o "Talles 34 al 42"
   if (arr.length === 1 && typeof arr[0] === 'string') {
-    const expanded = expandAlphaSizeRange(arr[0]);
+    const expanded = expandSizeRange(arr[0]);
     if (expanded && expanded.length) {
       return expanded.map((s, i) => ({
         id: `sz-${s}-${i}`,
@@ -194,6 +224,11 @@ export default function ProductDetail() {
           get: getSastrero,
           load: loadAllImagesSastrero,
           label: 'Sastrero'
+        },
+        denim: {
+          get: getDenim,
+          load: loadAllImagesDenim,
+          label: 'Denim'
         }
       };
 
