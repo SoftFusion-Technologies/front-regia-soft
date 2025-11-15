@@ -22,8 +22,8 @@ const COLLAPSE_RULES = [
   [22, 24],
   [25, 26],
   [27, 29],
-  [30, 32],
-  [33, 34]
+  [30, 31],
+  [32, 34]
 ];
 
 const files = Object.entries(modules)
@@ -110,16 +110,16 @@ const DETAILS_OVERRIDES = {
     sizes: ['1', '2', '3']
   },
   30: {
-    name: 'Denim Flower',
-    price: 60000,
-    colors: ['Blanco', 'Negro'],
-    sizes: ['Talles 34 al 44']
-  },
-  33: {
     name: 'Chaleco Bordado AMY',
     price: 45000,
     colors: ['Blanco', 'Negro'],
     sizes: ['Talles S al Xl']
+  },
+  32: {
+    name: 'Vestido Bordado NARA',
+    price: 54000,
+    colors: ['Blanco', 'Negro'],
+    sizes: ['Talles M al XXl']
   }
 };
 

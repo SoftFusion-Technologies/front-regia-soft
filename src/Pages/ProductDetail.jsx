@@ -107,9 +107,56 @@ const normalizeColors = (arr = []) =>
     };
   });
 
-// arriba del componente (junto al normalizeColors si lo tenés)
-const normalizeSizes = (arr = []) =>
-  arr.map((s, i) => ({ id: String(s ?? i), name: String(s) }));
+// Orden estándar de talles de letras
+const ALPHA_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+
+// Expande descripciones tipo "Talles M al XXl" -> ['M','L','XL','XXL']
+const expandAlphaSizeRange = (descriptor) => {
+  if (!descriptor) return null;
+
+  const raw = String(descriptor).toUpperCase(); // "TALLES M AL XXL"
+
+  // Buscamos explícitamente "M AL XXL", "S AL XL", etc. (con espacios)
+  const match = raw.match(
+    /(XS|S|M|L|XL|XXL|XXXL)\s+AL\s+(XS|S|M|L|XL|XXL|XXXL)/
+  );
+
+  if (!match) return null;
+
+  const from = match[1]; // ej: "M"
+  const to = match[2];   // ej: "XXL"
+
+  const startIdx = ALPHA_SIZES.indexOf(from);
+  const endIdx = ALPHA_SIZES.indexOf(to);
+
+  if (startIdx === -1 || endIdx === -1) return null;
+
+  const [fromIdx, toIdx] =
+    startIdx <= endIdx ? [startIdx, endIdx] : [endIdx, startIdx];
+
+  return ALPHA_SIZES.slice(fromIdx, toIdx + 1); // ['M','L','XL','XXL']
+};
+
+const normalizeSizes = (arr = []) => {
+  if (!Array.isArray(arr) || arr.length === 0) return [];
+
+  // Caso especial: viene una sola descripción tipo "Talles S al XL"
+  if (arr.length === 1 && typeof arr[0] === 'string') {
+    const expanded = expandAlphaSizeRange(arr[0]);
+    if (expanded && expanded.length) {
+      return expanded.map((s, i) => ({
+        id: `sz-${s}-${i}`,
+        name: s
+      }));
+    }
+  }
+
+  // Caso normal: ya vienen talles 1x1 ['S','M','L'] o ['1','2','3']
+  return arr.map((s, i) => ({
+    id: `sz-${s ?? i}`,
+    name: String(s)
+  }));
+};
 
 export default function ProductDetail() {
   const { catalog, id } = useParams();

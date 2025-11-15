@@ -136,7 +136,7 @@ export default function PostHero({
     <section
       ref={rootRef}
       className={[
-        'absolute inset-x-0 z-10 ',
+        'absolute inset-x-0 z-10 -mt-10 ',
         'top-[clamp(22svh,30svh,38svh)] sm:top-[clamp(26svh,34svh,42svh)] md:top-[clamp(28svh,36svh,46svh)] lg:top-[clamp(30svh,38svh,50svh)]',
         'flex justify-center px-4 sm:px-6',
         className

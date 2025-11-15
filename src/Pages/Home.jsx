@@ -16,7 +16,7 @@ import heroVertical from '../Videos/hero-vertical.mp4';
 
 import DuoShowcase from '../Components/DuoShowcase';
 
-import imgA from '../Images/deluxe1.webp';
+import imgA from '../Images/portadaDenin.jpeg';
 import imgB from '../Images/portadaSastreria.jpeg';
 import FeaturedProductsSastrero from './FeaturedProductsSastrero';
 
@@ -32,8 +32,8 @@ const Home = () => {
       <DuoShowcase
         left={{
           src: imgA,
-          alt: 'Nueva cápsula Denim',
-          href: '/coleccion/denim'
+          alt: 'Productos de Denim',
+          href: '/productos/denim'
         }}
         right={{
           src: imgB,
