@@ -14,12 +14,14 @@ import imgInsta5 from '../Images/HeroInsta/imgInsta5.jpg';
 // video vertical (mobile).
 import heroVertical from '../Videos/hero-vertical.mp4';
 
-import DuoShowcase from '../Components/DuoShowcase';
+import DuoShowcase, { BohoCapsuleVideo } from '../Components/DuoShowcase';
+import bohoVideo from '../Videos/portadaBohoClick.mp4';
 
 import imgA from '../Images/portadaDenin.jpeg';
 import imgB from '../Images/portadaSastreria.jpeg';
 import FeaturedProductsSastrero from './FeaturedProductsSastrero';
-
+import FeaturedProductsDenin from './FeaturedProductsDenim';
+import FeaturedProductsBoho from './FeaturedProductsBoho';
 const Home = () => {
   return (
     <div>
@@ -44,10 +46,16 @@ const Home = () => {
         gap="tight" // gap mínimo entre imágenes
         bleed={true} // pegado a los bordes del viewport
       />
-
+      <BohoCapsuleVideo
+        src={bohoVideo}
+        // poster={bohoVideoPoster}
+        href="/productos/boho-chic"
+      />
       <div className="mt-20">
         <FeaturedProducts />
         <FeaturedProductsSastrero></FeaturedProductsSastrero>
+        <FeaturedProductsDenin></FeaturedProductsDenin>
+        <FeaturedProductsBoho></FeaturedProductsBoho>
       </div>
       <InfoSection
         whatsappNumber="+54 9 3812 472636"

@@ -39,6 +39,12 @@ import {
   getGroupById as getDenim,
   loadAllImages as loadAllImagesDenim
 } from '../data/denim';
+
+import {
+  getGroupById as getBoho,
+  loadAllImages as loadAllImagesBoho
+} from '../data/boho';
+
 const GOLD_GRAD = 'from-[#f0d68a] to-[#d4af37]';
 
 function moneyAR(n) {
@@ -229,6 +235,11 @@ export default function ProductDetail() {
           get: getDenim,
           load: loadAllImagesDenim,
           label: 'Denim'
+        },
+        boho: {
+          get: getBoho,
+          load: loadAllImagesBoho,
+          label: 'Boho'
         }
       };
 

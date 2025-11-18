@@ -32,6 +32,11 @@ export const menuItems = [
         id: 23,
         label: 'Denin',
         href: 'productos/denim'
+      },
+      {
+        id: 24,
+        label: 'Cápsula BOHO CHIC',
+        href: 'productos/boho-chic'
       }
     ]
   },

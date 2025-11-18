@@ -21,6 +21,7 @@ import ScrollToTop from './Components/ScrollToTop';
 import FeaturedProductsVestidos from './Pages/FeaturedProducts';
 import FeaturedProductsSastrero from './Pages/FeaturedProductsSastrero';
 import FeaturedProductsDenin from './Pages/FeaturedProductsDenim';
+import FeaturedProductsBoho from './Pages/FeaturedProductsBoho';
 
 const App = () => {
   return (
@@ -52,6 +53,11 @@ const App = () => {
             element={<FeaturedProductsSastrero />}
           />
           <Route path="/productos/denim" element={<FeaturedProductsDenin />} />
+
+          <Route
+            path="/productos/boho-chic"
+            element={<FeaturedProductsBoho />}
+          />
           {/* Otros */}
           <Route
             path="/productos/remeras-over-clasicas"

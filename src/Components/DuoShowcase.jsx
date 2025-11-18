@@ -121,3 +121,61 @@ export default function DuoShowcase({
     </section>
   );
 }
+
+
+
+export function BohoCapsuleVideo({ src, href }) {
+  return (
+    <section className="mt-6 w-full overflow-x-clip">
+      <div className="relative left-1/2 -translate-x-1/2 w-[100vw] max-w-[100vw] overflow-x-clip">
+        <motion.div
+          initial={{ opacity: 0, y: 24, scale: 0.99, filter: 'blur(8px)' }}
+          whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          // 👉 Vertical tipo reel en mobile, más alto que 16:9 en desktop
+          className="group relative aspect-[9/16] md:aspect-[16/10] overflow-hidden bg-black"
+        >
+          <video
+            src={src}
+            className="h-full w-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+
+          {/* Gradiente para legibilidad */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-transparent"
+          />
+
+          {/* Texto + CTA */}
+          <div className="absolute inset-x-4 bottom-4 flex flex-col gap-3 sm:inset-x-6 sm:bottom-6 md:inset-x-10 md:bottom-8">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-white/70">
+                Nueva cápsula
+              </p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white">
+                Cápsula BOHO CHIC
+              </h2>
+            </div>
+
+            <ViewMoreButton
+              label="Ver cápsula BOHO CHIC"
+              href={href}
+              aria="Ver cápsula BOHO CHIC"
+            />
+          </div>
+
+          {/* Línea dorada abajo */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[#f1d08a] via-[#caa042] to-[#a38321] transition-all duration-700 group-hover:w-full"
+          />
+        </motion.div>
+      </div>
+    </section>
+  );
+}
