@@ -23,7 +23,8 @@ const COLLAPSE_RULES = [
   [25, 26],
   [27, 29],
   [30, 31],
-  [32, 34]
+  [32, 34],
+  [53,54]
 ];
 
 const files = Object.entries(modules)
@@ -61,17 +62,12 @@ const DETAILS_OVERRIDES = {
     name: 'Set LARA Forrado ',
     colors: ['Negro', 'Beige', 'Verde']
   },
-  14: {
+  53: {
     name: 'Blazer ARMANI',
     colors: ['Negro', 'Beige', 'Celeste', 'Blanco', 'Rosa', 'Amarillo'],
     sizes: ['1', '2', '3']
   },
-  15: {
-    name: 'Chaleco CADILLAC',
-    colors: ['Negro', 'Beige', 'Blanco', 'Amarillo'],
-    sizes: ['1', '2', '3']
-  },
-  16: {
+  52: {
     name: 'Chaleco CADILLAC',
     colors: ['Negro', 'Beige', 'Blanco', 'Amarillo'],
     sizes: ['1', '2', '3']
@@ -81,12 +77,12 @@ const DETAILS_OVERRIDES = {
     colors: ['Celeste', 'Beige', 'Negro', 'Amarillo'],
     sizes: ['1', '2', '3']
   },
-  19: {
+  51: {
     name: 'Short Zadic',
     colors: ['Blanco', 'Negro'],
     sizes: ['1', '2', '3', '4']
   },
-  20: {
+  50: {
     name: 'Set MIRI Brodery ',
     colors: ['Blanco', 'Negro'],
     sizes: ['Talles M al XL']
