@@ -43,7 +43,7 @@ function ImageCard({
       viewport={{ once: true, amount: 0.5 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className="group relative overflow-hidden rounded-none bg-black"
-      style={{ aspectRatio: ratio }} // mismo formato en todas las resoluciones
+      style={{ aspectRatio: ratio }}
     >
       <img
         src={src}
@@ -61,8 +61,8 @@ function ImageCard({
         className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-black/65"
       />
 
-      {/* Botón Ver más */}
-      <div className="absolute bottom-3 left-3">
+      {/* Botón Ver más: arriba en mobile, abajo en desktop */}
+      <div className="absolute left-3 top-3 md:top-auto md:bottom-3">
         <ViewMoreButton
           label="Ver más"
           href={href}
@@ -79,6 +79,7 @@ function ImageCard({
     </motion.div>
   );
 }
+
 
 /**
  * DuoShowcase v2 (full-bleed)
